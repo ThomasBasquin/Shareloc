@@ -1,92 +1,52 @@
-# Shareloc
+## Sherlock
+
+L'objectif de ce projet est de développer une plateforme permettant de s’échanger des services au sein d’une colocation ou d’une famille. Chaque colocation dispose de son propre espace au sein duquel les membres sont attachés.
+Des tâches ou services (tels que débarrasser la table, remplir le lave-vaisselle, faire les courses, ranger le salon, payer une sortie ciné, etc.), ayant chacun un coût exprimé en points, sont saisis dans l’espace de la colocation. Chaque membre de la colocation dispose d’un compte de points. Chaque fois qu’un membre réalise une tâche ou rend un service, il déclare la réalisation en y attachant éventuellement une photo. Une fois cette déclaration validée, le coût associé est crédité à son compte, et débité de manière partagée de celui des autres membres de la colocation qui en ont bénéficié.
+A la fin d’une période déterminée (par exemple, un mois ou une semaine), un récapitulatif des services rendus et du solde de chacun des membres est envoyé (ou rendu disponible) à toute la colocation.
+Rien n’empêche a priori un utilisateur d’être attaché à plusieurs espaces Colocation. Le compte de points de chaque utilisateur doit donc être maintenu au sein de chaque colocation dont il fait partie.
 
 
 
-## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+Liste des fonctionnalités attendues
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Inscription et authentification d’un utilisateur, création et modification de son profil
+Création / Gestion d’un espace Colocation
+En tant que gestionnaire d’une Colocation
+Invitation d’un utilisateur à rejoindre son espace
+En tant que membre d’une Colocation
+Proposer l’ajout d’un nouveau service pour la colocation (titre, description, nombre de points)
+Voter pour ou contre une proposition d’ajout d’un nouveau service
+Proposer la suppression d’un service
+Voter pour ou contre une proposition de suppression d’un service
+Déclarer la réalisation d’un service (service, [photo], bénéficiaires)
+En tant que bénéficiaire d’un service rendu :
+Valider / Rejeter la déclaration
+Consulter la liste des membres de la Colocation ainsi que le solde de leurs points
+Un espace d’échange accessible à tous les membres d’une Colocation
 
-## Add your files
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Description des entités
+Ceci constitue uniquement une proposition incomplète de quelques entités à utiliser pour ce projet.
+Toutes les associations entre les entités ne sont pas matérialisées ici. Des modifications et ajouts peuvent (doivent) évidemment être faits.
 
-```
-cd existing_repo
-git remote add origin https://git.unistra.fr/shareloc-spb/shareloc.git
-git branch -M main
-git push -uf origin main
-```
+### Users
+**email** : email (servant également de login) de l'utilisateur <br>
+**password** : mot de passe de l’utilisateur <br>
+**firstname** : prénom réel de l'utilisateur <br>
+**lastname** : nom de famille réel de l'utilisateur <br>
 
-## Integrate with your tools
+### Colocation
+**name** : nom de la colocation <br>
 
-- [ ] [Set up project integrations](https://git.unistra.fr/shareloc-spb/shareloc/-/settings/integrations)
+### Service
+**title** : titre du service <br>
+**description** : petit texte précisant le service <br>
+**cost** : nombre de points associé au service <br>
 
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
-
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
-
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
-
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
-
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
-
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+### AchievedService
+**from** : utilisateur ayant rendu le service <br>
+**to** : utilisateur(s) ayant bénéficié du service <br>
+**date** : date à laquelle a été rendu le service <br>
+**picture** : photo accompagnant éventuellement la déclaration <br>
+**valid** : indique si la déclaration de service fait a été validée ou non <br>
