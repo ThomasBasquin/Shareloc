@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb6b4357-5828-423d-95ba-94ea3a8097a2" name="Changes" comment="" />
+    <list default="true" id="bb6b4357-5828-423d-95ba-94ea3a8097a2" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/artifacts/Shareloc_war_exploded.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/artifacts/Shareloc_war_exploded.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloResource.java" afterDir="false" />
+    </list>
+    <list id="16c7a888-6f52-416b-a8b3-c863c89fa88b" name="Changes by thomas" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloResource.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,19 +21,34 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="LineStatusTrackerManager">
+    <file path="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloResource.java">
+      <ranges>
+        <range start1="2" end1="5" start2="2" end2="5" changelist="bb6b4357-5828-423d-95ba-94ea3a8097a2" />
+        <range start1="6" end1="7" start2="6" end2="7" changelist="bb6b4357-5828-423d-95ba-94ea3a8097a2" />
+        <range start1="14" end1="14" start2="14" end2="15" changelist="16c7a888-6f52-416b-a8b3-c863c89fa88b" />
+      </ranges>
+    </file>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="2I1wiKZG0H4tuqvxizzbQLNptPe" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "codeWithMe.voiceChat.enabledByDefault": "false",
+    "last_opened_file_path": "C:/Users/hugos/Desktop/GITUnistra/lp1-schellinger-fallot",
+    "nodejs_package_manager_path": "npm"
   }
-}</component>
+}]]></component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
