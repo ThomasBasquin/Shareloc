@@ -6,7 +6,7 @@ A la fin d’une période déterminée (par exemple, un mois ou une semaine), un
 Rien n’empêche a priori un utilisateur d’être attaché à plusieurs espaces Colocation. Le compte de points de chaque utilisateur doit donc être maintenu au sein de chaque colocation dont il fait partie.
 
 
-
+test
 
 ## Liste des fonctionnalités attendues
 
