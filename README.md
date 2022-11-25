@@ -7,7 +7,6 @@ Rien n’empêche a priori un utilisateur d’être attaché à plusieurs espace
 
 
 
-
 ## Liste des fonctionnalités attendues
 
 Inscription et authentification d’un utilisateur, création et modification de son profil
