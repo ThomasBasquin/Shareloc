@@ -10,21 +10,52 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb6b4357-5828-423d-95ba-94ea3a8097a2" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/controller/ControllerAchievedService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/controller/ControllerCollocation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/controller/ControllerService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/controller/ControllerUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/dao/DAOAbstractFacade.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/dao/DAOAchievedService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/dao/DAOCollocation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/dao/DAOService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/dao/DAOUser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/model/AchievedService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/model/Collocation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/model/Service.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/path/Authentification.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/path/ServiceCollocation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/path/ServiceInvitation.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/security/CorsFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/security/JWTAuthFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/security/JWTResponseFilter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/security/JWTokenUtility.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/security/RsaKeyProducer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/security/SigninNeeded.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/apiTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/api/apiTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/controllers/controllers.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/api/controllers/controllers.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/dao/dao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/api/dao/dao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/model/model.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/api/model/model.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/paths/paths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/api/paths/paths.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/security/security.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/api/security/security.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloResource.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/apiTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/controllers/controllers.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/dao/dao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/model/model.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/paths/paths.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/api/security/security.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/shareloc/shareloc/HelloResource.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/beans.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/persistence.xml" beforeDir="false" />
     </list>
     <list id="16c7a888-6f52-416b-a8b3-c863c89fa88b" name="Changes by thomas" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -51,15 +82,27 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "codeWithMe.voiceChat.enabledByDefault": "false",
-    "last_opened_file_path": "D:/IUT INFO/LP/LP1/shareloc/Shareloc",
+    "last_opened_file_path": "C:/Users/hugos/Desktop/GITUnistra/Shareloc/Shareloc/src/main",
     "nodejs_package_manager_path": "npm",
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\hugos\Desktop\GITUnistra\Shareloc\Shareloc\src\main" />
+      <recent name="C:\Users\hugos\Desktop\GITUnistra\Shareloc\Shareloc\src\main\java\com\shareloc\api\paths" />
+      <recent name="C:\Users\hugos\Desktop\GITUnistra\Shareloc\Shareloc\src\main\java\com\shareloc\api\security" />
+      <recent name="C:\Users\hugos\Desktop\GITUnistra\Shareloc\Shareloc\src\main\java\com\shareloc\api\model" />
+      <recent name="C:\Users\hugos\Desktop\GITUnistra\Shareloc\Shareloc\src\main\java\com\shareloc\api\dao" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\hugos\Desktop\GITUnistra\Shareloc\Shareloc" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration name="GlassFish 5.2022.31" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="GlassFish 5.2022.31" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="11" nameIsGenerated="true">
+    <configuration name="GlassFish 5.2022.31" type="GlassfishConfiguration" factoryName="Local" APPLICATION_SERVER_NAME="payara5" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="11" nameIsGenerated="true">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="Shareloc:war exploded">
@@ -142,6 +185,10 @@
       <workItem from="1669362525721" duration="19000" />
       <workItem from="1669362554386" duration="722000" />
       <workItem from="1669373632426" duration="1410000" />
+      <workItem from="1669971442159" duration="108000" />
+      <workItem from="1669971599391" duration="389000" />
+      <workItem from="1669972001182" duration="455000" />
+      <workItem from="1669974133695" duration="2392000" />
     </task>
     <servers />
   </component>
