@@ -4,10 +4,11 @@ import { Text, View } from 'react-native';
 
 const Accueil = ({navigation}) => {
     return (
-        <View>
+        
+        <View style={{ flex: 1, backgroundColor: 'white' }}>
             <Text>Accueil</Text>
         </View>
     )
 }
 
-export default Accueil
+export default Accueil;

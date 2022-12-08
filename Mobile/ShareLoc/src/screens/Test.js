@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 
 const Test = ({navigation}) => {
     return (
-        <View>
+        <View style={{ flex: 1, backgroundColor: 'white'}}>
             <Text>Test</Text>
         </View>
     )

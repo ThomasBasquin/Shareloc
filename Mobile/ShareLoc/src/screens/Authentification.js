@@ -4,7 +4,7 @@ import { Text, View, Button } from 'react-native';
 
 const Authentification = ({navigation}) => {
     return (
-        <View>
+        <View style={{ flex: 1, backgroundColor: 'white'}}>
             <Text>Authentification</Text>
             <Button 
             title="Authentication"
