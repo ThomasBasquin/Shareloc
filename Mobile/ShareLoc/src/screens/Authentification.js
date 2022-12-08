@@ -4,7 +4,8 @@ import { Login } from "../components/Login";
 
 const Authentification = ({ navigation }) => {
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
+      <Text>Authentification</Text>
       <Button
         title="Authentication"
         onPress={() => navigation.navigate("Home")}
