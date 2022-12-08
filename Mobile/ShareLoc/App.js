@@ -9,6 +9,7 @@ import Services from './src/screens/Services';
 import Authentification from './src/screens/Authentification';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Ionicons from '@expo/vector-icons/Ionicons';
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
@@ -30,8 +31,25 @@ export default function App() {
 const Home = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
-    <Tab.Navigator style={{ flex: 1, backgroundColor: 'white'}}>
-      <Tab.Screen name="Accueil" component={Accueil} options={{headerShown: false}}/>
+    <Tab.Navigator style={{ flex: 1, backgroundColor: 'white'}}
+    screenOptions={{
+      tabBarStyle: { position: 'absolute' },
+    }}
+    tabBarOptions={
+      {
+          activeTintColor: 'black',
+          inactiveTintColor: 'blue',
+          labelPosition: 'below-icon'
+      }
+  }>
+      <Tab.Screen name="Accueil" 
+      component={Accueil} 
+      options={{headerShown: false, 
+      tabBarLabel: 'Accueil',
+      tabBarIcon: ({ color, size }) => (
+        <Ionicons name="home" color={color} size={size} />
+      ),}} />
+
       <Tab.Screen name="Colocation" component={Colocation} options={{headerShown: false}}/>
       <Tab.Screen name="Services" component={Services} options={{headerShown: false}}/>
       <Tab.Screen name="Profil" component={Profil} options={{headerShown: false}}/>
