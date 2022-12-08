@@ -40,7 +40,7 @@ export default function App() {
 
 const Home = () => {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.bleuFonce }}>
       <Tab.Navigator
         style={{ flex: 1, backgroundColor: "black" }}
         screenOptions={{
