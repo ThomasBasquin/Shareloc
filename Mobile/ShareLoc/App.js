@@ -3,7 +3,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Accueil from './src/screens/Accueil';
-import Test from './src/screens/Test';
+import Colocation from './src/screens/Colocation';
+import Profil from './src/screens/Profil';
+import Services from './src/screens/Services';
 import Authentification from './src/screens/Authentification';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -30,7 +32,9 @@ const Home = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: 'white' }}>
     <Tab.Navigator style={{ flex: 1, backgroundColor: 'white'}}>
       <Tab.Screen name="Accueil" component={Accueil} options={{headerShown: false}}/>
-      <Tab.Screen name="Test" component={Test} options={{headerShown: false}}/>
+      <Tab.Screen name="Colocation" component={Colocation} options={{headerShown: false}}/>
+      <Tab.Screen name="Services" component={Services} options={{headerShown: false}}/>
+      <Tab.Screen name="Profil" component={Profil} options={{headerShown: false}}/>
     </Tab.Navigator>
     </SafeAreaView>
   )
