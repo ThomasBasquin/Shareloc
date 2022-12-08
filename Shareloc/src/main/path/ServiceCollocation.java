@@ -6,6 +6,7 @@ import main.security.SigninNeeded;
 
 import java.util.List;
 
+import javax.jms.Message;
 import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
