@@ -1,17 +1,16 @@
-import React from 'react';
-import { Text, View, Button } from 'react-native';
+import React from "react";
+import { Text, View, Button } from "react-native";
+import { Login } from "../components/Login";
 
+const Authentification = ({ navigation }) => {
+  return (
+    <View>
+      <Button
+        title="Authentication"
+        onPress={() => navigation.navigate("Home")}
+      />
+    </View>
+  );
+};
 
-const Authentification = ({navigation}) => {
-    return (
-        <View>
-            <Text>Authentification</Text>
-            <Button 
-            title="Authentication"
-            onPress = {()=>navigation.navigate('Home')}
-            />
-        </View>
-    )
-}
-
-export default Authentification
+export default Authentification;
