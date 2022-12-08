@@ -30,3 +30,4 @@ public class DAOAchievedService extends DAOAbstractFacade<AchievedService> {
 		return query.getResultList();
 	}
 }
+
