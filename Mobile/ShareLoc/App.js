@@ -7,6 +7,7 @@ import Colocation from "./src/screens/Colocation";
 import Profil from "./src/screens/Profil";
 import Services from "./src/screens/Services";
 import Authentification from "./src/screens/Authentification";
+import Signup from "./src/screens/Signup";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -25,6 +26,11 @@ export default function App() {
           <Stack.Screen
             name="Authentification"
             component={Authentification}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
             options={{ headerShown: false }}
           />
           <Stack.Screen

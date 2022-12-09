@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Text, View, Button, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import ButtonComponent from "../components/ButtonComponent";
 
-const Authentification = ({ navigation }) => {
+const Signup = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,18 +24,21 @@ const Authentification = ({ navigation }) => {
         secureTextEntry={true}
         textContentType="oneTimeCode"
       />
-
-      <ButtonComponent btnText="Connexion" primary />
-      <Button
-        title="Authentication"
-        onPress={() => navigation.navigate("Home")}
+      <TextInput
+        style={styles.input}
+        value={password}
+        placeholder="Confirmez votre mot de passe"
+        onChangeText={setPassword}
+        secureTextEntry={true}
+        textContentType="oneTimeCode"
       />
-      <TouchableOpacity
-        
-        onPress={() => navigation.navigate("Signup")}
-      >
-        <Text>Créer un compte</Text>
-      </TouchableOpacity>
+
+      <ButtonComponent  primary ><Text>Connexion</Text></ButtonComponent>
+      <Button
+        title="Créez"
+        onPress={() => navigation.navigate("Authentification")}
+      />
+      
     </View>
   );
 };
@@ -62,4 +65,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Authentification;
+export default Signup;
