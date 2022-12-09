@@ -51,10 +51,7 @@ const Home = () => {
           inactiveTintColor: COLOR.blanc,
           activeBackgroundColor: COLOR.bleuFonce,
           inactiveBackgroundColor: COLOR.bleuFonce,
-          style: {
-            backgroundColor: "#CE4418",
-            paddingBottom: 3,
-          },
+  
         }}
       >
         <Tab.Screen
