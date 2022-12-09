@@ -28,7 +28,7 @@ const styles=new StyleSheet.create({
         backgroundColor:COLOR.bleuFonce,
         borderWidth:1,
         borderRadius:15,
-        width:100,
+        width:130,
         elevation: 3,
     }
 })
