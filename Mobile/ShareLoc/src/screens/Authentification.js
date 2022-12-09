@@ -25,7 +25,9 @@ const Authentification = ({ navigation }) => {
         textContentType="oneTimeCode"
       />
 
-      <ButtonComponent primary><Text>CC</Text></ButtonComponent>
+      <ButtonComponent style={{width:200}} primary>
+        <Text>Connexion</Text>
+      </ButtonComponent>
       <Button
         title="Authentication"
         onPress={() => navigation.navigate("Home")}
