@@ -11,7 +11,15 @@ const Colocation = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       <Title title="Ma colocation" />
-      <Box>
+      <Resume />
+        <Participants />
+    </View>
+  );
+};
+
+const Resume = () => {
+    return (
+<Box>
         <View>
           <Text style={styles.text}>Résumé</Text>
           <View
@@ -55,17 +63,27 @@ const Colocation = ({ navigation }) => {
               <Text style={styles.titreBoxResume}>Top Coloc</Text>
               <View style={{ flexDirection: "row" }}>
                 <FontAwesome name="trophy" size={20} color={COLOR.jaune} style={{marginBottom:2}}/>
-                <Text style={{ color: COLOR.blanc, marginLeft: 10 , marginTop: 3}}>
+                <Text style={{ color: COLOR.blanc, marginLeft: 10, marginTop: 3 }}>
                   Roméo
                 </Text>
               </View>
             </BoxResume>
           </View>
         </View>
-      </Box>
-    </View>
-  );
-};
+      </Box>)
+}
+
+
+const Participants = () => {
+    return (
+        <View style={styles.participants}>
+            <Text style={styles.titreParticipants}>Participants</Text>
+        </View>
+    )
+}
+
+
+
 const styles = new StyleSheet.create({
   text: {
     fontSize: 22,
@@ -82,5 +100,15 @@ const styles = new StyleSheet.create({
     textAlign: "center",
     marginBottom: 5,
   },
+  participants: {
+    margin : "5%"
+  },
+  titreParticipants : {
+    fontSize: 20,
+    fontWeight: "800",
+    color: COLOR.bleuFonce,
+  }
 });
+
+
 export default Colocation;
