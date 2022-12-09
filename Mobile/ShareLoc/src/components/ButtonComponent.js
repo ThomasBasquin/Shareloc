@@ -5,8 +5,10 @@ import { COLOR } from "../constantes/Color";
 
 /**
  * 
- * @param primary boolean | Permet de choisir le style du bouton , false apr défaut
+ * @param {*} primary  Permet de choisir le style du bouton , false apr défaut
  * @param children composants enfant
+ * @param style
+ * @param other props
  * @returns ButtonComponent 
  */
 export default function ButtonComponent({
