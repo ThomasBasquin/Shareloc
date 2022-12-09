@@ -53,6 +53,7 @@ const Profil = ({ navigation }) => {
                 flexDirection: "row",
                 alignItems: "center",
                 borderWidth: 1,
+                width: 275,
                 height: 40,
                 marginLeft: 15,
                 marginTop: 7,
@@ -109,8 +110,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     marginTop: 35,
     margin: "5%",
-    padding: 15,
-    borderRadius: 15,
+    padding: 10,
+    // borderRadius: 15,
     // elevation: 2.5,
   },
   label: {
