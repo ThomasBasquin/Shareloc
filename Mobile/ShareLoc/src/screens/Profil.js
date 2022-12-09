@@ -7,6 +7,8 @@ import {
   Pressable,
   TouchableOpacity,
   Image,
+  SafeAreaView,
+  ScrollView,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
@@ -25,69 +27,77 @@ const Profil = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Title title="Profil" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+      <ScrollView>
+        <View style={{ flex: 1, backgroundColor: "white" }}>
+          <Title title="Profil" />
 
-      <View style={styles.view}>
-        <Text style={styles.label}>Nom :</Text>
-        <TextInput style={styles.input} value={Nom} onChangeText={setNom} />
-        <Text style={styles.label}>Prénom :</Text>
-        <TextInput
-          style={styles.input}
-          value={Prenom}
-          onChangeText={setPrenom}
-        />
-        <Text style={styles.label}>Email :</Text>
-        <TextInput style={styles.input} value={Email} onChangeText={setEmail} />
-        <Text style={styles.label}>Mot de passe :</Text>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            borderWidth: 1,
-            height: 40,
-            marginLeft: 15,
-            marginTop: 7,
-            marginBottom: 15,
-            borderColor: COLOR.grisFonce,
-            borderRadius: 15,
-          }}
-        >
-          <TextInput
-            style={[
-              styles.input,
-              {
-                width: 240,
-                borderWidth: 0,
-                margin: 0,
-                padding: 0,
-                marginBottom: 7,
-                marginLeft: 10,
-              },
-            ]}
-            value={Password}
-            onChangeText={setPassword}
-            secureTextEntry={!showPassword ? true : false}
-            textContentType="oneTimeCode"
-          ></TextInput>
-          <TouchableOpacity
-            onPressIn={() => {
-              handleShowPassword();
-            }}
-          >
-            <Ionicons
-              name={!showPassword ? "eye-off" : "eye"}
-              size={24}
-              color={COLOR.grisFonce}
-              style={{ right: 12, marginBottom: 0 }}
+          <View style={styles.view}>
+            <Text style={styles.label}>Nom :</Text>
+            <TextInput style={styles.input} value={Nom} onChangeText={setNom} />
+            <Text style={styles.label}>Prénom :</Text>
+            <TextInput
+              style={styles.input}
+              value={Prenom}
+              onChangeText={setPrenom}
             />
-          </TouchableOpacity>
+            <Text style={styles.label}>Email :</Text>
+            <TextInput
+              style={styles.input}
+              value={Email}
+              onChangeText={setEmail}
+            />
+            <Text style={styles.label}>Mot de passe :</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                borderWidth: 1,
+                height: 40,
+                marginLeft: 15,
+                marginTop: 7,
+                marginBottom: 15,
+                borderColor: COLOR.grisFonce,
+                borderRadius: 15,
+              }}
+            >
+              <TextInput
+                style={[
+                  styles.input,
+                  {
+                    width: 240,
+                    borderWidth: 0,
+                    margin: 0,
+                    padding: 0,
+                    marginBottom: 7,
+                    marginLeft: 10,
+                  },
+                ]}
+                value={Password}
+                onChangeText={setPassword}
+                secureTextEntry={!showPassword ? true : false}
+                textContentType="oneTimeCode"
+              ></TextInput>
+              <TouchableOpacity
+                onPressIn={() => {
+                  handleShowPassword();
+                }}
+              >
+                <Ionicons
+                  name={!showPassword ? "eye-off" : "eye"}
+                  size={24}
+                  color={COLOR.grisFonce}
+                  style={{ right: 12, marginBottom: 0 }}
+                />
+              </TouchableOpacity>
+            </View>
+            <ButtonComponent style={{ width: 250 }} primary>
+              <Text>Modifier mes informations</Text>
+            </ButtonComponent>
+          </View>
         </View>
-        <ButtonComponent style={{ width: 250 }} primary>
-          <Text>Modifier mes informations</Text>
-        </ButtonComponent>
-      </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

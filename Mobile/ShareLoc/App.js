@@ -13,7 +13,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {COLOR} from "./src/constantes/Color";
+import { COLOR } from "./src/constantes/Color";
 const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
@@ -51,13 +51,13 @@ const Home = () => {
         style={{ flex: 1, backgroundColor: "black" }}
         screenOptions={{
           tabBarStyle: { position: "absolute" },
+          tabBarHideOnKeyboard: true,
         }}
         tabBarOptions={{
           activeTintColor: COLOR.jaune,
           inactiveTintColor: COLOR.blanc,
           activeBackgroundColor: COLOR.bleuFonce,
           inactiveBackgroundColor: COLOR.bleuFonce,
-  
         }}
       >
         <Tab.Screen
