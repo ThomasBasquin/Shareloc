@@ -1,6 +1,5 @@
 package main.dao;
 
-import main.model.AchievedService;
 import main.model.User;
 
 import javax.persistence.NoResultException;

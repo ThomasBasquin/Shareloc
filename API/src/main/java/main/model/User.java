@@ -23,17 +23,13 @@ public class User {
 	@Column(name = "firstname")
 	private String firstname;
 
-	@JsonIgnore
-	@ManyToMany(mappedBy = "members")
-	private Collocation collocations;
-
-	public User(String email, String password, String lastname, String firstname,Collocation collocation) {
+	public User(String email, String password, String lastname, String firstname/*,Collocation collocation*/) {
 		super();
 		this.email = email;
 		this.password = password;
 		this.lastname = lastname;
 		this.firstname = firstname;
-		this.collocations = collocation;
+		//this.collocations = collocation;
 	}
 
 	public Long getId() {
@@ -75,7 +71,7 @@ public class User {
 		this.firstname = firstname;
 	}
 
-	public Collocation getCollocations() {
+	/*public Collocation getCollocations() {
 		return collocations;
-	}
+	}*/
 }
