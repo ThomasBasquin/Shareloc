@@ -22,7 +22,7 @@ export default function BoxGrise({
 
 const styles=new StyleSheet.create({
     view:{
-        margin:"5%",
+        margin:"3%",
         padding:15,
         borderColor: COLOR.bleuFonce,
         backgroundColor:COLOR.grisFonce,

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import BoxGrise from "../components/BoxGrise";
@@ -10,12 +10,22 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { Octicons } from '@expo/vector-icons';
 
 const Accueil = ({ navigation }) => {
   return (
-    <ScrollView style={{ backgroundColor: COLOR.blanc }}>
-      <View style={{ flex: 1, backgroundColor: COLOR.blanc }}>
-        <Title title="Accueil" />
+    <ScrollView style={{ backgroundColor: COLOR.blanc , marginBottom:50}}>
+      <View style={{ justifyContent: "space-between", flexDirection: "row"}}>
+      <Title title="Accueil" />
+      <TouchableOpacity
+                onPressIn={() => {
+                  navigation.navigate("Messagerie")
+                }}
+              >
+      <Octicons name="feed-discussion" size={35} color="black" style={{margin:30}}/></TouchableOpacity>
+      </View>
+      <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
+        
         <MesPoints />
         <Text style={styles.titreMesServices}>Mes services en cours :</Text>
         <MesServices
@@ -34,6 +44,18 @@ const Accueil = ({ navigation }) => {
           date="25/12/2022"
           by="Thomas"
           label="Faire le repas de noêl"
+          score={25}
+        />
+        <MesServices
+          date="15/12/2022"
+          by="Thomas"
+          label="Me faire des bisous"
+          score={25}
+        />
+         <MesServices
+          date="25/12/2022"
+          by="Thomas"
+          label="Me faire des bisous"
           score={25}
         />
       </View>
