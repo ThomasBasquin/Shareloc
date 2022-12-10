@@ -15,44 +15,63 @@ import { Octicons } from '@expo/vector-icons';
 const Accueil = ({ navigation }) => {
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc , marginBottom:50}}>
-      <View style={{ justifyContent: "space-between", flexDirection: "row"}}>
+      <View style={{ justifyContent: "space-between", flexDirection: "row", backgroundColor: COLOR.blanc}}>
       <Title title="Accueil" />
       <TouchableOpacity
                 onPressIn={() => {
                   navigation.navigate("Messagerie")
                 }}
               >
-      <Octicons name="feed-discussion" size={35} color="black" style={{margin:30}}/></TouchableOpacity>
+      <Octicons name="feed-discussion" size={35} color={COLOR.bleuFonce} style={{margin:25}}/></TouchableOpacity>
       </View>
       <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
         
         <MesPoints />
         <Text style={styles.titreMesServices}>Mes services en cours :</Text>
         <MesServices
+        navigation = {navigation}
           date="18/02/2022"
           by="Hugo"
           label="Passez l'aspirateur"
           score={10}
         />
         <MesServices
+        navigation = {navigation}
           date="19/02/2022"
           by="Lucas"
           label="Passez le balais"
           score={12}
         />
         <MesServices
+        navigation = {navigation}
           date="25/12/2022"
           by="Thomas"
           label="Faire le repas de noêl"
           score={25}
         />
         <MesServices
+        navigation = {navigation}
           date="15/12/2022"
           by="Thomas"
           label="Me faire des bisous"
           score={25}
         />
          <MesServices
+          navigation = {navigation}
+          date="25/12/2022"
+          by="Thomas"
+          label="Me faire des bisous"
+          score={25}
+        />
+        <MesServices
+          navigation = {navigation}
+          date="25/12/2022"
+          by="Thomas"
+          label="Me faire des bisous"
+          score={25}
+        />
+        <MesServices
+        navigation = {navigation}
           date="25/12/2022"
           by="Thomas"
           label="Me faire des bisous"
@@ -76,8 +95,9 @@ const MesPoints = () => {
   );
 };
 
-const MesServices = ({ date, by, label, score }) => {
+const MesServices = ({ navigation, date, by, label, score }) => {
   return (
+    
     <View>
       <BoxGrise>
         <View
@@ -95,18 +115,22 @@ const MesServices = ({ date, by, label, score }) => {
             />
             <InfoService date={date} by={by} label={label} />
           </View>
-          <ScoreService points={score} />
+          <ScoreService points={score} navigation={navigation}/>
         </View>
       </BoxGrise>
     </View>
+    
   );
 };
 
-const ScoreService = ({ points }) => {
+const ScoreService = ({ points, navigation }) => {
   return (
-    <Text style={{ fontSize: 21, fontWeight: "600" }}>
+    <Text style={{ fontSize: 21, fontWeight: "600"}}>
       {points} pts <FontAwesome name="star" size={24} color={COLOR.jaune} />
-      <Entypo name="chevron-right" size={30} color="black" />
+      <TouchableOpacity
+    onPressIn={() => {
+      navigation.navigate("DetailsService")
+    }}><Entypo name="chevron-right" size={35} color={COLOR.bleuFonce} /></TouchableOpacity>
     </Text>
   );
 };

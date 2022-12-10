@@ -8,6 +8,7 @@ import Profil from "./src/screens/Profil";
 import Services from "./src/screens/Services";
 import Authentification from "./src/screens/Authentification";
 import Messagerie from "./src/screens/Messagerie";
+import DetailsService from "./src/screens/DetailsService";
 import Signup from "./src/screens/Signup";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -37,6 +38,11 @@ export default function App() {
           <Stack.Screen
             name="Signup"
             component={Signup}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="DetailsService"
+            component={DetailsService}
             options={{ headerShown: false }}
           />
           <Stack.Screen
