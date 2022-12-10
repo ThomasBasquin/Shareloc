@@ -1,5 +1,5 @@
-import React from "react";
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import React, {useState} from "react";
+import { Text, View, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import { Octicons } from "@expo/vector-icons";
@@ -35,6 +35,7 @@ const DetailsService = ({ route, navigation }) => {
 };
 
 const ContenuDetails = ({ points, date, by }) => {
+    const [modalVisible, setModalVisible] = useState(false);
   return (
     <View>
       <BoxGrise>
