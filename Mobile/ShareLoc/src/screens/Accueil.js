@@ -150,7 +150,7 @@ const ScoreService = ({ points, navigation, date, by, label }) => {
       {points} pts <FontAwesome name="star" size={24} color={COLOR.jaune} />
       <TouchableOpacity
         onPressIn={() => {
-          navigation.navigate("DetailsService", {
+          navigation.navigate("Détails", {
             points: points,
             date: date,
             by: by,
@@ -208,6 +208,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginLeft: 12,
     marginTop: 10,
+    marginBottom : 10
   },
   infoService: {
     fontSize: 15,

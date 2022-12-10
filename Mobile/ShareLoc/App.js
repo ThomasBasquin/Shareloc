@@ -22,7 +22,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.blanc }}>
       <NavigationContainer style={{ flex: 1, backgroundColor: "white" }}>
         <Stack.Navigator initialRouteName="Authentification">
           <Stack.Screen
@@ -41,9 +41,9 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name="DetailsService"
+            name="Détails"
             component={DetailsService}
-            options={{ headerShown: false }}
+            
           />
           <Stack.Screen
             name="Home"
