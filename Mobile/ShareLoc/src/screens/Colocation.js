@@ -1,17 +1,28 @@
 import React from "react";
-import { Text, View, StyleSheet, ScrollView } from "react-native";
+import { Text, View, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import Box from "../components/Box";
 import BoxResume from "../components/BoxResume";
 import { COLOR } from "../constantes/Color";
 import { FontAwesome } from "@expo/vector-icons";
+import { Octicons } from '@expo/vector-icons';
+
 
 const Colocation = ({ navigation }) => {
   return (
     <ScrollView>
     <View style={{ flex: 1, backgroundColor: "white" }}>
-      <Title title="Ma colocation" />
+    <View style={{ justifyContent: "space-between", flexDirection: "row", backgroundColor: COLOR.blanc}}>
+    <Title title="Ma colocation" />
+      <TouchableOpacity
+                onPressIn={() => {
+                  navigation.navigate("Messagerie")
+                }}
+              >
+      <Octicons name="feed-discussion" size={35} color={COLOR.bleuFonce} style={{margin:25}}/></TouchableOpacity>
+      </View>
+      
       <Resume />
       <Participants />
     </View>

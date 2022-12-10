@@ -6,12 +6,13 @@ import { Octicons } from '@expo/vector-icons';
 import {COLOR} from "../constantes/Color"
 
 
-const DetailsService = ({}) => {
+const DetailsService = ({route, navigation}) => {
+    const {points, date, by, label} = route.params;
     return (
         
         <View style={{  backgroundColor: COLOR.blanc}}>
       <Title title="Détails" />
-     
+     <Text></Text>
       </View>
     )
 }
