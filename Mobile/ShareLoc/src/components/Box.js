@@ -23,7 +23,7 @@ export default function Box({
 const styles=new StyleSheet.create({
     view:{
         margin:"5%",
-        padding:15,
+        padding:12,
         borderColor: COLOR.gris,
         backgroundColor:COLOR.blanc,
         borderWidth:1,

@@ -9,7 +9,7 @@ const Services = ({navigation}) => {
         
         <View style={{ flex: 1, backgroundColor: 'white' }}>
             <Title title="Services" />
-            <Ionicons name='md-checkmark-circle' size={32} color='green' />
+            
         </View>
     )
 }
