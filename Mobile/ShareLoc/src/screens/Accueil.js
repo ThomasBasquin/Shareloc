@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   titreMesServices: {
-    fontSize: 20,
+    fontSize: 28,
     fontWeight: "600",
     marginLeft: 12,
     marginTop: 10,

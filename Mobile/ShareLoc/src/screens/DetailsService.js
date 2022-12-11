@@ -45,10 +45,9 @@ const DetailsService = ({ route, navigation }) => {
 const ContenuDetails = ({ points, date, by, pour, label, navigation }) => {
   const [modalVisibility, setModalVisibility] = useState(false);
 
-  const validService = (navigation) =>{
-    
+  const validService = (navigation) => {
     navigation.goBack();
-  }
+  };
 
   return (
     <View>
