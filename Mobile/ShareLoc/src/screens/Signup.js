@@ -33,11 +33,8 @@ const Signup = ({ navigation }) => {
         textContentType="oneTimeCode"
       />
 
-      <ButtonComponent  primary ><Text>Connexion</Text></ButtonComponent>
-      <Button
-        title="Créez"
-        onPress={() => navigation.navigate("Authentification")}
-      />
+      <ButtonComponent  primary onPress={() => navigation.navigate("Authentification")}><Text>Créez</Text></ButtonComponent>
+      
       
     </View>
   );

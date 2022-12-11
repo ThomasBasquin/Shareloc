@@ -25,13 +25,10 @@ const Authentification = ({ navigation }) => {
         textContentType="oneTimeCode"
       />
 
-      <ButtonComponent style={{width:200}} primary>
+      <ButtonComponent style={{width:200}} primary onPress={() => navigation.navigate("Home")}>
         <Text>Connexion</Text>
       </ButtonComponent>
-      <Button
-        title="Authentication"
-        onPress={() => navigation.navigate("Home")}
-      />
+      
       <TouchableOpacity
         
         onPress={() => navigation.navigate("Signup")}
