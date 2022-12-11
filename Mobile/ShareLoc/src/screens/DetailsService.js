@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Text, View, TouchableOpacity, StyleSheet, Modal } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
@@ -10,9 +10,10 @@ import BoxGrise from "../components/BoxGrise";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
+import ModalGeneral from "../components/ModalGeneral";
 
 const DetailsService = ({ route, navigation }) => {
-  const { points, date, by, label } = route.params;
+  const { points, date, by, pour, label } = route.params;
   return (
     <View style={{ backgroundColor: COLOR.blanc, margin: 5, height: "100%" }}>
       <View style={{ flexDirection: "column" }}>
@@ -29,13 +30,26 @@ const DetailsService = ({ route, navigation }) => {
           </BoxResume>
         </View>
       </View>
-      <ContenuDetails points={points} date={date} by={by} />
+      <ContenuDetails
+        points={points}
+        date={date}
+        by={by}
+        pour={pour}
+        label={label}
+        navigation={navigation}
+      />
     </View>
   );
 };
 
-const ContenuDetails = ({ points, date, by }) => {
-    const [modalVisible, setModalVisible] = useState(false);
+const ContenuDetails = ({ points, date, by, pour, label, navigation }) => {
+  const [modalVisibility, setModalVisibility] = useState(false);
+
+  const validService = (navigation) =>{
+    
+    navigation.goBack();
+  }
+
   return (
     <View>
       <BoxGrise>
@@ -65,12 +79,32 @@ const ContenuDetails = ({ points, date, by }) => {
             </View>
             <View style={styles.pour}>
               <Text>Pour</Text>
-              <Text style={styles.for}>Roméo</Text>
+              <Text style={styles.for}>{pour}</Text>
             </View>
           </View>
         </View>
       </BoxGrise>
-      <ButtonComponent ><Text>Valider le service</Text></ButtonComponent>
+      <ButtonComponent onPress={() => setModalVisibility(!modalVisibility)}>
+        <Text>Valider le service</Text>
+      </ButtonComponent>
+      <ModalGeneral visible={modalVisibility}>
+        <Text style={styles.titreModal}>Etes vous sûr ?</Text>
+        <Text style={styles.contenu}>
+          Vous êtes sur le point de confirmer le service suivant :{" "}
+          <Text style={{ fontWeight: "700", fontSize: 20 }}>{label}</Text>
+        </Text>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <ButtonComponent onPress={() => validService(navigation)}>
+            Confirmer
+          </ButtonComponent>
+          <ButtonComponent
+            primary
+            onPress={() => setModalVisibility(!modalVisibility)}
+          >
+            <Text>Annuler</Text>
+          </ButtonComponent>
+        </View>
+      </ModalGeneral>
     </View>
   );
 };
@@ -107,16 +141,24 @@ const styles = new StyleSheet.create({
     marginLeft: 40,
     paddingLeft: 10,
     borderLeftWidth: 1,
-    borderLeftColor : COLOR.jaune,
-    fontWeight: "700"
+    borderLeftColor: COLOR.jaune,
+    fontWeight: "700",
   },
-  for : {
+  for: {
     marginLeft: 28.8,
     paddingLeft: 10,
     borderLeftWidth: 1,
-    borderLeftColor : COLOR.jaune,
-    fontWeight: "700"
-  }
+    borderLeftColor: COLOR.jaune,
+    fontWeight: "700",
+  },
+  titreModal: {
+    fontSize: 26,
+    fontWeight: "bold",
+    marginBottom: 18,
+  },
+  contenu: {
+    fontSize: 15,
+  },
 });
 
 export default DetailsService;

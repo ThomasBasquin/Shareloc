@@ -17,6 +17,7 @@ import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
+import ServiceComponent from "../components/ServiceComponent";
 
 const Accueil = ({ navigation }) => {
   return (
@@ -45,52 +46,59 @@ const Accueil = ({ navigation }) => {
       <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
         <MesPoints />
         <Text style={styles.titreMesServices}>Mes services en cours :</Text>
-        <MesServices
+        <ServiceComponent
           navigation={navigation}
           date="18/02/2022"
           by="Hugo"
+          pour="Roméo"
           label="Passez l'aspirateur"
           score={10}
         />
-        <MesServices
+        <ServiceComponent
           navigation={navigation}
           date="19/02/2022"
           by="Lucas"
+          pour="Roméo"
           label="Passez le balais"
           score={12}
         />
-        <MesServices
+        <ServiceComponent
           navigation={navigation}
           date="25/12/2022"
           by="Thomas"
-          label="Faire le repas de noêl"
+          pour="Roméo"
+          label="Faire le repas de Noël"
           score={25}
         />
-        <MesServices
+        <ServiceComponent
           navigation={navigation}
           date="15/12/2022"
           by="Thomas"
+          pour="Roméo"
           label="Me faire des bisous"
           score={25}
         />
-        <MesServices
+        <ServiceComponent
           navigation={navigation}
           date="25/12/2022"
           by="Thomas"
+          pour="Roméo"
           label="Me faire des bisous"
           score={25}
         />
-        <MesServices
+        <ServiceComponent
           navigation={navigation}
           date="25/12/2022"
           by="Thomas"
+          pour="Roméo"
           label="Me faire des bisous"
           score={25}
         />
-        <MesServices
+        <ServiceComponent
           navigation={navigation}
           date="25/12/2022"
           by="Thomas"
+          pour="Roméo"
           label="Me faire des bisous"
           score={25}
         />
@@ -112,88 +120,6 @@ const MesPoints = () => {
   );
 };
 
-const MesServices = ({ navigation, date, by, label, score }) => {
-  return (
-    <View>
-      <BoxGrise>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <View style={{ alignItems: "center", flexDirection: "row" }}>
-            <MaterialIcons
-              name="cleaning-services"
-              color={COLOR.bleuFonce}
-              size={30}
-            />
-            <InfoService date={date} by={by} label={label} />
-          </View>
-          <ScoreService
-            points={score}
-            navigation={navigation}
-            date={date}
-            by={by}
-            label={label}
-          />
-        </View>
-      </BoxGrise>
-    </View>
-  );
-};
-
-const ScoreService = ({ points, navigation, date, by, label }) => {
-  return (
-    <Text style={{ fontSize: 21, fontWeight: "600" }}>
-      {points} pts <FontAwesome name="star" size={24} color={COLOR.jaune} />
-      <TouchableOpacity
-        onPressIn={() => {
-          navigation.navigate("Détails", {
-            points: points,
-            date: date,
-            by: by,
-            label: label,
-          });
-        }}
-      >
-        <Entypo name="chevron-right" size={35} color={COLOR.bleuFonce} />
-      </TouchableOpacity>
-    </Text>
-  );
-};
-
-const InfoService = ({ date, by, label }) => {
-  return (
-    <View style={{ flexDirection: "column" }}>
-      <Text style={styles.infoService}>{label}</Text>
-      <Text
-        style={{
-          marginLeft: 10,
-          color: COLOR.blanc,
-          padding: 2,
-          fontSize: 12,
-          fontWeight: "",
-        }}
-      >
-        <AntDesign name="calendar" size={16} color={COLOR.blanc} />
-        {date}
-      </Text>
-      <Text
-        style={{
-          marginLeft: 10,
-          color: COLOR.blanc,
-          padding: 2,
-          fontSize: 12,
-        }}
-      >
-        <FontAwesome5 name="people-arrows" size={16} color={COLOR.blanc} />
-        Par {by}
-      </Text>
-    </View>
-  );
-};
 const styles = StyleSheet.create({
   points: {
     fontSize: 20,
@@ -208,7 +134,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     marginLeft: 12,
     marginTop: 10,
-    marginBottom : 10
+    marginBottom: 10,
   },
   infoService: {
     fontSize: 15,
