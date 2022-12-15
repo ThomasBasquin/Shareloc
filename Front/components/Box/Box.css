@@ -1,0 +1,10 @@
+.box {
+    margin: 5%;
+    padding: 12px;
+    border-color: var(--gris);
+    background-color: var(--blanc);
+    border: 1px solid var(--gris);
+    border-radius: 15px;
+    box-shadow: inset 0px;
+    elevation: 10,
+}

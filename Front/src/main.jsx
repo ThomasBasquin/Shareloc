@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import Authentification from "../route/Authentification/Authentification";
-import Colocation from "../route/Authentification/Colocation";
+import Colocation from "../route/Colocation/Colocation";
 import Compte from "../route/Compte/Compte";
 import Service from "../route/Services/Services";
 import Accueil from "../route/Accueil/Accueil";
