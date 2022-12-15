@@ -80,24 +80,24 @@ const InfoService = ({ date, by, label }) => {
       <Text
         style={{
           marginLeft: 10,
-          color: COLOR.blanc,
+          color: COLOR.bleuFonce,
           padding: 2,
           fontSize: 12,
           fontWeight: "",
         }}
       >
-        <AntDesign name="calendar" size={16} color={COLOR.blanc} />
+        <AntDesign name="calendar" size={16} color={COLOR.bleuFonce} />
         {date}
       </Text>
       <Text
         style={{
           marginLeft: 10,
-          color: COLOR.blanc,
+          color: COLOR.bleuFonceanc,
           padding: 2,
           fontSize: 12,
         }}
       >
-        <FontAwesome5 name="people-arrows" size={16} color={COLOR.blanc} />
+        <FontAwesome5 name="people-arrows" size={16} color={COLOR.bleuFonce} />
         Par {by}
       </Text>
     </View>
@@ -120,9 +120,9 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   infoService: {
-    fontSize: 15,
+    fontSize: 18,
     marginLeft: 10,
-    fontWeight: "600",
+    fontWeight: "800",
   },
 });
 

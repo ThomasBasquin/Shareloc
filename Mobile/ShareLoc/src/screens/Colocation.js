@@ -113,6 +113,7 @@ const Participants = () => {
   return (
     <View style={styles.participants}>
       <Text style={styles.titreParticipants}>Participants</Text>
+      <Box>
       <View style={styles.itemParticipants}>
         <Text style={styles.prenom}>
           Roméo <Text style={styles.role}>(créateur)</Text>
@@ -143,6 +144,7 @@ const Participants = () => {
         </Text>
         <Text style={styles.nbPoints}>0 <Text style={{color : COLOR.jaune}}>pts</Text></Text>
       </View>
+      </Box>
     </View>
   );
 };
@@ -171,7 +173,7 @@ const styles = new StyleSheet.create({
     fontSize: 25,
     fontWeight: "800",
     color: COLOR.bleuFonce,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   prenom: {
     fontSize: 19,
