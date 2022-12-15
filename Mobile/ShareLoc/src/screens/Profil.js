@@ -9,13 +9,16 @@ import {
   Image,
   SafeAreaView,
   ScrollView,
+  Modal,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import ButtonComponent from "../components/ButtonComponent";
+import ModalGeneral from "../components/ModalGeneral";
 import { COLOR } from "../constantes/Color";
 
 const Profil = ({ navigation }) => {
+  const [modalVisibility, setModalVisibility] = useState(false);
   const [Nom, setNom] = useState("Basquin");
   const [Prenom, setPrenom] = useState("Thomas");
   const [Email, setEmail] = useState("thomas.basquin2@gmail.com");
@@ -26,6 +29,14 @@ const Profil = ({ navigation }) => {
     setShowPassword(!showPassword);
   };
 
+  const annuler = () => {
+    setModalVisibility(!modalVisibility);
+  };
+
+  const valider = () => {
+    setModalVisibility(!modalVisibility);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "white" }}>
       <ScrollView>
@@ -33,70 +44,110 @@ const Profil = ({ navigation }) => {
           <Title title="Profil" />
 
           <View style={styles.view}>
-            <Text style={styles.label}>Nom :</Text>
-            <TextInput style={styles.input} value={Nom} onChangeText={setNom} />
-            <Text style={styles.label}>Prénom :</Text>
-            <TextInput
-              style={styles.input}
-              value={Prenom}
-              onChangeText={setPrenom}
-            />
-            <Text style={styles.label}>Email :</Text>
-            <TextInput
-              style={styles.input}
-              value={Email}
-              onChangeText={setEmail}
-            />
-            <Text style={styles.label}>Mot de passe :</Text>
-            <View
+            <ButtonComponent
               style={{
-                flexDirection: "row",
-                alignItems: "center",
-                borderWidth: 1,
-                width: 275,
-                height: 40,
-                marginLeft: 15,
-                marginTop: 7,
-                marginBottom: 15,
-                borderColor: COLOR.grisFonce,
-                borderRadius: 15,
+                width: 180,
+                top: -123.5,
+                marginLeft: 140,
+              }}
+              red
+              onPressIn={() => {
+                setModalVisibility(!modalVisibility);
               }}
             >
+              <Text style={{ color: "white" }}>Quitter ma colocation</Text>
+            </ButtonComponent>
+
+            <View style={{ bottom: 0 }}>
+              <Text style={[styles.label]}>Nom :</Text>
               <TextInput
-                style={[
-                  styles.input,
-                  {
-                    width: 240,
-                    borderWidth: 0,
-                    margin: 0,
-                    padding: 0,
-                    marginBottom: 7,
-                    marginLeft: 10,
-                  },
-                ]}
-                value={Password}
-                onChangeText={setPassword}
-                secureTextEntry={!showPassword ? true : false}
-                textContentType="oneTimeCode"
-              ></TextInput>
-              <TouchableOpacity
-                onPressIn={() => {
-                  handleShowPassword();
+                style={styles.input}
+                value={Nom}
+                onChangeText={setNom}
+              />
+              <Text style={styles.label}>Prénom :</Text>
+              <TextInput
+                style={styles.input}
+                value={Prenom}
+                onChangeText={setPrenom}
+              />
+              <Text style={styles.label}>Email :</Text>
+              <TextInput
+                style={styles.input}
+                value={Email}
+                onChangeText={setEmail}
+              />
+              <Text style={styles.label}>Mot de passe :</Text>
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  borderWidth: 1,
+                  width: 275,
+                  height: 40,
+                  marginLeft: 15,
+                  marginTop: 7,
+                  marginBottom: 15,
+                  borderColor: COLOR.grisFonce,
+                  borderRadius: 15,
                 }}
               >
-                <Ionicons
-                  name={!showPassword ? "eye-off" : "eye"}
-                  size={24}
-                  color={COLOR.grisFonce}
-                  style={{ right: 12, marginBottom: 0 }}
-                />
-              </TouchableOpacity>
+                <TextInput
+                  style={[
+                    styles.input,
+                    {
+                      width: 240,
+                      borderWidth: 0,
+                      margin: 0,
+                      padding: 0,
+                      marginBottom: 7,
+                      marginLeft: 10,
+                    },
+                  ]}
+                  value={Password}
+                  onChangeText={setPassword}
+                  secureTextEntry={!showPassword ? true : false}
+                  textContentType="oneTimeCode"
+                ></TextInput>
+                <TouchableOpacity
+                  onPressIn={() => {
+                    handleShowPassword();
+                  }}
+                >
+                  <Ionicons
+                    name={!showPassword ? "eye-off" : "eye"}
+                    size={24}
+                    color={COLOR.grisFonce}
+                    style={{ right: 12, marginBottom: 0 }}
+                  />
+                </TouchableOpacity>
+              </View>
+
+              <ButtonComponent
+                style={{ width: 230, left: 43, marginTop: 25 }}
+                primary
+              >
+                <Text>Modifier mes informations</Text>
+              </ButtonComponent>
             </View>
-            <ButtonComponent style={{ width: 250 }} primary>
-              <Text>Modifier mes informations</Text>
-            </ButtonComponent>
           </View>
         </View>
+        <ModalGeneral visible={modalVisibility}>
+          <Text style={styles.titreModal}>
+            Voulez-vous vraiment quitter votre collocation ?
+          </Text>
+
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <ButtonComponent style={{ width: 55 }} onPress={() => valider()}>
+              Oui
+            </ButtonComponent>
+            <ButtonComponent primary onPress={() => annuler()}>
+              <Text>Annuler</Text>
+            </ButtonComponent>
+          </View>
+        </ModalGeneral>
       </ScrollView>
     </SafeAreaView>
   );
@@ -135,5 +186,11 @@ const styles = StyleSheet.create({
     color: COLOR.bleuFonce,
     fontWeight: "500",
     fontSize: 14,
+  },
+  titreModal: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 16,
+    textAlign: "center",
   },
 });

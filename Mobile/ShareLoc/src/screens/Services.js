@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StyleSheet,
-  TextInput
+  TextInput,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
@@ -22,14 +22,13 @@ const Services = ({ navigation }) => {
   const [beneficiaire, setBeneficiaire] = useState("");
   const [nbPoints, setNbPoints] = useState(0);
 
-
   const annuler = () => {
     setModalVisibility(!modalVisibility);
     setActionnaire("");
     setNbPoints(0);
     setBeneficiaire("");
     setNomService("");
-  }
+  };
 
   const valider = () => {
     setModalVisibility(!modalVisibility);
@@ -37,7 +36,7 @@ const Services = ({ navigation }) => {
     setNbPoints(0);
     setBeneficiaire("");
     setNomService("");
-  }
+  };
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
       <View
@@ -71,40 +70,35 @@ const Services = ({ navigation }) => {
       <ServiceBeneficiaire navigation={navigation} />
       <ServiceFinis navigation={navigation} />
       <ModalGeneral visible={modalVisibility}>
-      <Text style={styles.titreModal}>Créez un service</Text>
-      <TextInput
-        style={styles.input}
-        value={nomService}
-        placeholder="Nom du service"
-        onChangeText={setNomService}
-      />
-      <TextInput
-        style={styles.input}
-        value={actionnaire}
-        placeholder="Actionnaire"
-        onChangeText={setActionnaire}
-      />
-      <TextInput
-        style={styles.input}
-        value={beneficiaire}
-        placeholder="Bénéficiaire"
-        onChangeText={setBeneficiaire}
-      />
-      <TextInput
-        style={styles.input}
-        value={nbPoints}
-        placeholder="Nombre de points"
-        onChangeText={setNbPoints}
-        keyboardType="numeric"
-      />
+        <Text style={styles.titreModal}>Créez un service</Text>
+        <TextInput
+          style={styles.input}
+          value={nomService}
+          placeholder="Nom du service"
+          onChangeText={setNomService}
+        />
+        <TextInput
+          style={styles.input}
+          value={actionnaire}
+          placeholder="Actionnaire"
+          onChangeText={setActionnaire}
+        />
+        <TextInput
+          style={styles.input}
+          value={beneficiaire}
+          placeholder="Bénéficiaire"
+          onChangeText={setBeneficiaire}
+        />
+        <TextInput
+          style={styles.input}
+          value={nbPoints}
+          placeholder="Nombre de points"
+          onChangeText={setNbPoints}
+          keyboardType="numeric"
+        />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <ButtonComponent onPress={() => valider()}>
-            Créer
-          </ButtonComponent>
-          <ButtonComponent
-            primary
-            onPress={() => annuler()}
-          >
+          <ButtonComponent onPress={() => valider()}>Créer</ButtonComponent>
+          <ButtonComponent primary onPress={() => annuler()}>
             <Text>Annuler</Text>
           </ButtonComponent>
         </View>
@@ -226,12 +220,12 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width : 200,
+    width: 200,
     margin: 5,
     borderWidth: 1,
     padding: 10,
     borderRadius: 15,
-    marginHorizontal:40
+    marginHorizontal: 40,
   },
 });
 
