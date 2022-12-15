@@ -23,7 +23,7 @@ const Profil = ({ navigation }) => {
   const [Prenom, setPrenom] = useState("Thomas");
   const [Email, setEmail] = useState("thomas.basquin2@gmail.com");
   const [number, setNumber] = useState("06 12 34 56 78");
-  const [Password, setPassword] = useState("Mpeg-f1973");
+  const [Password, setPassword] = useState("PetitCoquin");
   const [showPassword, setShowPassword] = useState(false);
   const [editable, setEditable] = useState(false);
 
