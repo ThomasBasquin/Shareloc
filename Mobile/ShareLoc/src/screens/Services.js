@@ -66,8 +66,9 @@ const Services = ({ navigation }) => {
       >
         <Text>Créer un service</Text>
       </ButtonComponent>
-      <ServiceActionnaire navigation={navigation} />
       <ServiceBeneficiaire navigation={navigation} />
+      <ServiceActionnaire navigation={navigation} />
+      
       <ServiceFinis navigation={navigation} />
       <ModalGeneral visible={modalVisibility}>
         <Text style={styles.titreModal}>Créez un service</Text>
@@ -145,7 +146,7 @@ const ServiceBeneficiaire = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
       <Text style={styles.titrePartie}>
-        Mes services en tant que bénéficiaire :
+        Mes services en cours :
       </Text>
       <ServiceComponent
         navigation={navigation}

@@ -184,7 +184,7 @@ const ServicesEnCours = ({ navigation }) => {
         score={10}
       />
       
-      <ButtonComponent primary onPress={()=> {navigation.navigate("Services")}}>Voir tout</ButtonComponent>
+      <ButtonComponent primary onPress={()=> {navigation.navigate("ServicesColocation")}}>Voir tout</ButtonComponent>
     
     </View>
   );

@@ -9,6 +9,7 @@ import Services from "./src/screens/Services";
 import Authentification from "./src/screens/Authentification";
 import Messagerie from "./src/screens/Messagerie";
 import DetailsService from "./src/screens/DetailsService";
+import ServicesColocation from "./src/screens/ServicesColocation";
 import Signup from "./src/screens/Signup";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -48,6 +49,11 @@ export default function App() {
           <Stack.Screen
             name="Home"
             component={Home}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ServicesColocation"
+            component={ServicesColocation}
             options={{ headerShown: false }}
           />
         </Stack.Navigator>
