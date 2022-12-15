@@ -7,11 +7,11 @@ import {
   Navigate,
 } from "react-router-dom";
 import "./index.css";
-import Authentification from "../route/Authentification";
-import Colocation from "../route/Colocation";
-import Compte from "../route/Compte";
-import Service from "../route/Service";
-import Accueil from "../route/Accueil";
+import Authentification from "../route/Authentification/Authentification";
+import Colocation from "../route/Colocation/Colocation";
+import Compte from "../route/Compte/Compte";
+import Service from "../route/Services/Services";
+import Accueil from "../route/Accueil/Accueil";
 
 const router = createBrowserRouter([
   {
@@ -41,13 +41,7 @@ const router = createBrowserRouter([
 
 ]);
 
-function Name() {
-  let { name } = useParams();
-  if (name === "pierre") {
-    throw { message: "Je ne vous permets pas!" };
-  }
-  return <span> dear {name}</span>;
-}
+
 
 document.addEventListener("DOMContentLoaded", function (event) {
   //@ts-ignore
