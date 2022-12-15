@@ -22,11 +22,17 @@ const Profil = ({ navigation }) => {
   const [Nom, setNom] = useState("Basquin");
   const [Prenom, setPrenom] = useState("Thomas");
   const [Email, setEmail] = useState("thomas.basquin2@gmail.com");
+  const [number, setNumber] = useState("06 12 34 56 78");
   const [Password, setPassword] = useState("Mpeg-f1973");
   const [showPassword, setShowPassword] = useState(false);
+  const [editable, setEditable] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleEditable = () => {
+    setEditable(!editable);
   };
 
   const annuler = () => {
@@ -51,31 +57,50 @@ const Profil = ({ navigation }) => {
                 marginLeft: 140,
               }}
               red
-              onPressIn={() => {
+              onPress={() => {
                 setModalVisibility(!modalVisibility);
               }}
             >
               <Text style={{ color: "white" }}>Quitter ma colocation</Text>
             </ButtonComponent>
 
-            <View style={{ bottom: 0 }}>
+            <View
+              style={{
+                bottom: 70,
+                elevation: 12,
+                borderRadius: 20,
+                padding: 15,
+                paddingRight: 15,
+                backgroundColor: COLOR.blanc,
+              }}
+            >
               <Text style={[styles.label]}>Nom :</Text>
               <TextInput
                 style={styles.input}
                 value={Nom}
                 onChangeText={setNom}
+                editable={editable ? true : false}
               />
               <Text style={styles.label}>Prénom :</Text>
               <TextInput
                 style={styles.input}
                 value={Prenom}
                 onChangeText={setPrenom}
+                editable={editable ? true : false}
               />
               <Text style={styles.label}>Email :</Text>
               <TextInput
                 style={styles.input}
                 value={Email}
                 onChangeText={setEmail}
+                editable={editable ? true : false}
+              />
+              <Text style={styles.label}>Numéro de portable :</Text>
+              <TextInput
+                style={styles.input}
+                value={number}
+                onChangeText={setNumber}
+                editable={editable ? true : false}
               />
               <Text style={styles.label}>Mot de passe :</Text>
               <View
@@ -85,7 +110,7 @@ const Profil = ({ navigation }) => {
                   borderWidth: 1,
                   width: 275,
                   height: 40,
-                  marginLeft: 15,
+                  marginLeft: 0,
                   marginTop: 7,
                   marginBottom: 15,
                   borderColor: COLOR.grisFonce,
@@ -108,6 +133,7 @@ const Profil = ({ navigation }) => {
                   onChangeText={setPassword}
                   secureTextEntry={!showPassword ? true : false}
                   textContentType="oneTimeCode"
+                  editable={editable ? true : false}
                 ></TextInput>
                 <TouchableOpacity
                   onPressIn={() => {
@@ -122,14 +148,16 @@ const Profil = ({ navigation }) => {
                   />
                 </TouchableOpacity>
               </View>
-
-              <ButtonComponent
-                style={{ width: 230, left: 43, marginTop: 25 }}
-                primary
-              >
-                <Text>Modifier mes informations</Text>
-              </ButtonComponent>
             </View>
+            <ButtonComponent
+              style={{ width: 230, marginLeft: 75, marginTop: -30 }}
+              primary
+              onPress={() => {
+                handleEditable();
+              }}
+            >
+              <Text>Modifier mes informations</Text>
+            </ButtonComponent>
           </View>
         </View>
         <ModalGeneral visible={modalVisibility}>
@@ -162,7 +190,7 @@ const styles = StyleSheet.create({
     marginTop: 35,
     margin: "5%",
     padding: 10,
-    // borderRadius: 15,
+    // borderRadius: 10,
     // elevation: 2.5,
   },
   label: {
@@ -176,7 +204,7 @@ const styles = StyleSheet.create({
     height: 40,
     width: 275,
     margin: 5,
-    marginLeft: 15,
+    marginLeft: 0,
     marginTop: 7,
     marginBottom: 15,
     borderWidth: 1,
