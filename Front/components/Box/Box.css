@@ -1,0 +1,8 @@
+.box {
+    margin:10px;
+    padding: 12px;
+    border-color: var(--gris);
+    background-color: var(--blanc);
+    border: 1px solid var(--gris);
+    border-radius: 15px;
+}

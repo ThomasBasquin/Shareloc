@@ -2,18 +2,18 @@ import React from "react";
 import { Text, StyleSheet, TouchableOpacity } from "react-native";
 import { COLOR } from "../constantes/Color";
 
-
 /**
- * 
+ *
  * @param {*} primary  Permet de choisir le style du bouton , false apr défaut
  * @param children composants enfant
  * @param style
  * @param other props
- * @returns ButtonComponent 
+ * @returns ButtonComponent
  */
 export default function ButtonComponent({
   children,
   primary = false,
+  red = false,
   style,
   ...other
 }) {
@@ -22,13 +22,21 @@ export default function ButtonComponent({
       style={{
         ...styles.pressable,
         ...style,
-        backgroundColor: primary ? COLOR.bleuFonce : COLOR.jaune,
+        backgroundColor: primary
+          ? COLOR.bleuFonce
+          : red
+          ? COLOR.rouge
+          : COLOR.jaune,
+
         color: primary ? COLOR.jaune : COLOR.bleuFonce,
       }}
       {...other}
     >
       <Text
-        style={{...styles.text, color: primary ? COLOR.jaune : COLOR.bleuFonce }}
+        style={{
+          ...styles.text,
+          color: primary ? COLOR.jaune : COLOR.bleuFonce,
+        }}
       >
         {children}
       </Text>
@@ -41,14 +49,14 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     margin: 15,
     padding: 10,
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center"
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   text: {
-    fontSize:16,
+    fontSize: 16,
     fontWeight: "800",
-    width:"100%",
-    textAlign:"center"
+    width: "100%",
+    textAlign: "center",
   },
 });

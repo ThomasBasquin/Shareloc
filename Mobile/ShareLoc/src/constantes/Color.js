@@ -4,4 +4,5 @@ export const COLOR = {
   bleuFonce: "#191641",
   blanc: "#FAFAFA",
   grisFonce: "#ccc",
+  rouge : "#FF4D4D"
 };

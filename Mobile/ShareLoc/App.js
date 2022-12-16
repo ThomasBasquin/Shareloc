@@ -9,6 +9,7 @@ import Services from "./src/screens/Services";
 import Authentification from "./src/screens/Authentification";
 import Messagerie from "./src/screens/Messagerie";
 import DetailsService from "./src/screens/DetailsService";
+import ServicesColocation from "./src/screens/ServicesColocation";
 import Signup from "./src/screens/Signup";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -20,15 +21,16 @@ const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
+
 export default function App() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.blanc }}>
-      <NavigationContainer style={{ flex: 1, backgroundColor: "white" }}>
+      <NavigationContainer  style={{ flex: 1, backgroundColor: "white" }}>
         <Stack.Navigator initialRouteName="Authentification">
           <Stack.Screen
             name="Authentification"
             component={Authentification}
-            options={{ headerShown: false }}
+            options={{ headerShown: false, }}
           />
           <Stack.Screen
             name="Messagerie"
@@ -43,12 +45,32 @@ export default function App() {
           <Stack.Screen
             name="Détails"
             component={DetailsService}
+            options={{ 
+              title: '',
+              headerStyle: {
+              backgroundColor: COLOR.bleuFonce,
+              
+            },
+           
+            headerTintColor: COLOR.blanc }}
             
           />
           <Stack.Screen
             name="Home"
             component={Home}
             options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ServicesColocation"
+            component={ServicesColocation}
+            options={{ 
+              title: '',
+              headerStyle: {
+              backgroundColor: COLOR.bleuFonce,
+              
+            },
+           
+            headerTintColor: COLOR.blanc }}
           />
         </Stack.Navigator>
       </NavigationContainer>
