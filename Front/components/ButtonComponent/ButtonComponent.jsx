@@ -1,7 +1,7 @@
 import React from "react";
-import './ButtonComponent.css';
-import {Link} from "react-router-dom";
-import {COLOR} from "../../constant/color"
+import "./ButtonComponent.css";
+import { Link } from "react-router-dom";
+import { COLOR } from "../../constant/color";
 
 /**
  *
@@ -15,14 +15,13 @@ import {COLOR} from "../../constant/color"
 export default function ButtonComponent({
   children,
   primary = false,
-link,
+  link,
   style,
   ...other
 }) {
-  const route = "/"+link;
   return (
     <Link
-    to={route}
+      to={`/${link}`}
       className="buttonComposant"
       style={{
         ...style,
@@ -32,9 +31,8 @@ link,
       {...other}
     >
       <p
-      className="intituleButton"
+        className="intituleButton"
         style={{
-         
           color: primary ? COLOR.jaune : COLOR.bleuFonce,
         }}
       >
@@ -43,5 +41,3 @@ link,
     </Link>
   );
 }
-
-
