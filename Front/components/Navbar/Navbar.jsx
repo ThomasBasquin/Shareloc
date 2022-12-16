@@ -5,10 +5,8 @@ import { COLOR } from "../../constant/color";
 
 export default function Navbar() {
   return (
-    <div className="navbar">
-      <div className="img">
-        <img src="../../src/assets/logo.png" style={{width:100, height:100}}/>
-      </div>
+    <nav className="navbar">
+      <img className="logo" src="../../src/assets/logo.png" />
       <div className="link">
         <img src="../../src/assets/home-sharp.svg" />
         <Link to="/welcome" className="itemNavbar">
@@ -28,6 +26,6 @@ export default function Navbar() {
           Compte
         </Link>
       </div>
-    </div>
+    </nav>
   );
 }
