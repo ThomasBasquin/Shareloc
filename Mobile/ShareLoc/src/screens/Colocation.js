@@ -14,7 +14,7 @@ import { COLOR } from "../constantes/Color";
 import { FontAwesome } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import ServiceComponent from "../components/ServiceComponent";
-import ButtonComponent from "../components/ButtonComponent"
+import ButtonComponent from "../components/ButtonComponent";
 
 const Colocation = ({ navigation }) => {
   return (
@@ -183,9 +183,15 @@ const ServicesEnCours = ({ navigation }) => {
         label="Passez l'aspirateur"
         score={10}
       />
-      
-      <ButtonComponent primary onPress={()=> {navigation.navigate("ServicesColocation")}}>Voir tout</ButtonComponent>
-    
+
+      <ButtonComponent
+        primary
+        onPress={() => {
+          navigation.navigate("ServicesColocation");
+        }}
+      >
+        Voir tout
+      </ButtonComponent>
     </View>
   );
 };
@@ -237,11 +243,11 @@ const styles = new StyleSheet.create({
   nbPoints: {
     fontSize: 16,
   },
-  voirTout : {
+  voirTout: {
     fontSize: 18,
     fontWeight: "600",
-    margin :10
-  }
+    margin: 10,
+  },
 });
 
 export default Colocation;

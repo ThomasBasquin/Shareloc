@@ -21,21 +21,26 @@ const Tab = createBottomTabNavigator();
 
 const Stack = createNativeStackNavigator();
 
-
 export default function App() {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.blanc }}>
-      <NavigationContainer  style={{ flex: 1, backgroundColor: "white" }}>
+      <NavigationContainer style={{ flex: 1, backgroundColor: "white" }}>
         <Stack.Navigator initialRouteName="Authentification">
           <Stack.Screen
             name="Authentification"
             component={Authentification}
-            options={{ headerShown: false, }}
+            options={{ headerShown: false }}
           />
           <Stack.Screen
             name="Messagerie"
             component={Messagerie}
-            options={{ headerShown: false }}
+            options={{
+              title: "",
+              headerStyle: {
+                backgroundColor: COLOR.bleuFonce,
+              },
+              headerTintColor: COLOR.blanc,
+            }}
           />
           <Stack.Screen
             name="Signup"
@@ -45,15 +50,14 @@ export default function App() {
           <Stack.Screen
             name="Détails"
             component={DetailsService}
-            options={{ 
-              title: '',
+            options={{
+              title: "",
               headerStyle: {
-              backgroundColor: COLOR.bleuFonce,
-              
-            },
-           
-            headerTintColor: COLOR.blanc }}
-            
+                backgroundColor: COLOR.bleuFonce,
+              },
+
+              headerTintColor: COLOR.blanc,
+            }}
           />
           <Stack.Screen
             name="Home"
@@ -63,14 +67,14 @@ export default function App() {
           <Stack.Screen
             name="ServicesColocation"
             component={ServicesColocation}
-            options={{ 
-              title: '',
+            options={{
+              title: "",
               headerStyle: {
-              backgroundColor: COLOR.bleuFonce,
-              
-            },
-           
-            headerTintColor: COLOR.blanc }}
+                backgroundColor: COLOR.bleuFonce,
+              },
+
+              headerTintColor: COLOR.blanc,
+            }}
           />
         </Stack.Navigator>
       </NavigationContainer>

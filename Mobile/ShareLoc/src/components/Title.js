@@ -29,8 +29,8 @@ const styles = new StyleSheet.create({
     backgroundColor: COLOR.jaune,
     width: 40,
     height: 5,
-    left:10,
+    left: 10,
     position: "relative",
-    borderRadius:15,
+    borderRadius: 15,
   },
 });

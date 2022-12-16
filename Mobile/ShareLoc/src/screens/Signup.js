@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 
-import { Text, View, Button, Image, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  Button,
+  Image,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import ButtonComponent from "../components/ButtonComponent";
 
 const Signup = ({ navigation }) => {
@@ -33,9 +41,12 @@ const Signup = ({ navigation }) => {
         textContentType="oneTimeCode"
       />
 
-      <ButtonComponent  primary onPress={() => navigation.navigate("Authentification")}><Text>Créez</Text></ButtonComponent>
-      
-      
+      <ButtonComponent
+        primary
+        onPress={() => navigation.navigate("Authentification")}
+      >
+        <Text>Créez</Text>
+      </ButtonComponent>
     </View>
   );
 };
@@ -54,7 +65,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width : 200,
+    width: 200,
     margin: 5,
     borderWidth: 1,
     padding: 10,

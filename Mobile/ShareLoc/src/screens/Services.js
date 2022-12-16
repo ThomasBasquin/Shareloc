@@ -68,7 +68,7 @@ const Services = ({ navigation }) => {
       </ButtonComponent>
       <ServiceBeneficiaire navigation={navigation} />
       <ServiceActionnaire navigation={navigation} />
-      
+
       <ServiceFinis navigation={navigation} />
       <ModalGeneral visible={modalVisibility}>
         <Text style={styles.titreModal}>Créez un service</Text>
@@ -145,9 +145,7 @@ const ServiceActionnaire = ({ navigation }) => {
 const ServiceBeneficiaire = ({ navigation }) => {
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
-      <Text style={styles.titrePartie}>
-        Mes services en cours :
-      </Text>
+      <Text style={styles.titrePartie}>Mes services en cours :</Text>
       <ServiceComponent
         navigation={navigation}
         date="18/02/2022"
