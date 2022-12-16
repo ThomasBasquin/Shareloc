@@ -19,9 +19,10 @@ link,
   style,
   ...other
 }) {
+  const route = "/"+link;
   return (
     <Link
-    to="/${link}"
+    to={route}
       className="buttonComposant"
       style={{
         ...style,
