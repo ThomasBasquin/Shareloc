@@ -16,11 +16,11 @@ class Collocation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['Collocation:read',"User:read"])]
+    #[Groups(['Collocation:read',"User:read","Invitation:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['Collocation:read',"User:read"])]
+    #[Groups(['Collocation:read',"User:read","Invitation:read"])]
     private ?string $name = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -32,9 +32,13 @@ class Collocation
     #[Groups(['Collocation:read'])]
     private Collection $members;
 
+    #[ORM\OneToMany(mappedBy: 'collocation', targetEntity: Invitation::class, orphanRemoval: true)]
+    private Collection $invitations;
+
     public function __construct()
     {
         $this->members = new ArrayCollection();
+        $this->invitations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -90,6 +94,36 @@ class Collocation
             // set the owning side to null (unless already changed)
             if ($member->getCollocation() === $this) {
                 $member->setCollocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Invitation>
+     */
+    public function getInvitations(): Collection
+    {
+        return $this->invitations;
+    }
+
+    public function addInvitation(Invitation $invitation): self
+    {
+        if (!$this->invitations->contains($invitation)) {
+            $this->invitations->add($invitation);
+            $invitation->setCollocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInvitation(Invitation $invitation): self
+    {
+        if ($this->invitations->removeElement($invitation)) {
+            // set the owning side to null (unless already changed)
+            if ($invitation->getCollocation() === $this) {
+                $invitation->setCollocation(null);
             }
         }
 

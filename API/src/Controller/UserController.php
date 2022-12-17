@@ -12,8 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 
-#[Route('/user', name: 'user_')]
+#[Route('/api/user', name: 'user_')]
 class UserController extends AbstractController
 {
 
@@ -28,7 +31,29 @@ class UserController extends AbstractController
         $this->passwordHasher=$passwordHasher;
     }
 
-    #[Route('/login', name: 'login',methods:["POST"])]
+
+    /**
+     * List the rewards of the specified user.
+     *
+     * This call takes into account all confirmed awards, but not pending or refused awards.
+     *
+     * @Route("/login", methods={"POST"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Returns the rewards of an user",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
+     *     )
+     * )
+     * @OA\Parameter(
+     *     name="order",
+     *     in="query",
+     *     description="The field used to order rewards",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Tag(name="rewards")
+     */
     public function login(Request $request): Response
     {
         $email=$request->toArray()["email"] ?? null;

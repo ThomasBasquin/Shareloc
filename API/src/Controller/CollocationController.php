@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 
-#[Route('/collocation', name: 'collocation_')]
+#[Route('/api/collocation', name: 'collocation_')]
 class CollocationController extends AbstractController
 {
 
@@ -63,21 +63,24 @@ class CollocationController extends AbstractController
         return $this->json($collocation,200,[],["groups" => ["Collocation:read"]]);
     }
 
-    #[Route('/{collocation}/member/{member}', name: 'add_member',methods:["GET"])]
-    public function addMember(Collocation $collocation,User $member): Response
-    {
-        $collocation->addMember($member);
+    // #[Route('/{collocation}/member/{member}', name: 'add_member',methods:["GET"])]
+    // public function addMember(Collocation $collocation,User $member): Response
+    // {
+    //     $collocation->addMember($member);
 
-        $this->collocationRepository->save($collocation,true);
+    //     $this->collocationRepository->save($collocation,true);
         
-        return $this->json($collocation,200,[],["groups" => ["Collocation:read"]]);
-    }
+    //     return $this->json($collocation,200,[],["groups" => ["Collocation:read"]]);
+    // }
 
     #[Route('/{collocation}/member/{member}', name: 'delete_member',methods:["DELETE"])]
     public function deleteMember(Collocation $collocation,User $member): Response
     {
         if($collocation->getManager()===$member){
             throw new BadRequestHttpException("On ne peut pas viré le manager de la collocation");
+        }
+        if($collocation->getManager()==$this->getUser()){
+            throw new BadRequestHttpException("Il n'y a quel le manager qui peut virer des membres");
         }
         $collocation->removeMember($member);
 
