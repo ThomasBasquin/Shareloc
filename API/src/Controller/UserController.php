@@ -33,26 +33,35 @@ class UserController extends AbstractController
 
 
     /**
-     * List the rewards of the specified user.
-     *
-     * This call takes into account all confirmed awards, but not pending or refused awards.
+     * Connexion d'un utilisateur
+     * 
+     * Permet de savoir si la pair email mot de passe est assigné à un utilisateur
      *
      * @Route("/login", methods={"POST"})
      * @OA\Response(
      *     response=200,
-     *     description="Returns the rewards of an user",
+     *     description="Retourne le User connecté",
      *     @OA\JsonContent(
      *        type="array",
      *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
      *     )
      * )
      * @OA\Parameter(
-     *     name="order",
-     *     in="query",
-     *     description="The field used to order rewards",
+     *     name="email",
+     *     in="header",
+     *     required=true,
+     *     description="L'email de l'utilisateur",
      *     @OA\Schema(type="string")
      * )
-     * @OA\Tag(name="rewards")
+     * @OA\Parameter(
+     *     name="password",
+     *     in="header",
+     *     required=true,
+     *     description="Le mot de passe de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * 
+     * @OA\Tag(name="User")
      */
     public function login(Request $request): Response
     {
@@ -76,7 +85,50 @@ class UserController extends AbstractController
         return $this->json($user,201,[],["groups" => ["User:read","Collocation:read"]]);
     }
 
-    #[Route('', name: 'create',methods:["POST"])]
+    /**
+     * Création d'un utilisateur
+     *
+     *
+     * @Route("", methods={"POST"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne l'utilisateur créer",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
+     *     )
+     * )
+     * @OA\Parameter(
+     *     name="email",
+     *     in="header",
+     *     required=true,
+     *     description="L'email de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *     name="password",
+     *     in="header",
+     *     required=true,
+     *     description="Le mot de passe de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *     name="firstname",
+     *     in="header",
+     *     required=true,
+     *     description="Prénom de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *     name="lastname",
+     *     in="header",
+     *     required=true,
+     *     description="Nom de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * 
+     * @OA\Tag(name="User")
+     */
     public function create(Request $request): Response
     {
         $user = $this->serializer->deserialize($request->getContent(), User::class, "json");
@@ -90,13 +142,67 @@ class UserController extends AbstractController
         return $this->json($user,201,[],["groups" => ["User:read","Collocation:read"]]);
     }
 
-    #[Route('/{user}', name: 'get',methods:["GET"])]
+    /**
+     * Récupérer les information d'un utilisateur
+     *
+     *
+     * @Route("/{user}", methods={"GET"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne l'utilisateur choisi",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="User")
+     */
     public function get(User $user): Response
     {   
         return $this->json($user,200,[],["groups" => ["User:read"]]);
     }
 
-    #[Route('/{user}', name: 'update',methods:["PUT"])]
+    /**
+     * Met à jour un utilisateur
+     *
+     *
+     * @Route("/{user}", methods={"PUT"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne l'utilisateur mis à jour",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
+     *     )
+     * )
+     * @OA\Parameter(
+     *     name="email",
+     *     in="header",
+     *     description="L'email de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *     name="password",
+     *     in="header",
+     *     description="Le mot de passe de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *     name="firstname",
+     *     in="header",
+     *     description="Prénom de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *     name="lastname",
+     *     in="header",
+     *     description="Nom de l'utilisateur",
+     *     @OA\Schema(type="string")
+     * )
+     * 
+     * @OA\Tag(name="User")
+     */
     public function update(User $user,Request $request): Response
     {
         $email=$request->toArray()["email"] ?? null;

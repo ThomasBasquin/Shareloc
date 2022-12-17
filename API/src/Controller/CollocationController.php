@@ -13,6 +13,9 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 
 #[Route('/api/collocation', name: 'collocation_')]
 class CollocationController extends AbstractController
@@ -29,7 +32,36 @@ class CollocationController extends AbstractController
         $this->userRepository=$userRepository;
     }
 
-    #[Route('', name: 'create',methods:["POST"])]
+    /**
+     * Créer une collocation
+     *
+     *
+     * @Route("", methods={"POST"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne la collocation crée",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Collocation::class, groups={"Collocation:read"}))
+     *     )
+     * )
+     * @OA\Parameter(
+     *     name="name",
+     *     in="header",
+     *     required=true,
+     *     description="Nom de la collocation",
+     *     @OA\Schema(type="string")
+     * )
+     * @OA\Parameter(
+     *     name="manager",
+     *     in="header",
+     *     required=true,
+     *     description="Id du manager",
+     *     @OA\Schema(type="number")
+     * )
+     * 
+     * @OA\Tag(name="Collocation")
+     */
     public function create(Request $request): Response
     {
         /** @var Collocation */
@@ -48,7 +80,29 @@ class CollocationController extends AbstractController
         return $this->json($collocation,201,[],["groups" => ["Collocation:read"]]);
     }
 
-    #[Route('/{collocation}', name: 'update',methods:["PUT"])]
+    /**
+     * Met à jour une collocation
+     *
+     *
+     * @Route("/{collocation}", methods={"PUT"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne la collocation mis à jour",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Collocation::class, groups={"Collocation:read"}))
+     *     )
+     * )
+     * @OA\Parameter(
+     *     name="name",
+     *     in="header",
+     *     required=true,
+     *     description="Nom de la collocation",
+     *     @OA\Schema(type="string")
+     * )
+     * 
+     * @OA\Tag(name="Collocation")
+     */
     public function update(Collocation $collocation,Request $request): Response
     {
         $members=$request->toArray()["members"] ?? null;
@@ -63,17 +117,23 @@ class CollocationController extends AbstractController
         return $this->json($collocation,200,[],["groups" => ["Collocation:read"]]);
     }
 
-    // #[Route('/{collocation}/member/{member}', name: 'add_member',methods:["GET"])]
-    // public function addMember(Collocation $collocation,User $member): Response
-    // {
-    //     $collocation->addMember($member);
-
-    //     $this->collocationRepository->save($collocation,true);
-        
-    //     return $this->json($collocation,200,[],["groups" => ["Collocation:read"]]);
-    // }
-
-    #[Route('/{collocation}/member/{member}', name: 'delete_member',methods:["DELETE"])]
+    
+    /**
+     * Supprimer un membre de la collocation
+     *
+     *
+     * @Route("/{collocation}/member/{member}", methods={"DELETE"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne la collocation mis à jour",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Collocation::class, groups={"Collocation:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="Collocation")
+     */
     public function deleteMember(Collocation $collocation,User $member): Response
     {
         if($collocation->getManager()===$member){

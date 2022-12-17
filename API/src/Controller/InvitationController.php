@@ -15,7 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 
 #[Route('/api/invitation', name: 'invitation_')]
 class InvitationController extends AbstractController
@@ -34,7 +36,43 @@ class InvitationController extends AbstractController
         $this->invitationRepository = $invitationRepository;
     }
 
-    #[Route('', name: 'create', methods: ["POST"])]
+    /**
+     * Créer une invitation
+     *
+     *
+     * @Route("", methods={"POST"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne l'invitation crée",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Invitation::class, groups={"Invitation:read"}))
+     *     )
+     * )
+     * @OA\Parameter(
+     *     name="collocation",
+     *     in="header",
+     *     required=true,
+     *     description="id de la collocation",
+     *     @OA\Schema(type="number")
+     * )
+     * @OA\Parameter(
+     *     name="sender",
+     *     in="header",
+     *     required=true,
+     *     description="id de l'envoyeur de l'invitation",
+     *     @OA\Schema(type="number")
+     * )
+     * @OA\Parameter(
+     *     name="receipter",
+     *     in="header",
+     *     required=true,
+     *     description="id du récéptionneur de l'invitation",
+     *     @OA\Schema(type="number")
+     * )
+     * 
+     * @OA\Tag(name="Invitation")
+     */
     public function create(Request $request): Response
     {
         /** @var Invitation */
@@ -79,7 +117,32 @@ class InvitationController extends AbstractController
         return $this->json($invitation, 201, [], ["groups" => ["Invitation:read"]]);
     }
 
-    #[Route('/{invitation}/replied', name: 'repliedInvitation', methods: ["PUT"])]
+
+    /**
+     * Modification de la réponse de d'une invitation
+     * 
+     * Si accepted = true, on ajoute automatiquement le membre à sa nouvelle collocation
+     *
+     *
+     * @Route("/{invitation}/replied", methods={"PUT"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne l'invitation crée",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Invitation::class, groups={"Invitation:read"}))
+     *     )
+     * )
+     * @OA\Parameter(
+     *     name="accepted",
+     *     in="header",
+     *     required=true,
+     *     description="Réponse de l'invitation",
+     *     @OA\Schema(type="boolean")
+     * )
+     * 
+     * @OA\Tag(name="Invitation")
+     */
     public function update(Invitation $invitation, Request $request): Response
     {
         $accepted = $request->toArray()["accepted"] ?? null;
