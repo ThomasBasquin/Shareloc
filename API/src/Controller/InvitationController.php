@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Collocation;
 use App\Entity\Invitation;
 use App\Entity\User;
 use App\Repository\CollocationRepository;
@@ -43,7 +42,7 @@ class InvitationController extends AbstractController
      * @Route("", methods={"POST"})
      * @OA\Response(
      *     response=201,
-     *     description="Retourne l'invitation crée",
+     *     description="Retourne l'invitation créee",
      *     @OA\JsonContent(
      *        type="array",
      *        @OA\Items(ref=@Model(type=Invitation::class, groups={"Invitation:read"}))

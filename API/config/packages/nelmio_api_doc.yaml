@@ -3,9 +3,10 @@ nelmio_api_doc:
         info:
             title: SharelocAPI
             description: Web service de l'application ShareLoc créer lors de la licence CDAD 
-            version: 0.0.1
+            version: 0.0.2
     areas: # to filter documented areas
         path_patterns:
-            - ^/api/user # Accepts routes under /api except /api/doc
-            - ^/api/collocation # Accepts routes under /api except /api/doc
-            - ^/api/invitation # Accepts routes under /api except /api/doc
+            - ^/api/user
+            - ^/api/collocation
+            - ^/api/invitation
+            - ^/api/service

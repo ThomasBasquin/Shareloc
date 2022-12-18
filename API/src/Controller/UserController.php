@@ -126,7 +126,6 @@ class UserController extends AbstractController
      *     description="Nom de l'utilisateur",
      *     @OA\Schema(type="string")
      * )
-     * 
      * @OA\Tag(name="User")
      */
     public function create(Request $request): Response
@@ -143,13 +142,13 @@ class UserController extends AbstractController
     }
 
     /**
-     * Récupérer les information d'un utilisateur
+     * Récupère les informations de l'utilisateur connecté
      *
      *
-     * @Route("/{user}", methods={"GET"})
+     * @Route("/whoami", methods={"GET"})
      * @OA\Response(
-     *     response=201,
-     *     description="Retourne l'utilisateur choisi",
+     *     response=200,
+     *     description="Retourne l'utilisateur connecté",
      *     @OA\JsonContent(
      *        type="array",
      *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
@@ -158,9 +157,9 @@ class UserController extends AbstractController
      * 
      * @OA\Tag(name="User")
      */
-    public function get(User $user): Response
+    public function whoami(): Response
     {   
-        return $this->json($user,200,[],["groups" => ["User:read"]]);
+        return $this->json($this->getUser(),200,[],["groups" => ["User:read"]]);
     }
 
     /**

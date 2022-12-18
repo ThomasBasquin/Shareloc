@@ -39,7 +39,7 @@ class CollocationController extends AbstractController
      * @Route("", methods={"POST"})
      * @OA\Response(
      *     response=201,
-     *     description="Retourne la collocation crée",
+     *     description="Retourne la collocation créee",
      *     @OA\JsonContent(
      *        type="array",
      *        @OA\Items(ref=@Model(type=Collocation::class, groups={"Collocation:read"}))
@@ -142,6 +142,7 @@ class CollocationController extends AbstractController
         if($collocation->getManager()==$this->getUser()){
             throw new BadRequestHttpException("Il n'y a quel le manager qui peut virer des membres");
         }
+        $member->resetPoints();
         $collocation->removeMember($member);
 
         $this->collocationRepository->save($collocation,true);
