@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Collocation;
 use App\Entity\User;
+use App\Entity\Message;
 use App\Repository\CollocationRepository;
+use App\Repository\MessageRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +26,14 @@ class CollocationController extends AbstractController
     private SerializerInterface $serializer;
     private CollocationRepository $collocationRepository;
     private UserRepository $userRepository;
+    private MessageRepository $messageRepository;
 
-    public function __construct(SerializerInterface $serializer,CollocationRepository $collocationRepository,UserRepository $userRepository)
+    public function __construct(SerializerInterface $serializer,CollocationRepository $collocationRepository,UserRepository $userRepository,MessageRepository $messageRepository)
     {
         $this->serializer=$serializer;
         $this->collocationRepository=$collocationRepository;
         $this->userRepository=$userRepository;
+        $this->messageRepository=$messageRepository;
     }
 
     /**
@@ -148,5 +152,30 @@ class CollocationController extends AbstractController
         $this->collocationRepository->save($collocation,true);
         
         return $this->json($collocation,200,[],["groups" => ["Collocation:read"]]);
+    }
+
+    /**
+     * Récupérer les message d'une collocation
+     * 
+     * les messages sont triés du plus vieux au plus récent
+     *
+     *
+     * @Route("/{collocation}/messages", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne le message de la collocation",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Message::class, groups={"Message:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="Collocation")
+     */
+    public function getMessageFromCollocation(Collocation $collocation): Response
+    {
+        $messages=$this->messageRepository->findBy(["collocation"=>$collocation],["sendAt"=>"DESC"]);
+        
+        return $this->json($messages,200,[],["groups" => ["Message:read"]]);
     }
 }

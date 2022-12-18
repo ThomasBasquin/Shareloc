@@ -16,11 +16,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read"])]
+    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read","Message:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read"])]
+    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read","Message:read"])]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -33,11 +33,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read"])]
+    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read","Message:read"])]
     private ?string $firstname = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read"])]
+    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read","Message:read"])]
     private ?string $lastname = null;
 
     #[ORM\ManyToOne(inversedBy: 'members')]
@@ -45,7 +45,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?Collocation $collocation = null;
 
     #[ORM\Column]
-    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read"])]
+    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read","Message:read"])]
     private ?int $points = null;
 
     public function __construct()

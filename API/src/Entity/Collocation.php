@@ -16,11 +16,11 @@ class Collocation
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['Collocation:read',"User:read","Invitation:read","Service:read"])]
+    #[Groups(['Collocation:read',"User:read","Invitation:read","Service:read","Message:read"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(['Collocation:read',"User:read","Invitation:read","Service:read"])]
+    #[Groups(['Collocation:read',"User:read","Invitation:read","Service:read","Message:read"])]
     private ?string $name = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
