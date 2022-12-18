@@ -33,59 +33,6 @@ class UserController extends AbstractController
 
 
     /**
-     * Connexion d'un utilisateur
-     * 
-     * Permet de savoir si la pair email mot de passe est assigné à un utilisateur
-     *
-     * @Route("/login", methods={"POST"})
-     * @OA\Response(
-     *     response=200,
-     *     description="Retourne le User connecté",
-     *     @OA\JsonContent(
-     *        type="array",
-     *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
-     *     )
-     * )
-     * @OA\Parameter(
-     *     name="email",
-     *     in="header",
-     *     required=true,
-     *     description="L'email de l'utilisateur",
-     *     @OA\Schema(type="string")
-     * )
-     * @OA\Parameter(
-     *     name="password",
-     *     in="header",
-     *     required=true,
-     *     description="Le mot de passe de l'utilisateur",
-     *     @OA\Schema(type="string")
-     * )
-     * 
-     * @OA\Tag(name="User")
-     */
-    public function login(Request $request): Response
-    {
-        $email=$request->toArray()["email"] ?? null;
-        $password=$request->toArray()["password"] ?? null;
-
-        if(!$email || !$password){
-            throw new BadRequestHttpException("L'email ou le mot de passe n'est pas renseigné");
-        }
-
-        $user=$this->userRepository->findOneBy(["email"=> $email]);
-
-        if(!$user){
-            throw new BadRequestHttpException("Aucun compte pour cette email");
-        }
-
-        if(!$this->passwordHasher->isPasswordValid($user,$password)){
-            throw new BadRequestHttpException("Mauvais mot de passe");
-        }
-
-        return $this->json($user,201,[],["groups" => ["User:read","Collocation:read"]]);
-    }
-
-    /**
      * Création d'un utilisateur
      *
      *
