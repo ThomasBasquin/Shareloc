@@ -23,17 +23,16 @@ class Collocation
     #[Groups(['Collocation:read',"User:read","Invitation:read","Service:read","Message:read"])]
     private ?string $name = null;
 
-    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     #[Groups(['Collocation:read'])]
     private ?User $manager = null;
 
-    #[ORM\OneToMany(mappedBy: 'collocation', targetEntity: User::class)]
-    #[Groups(['Collocation:read'])]
-    private Collection $members;
-
     #[ORM\OneToMany(mappedBy: 'collocation', targetEntity: Invitation::class, orphanRemoval: true)]
     private Collection $invitations;
+
+    #[ORM\OneToMany(mappedBy: 'collocation', targetEntity: User::class,cascade: ['persist'])]
+    private Collection $members;
 
     public function __construct()
     {
@@ -78,28 +77,6 @@ class Collocation
         return $this->members;
     }
 
-    public function addMember(User $member): self
-    {
-        if (!$this->members->contains($member)) {
-            $this->members->add($member);
-            $member->setCollocation($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMember(User $member): self
-    {
-        if ($this->members->removeElement($member)) {
-            // set the owning side to null (unless already changed)
-            if ($member->getCollocation() === $this) {
-                $member->setCollocation(null);
-            }
-        }
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Invitation>
      */
@@ -124,6 +101,28 @@ class Collocation
             // set the owning side to null (unless already changed)
             if ($invitation->getCollocation() === $this) {
                 $invitation->setCollocation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function addMember(User $member): self
+    {
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+            $member->setCollocation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMember(User $member): self
+    {
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getCollocation() === $this) {
+                $member->setCollocation(null);
             }
         }
 

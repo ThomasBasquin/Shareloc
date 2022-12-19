@@ -4,10 +4,19 @@ nelmio_api_doc:
             title: SharelocAPI
             description: Web service de l'application ShareLoc créer lors de la licence CDAD 
             version: 0.0.2
+        components:
+            securitySchemes:
+                Bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+        security:
+            - Bearer: []
     areas: # to filter documented areas
         path_patterns:
             - ^/api/user
             - ^/api/login
+            - ^/api/register
             - ^/api/whoami
             - ^/api/collocation
             - ^/api/invitation

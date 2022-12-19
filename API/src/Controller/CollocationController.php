@@ -76,6 +76,9 @@ class CollocationController extends AbstractController
             if(!$manager){
                 throw new BadRequestHttpException("Aucun utilisateur trouvé pour le manager");
             }
+            if($manager->getCollocation()){
+                throw new BadRequestHttpException("L'utilisateur a déjà une collocation");
+            }
             $collocation->setManager($manager);
             $collocation->addMember($manager);
         }
@@ -143,8 +146,9 @@ class CollocationController extends AbstractController
         if($collocation->getManager()===$member){
             throw new BadRequestHttpException("On ne peut pas viré le manager de la collocation");
         }
+        dump($this->getUser());
         if($collocation->getManager()==$this->getUser()){
-            throw new BadRequestHttpException("Il n'y a quel le manager qui peut virer des membres");
+            throw new BadRequestHttpException("Il n'y a que le manager qui peut virer des membres");
         }
         $member->resetPoints();
         $collocation->removeMember($member);

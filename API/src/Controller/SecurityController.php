@@ -36,14 +36,10 @@ class SecurityController extends AbstractController
      * 
      * Permet de savoir si la pair email mot de passe est assigné à un utilisateur
      *
-     * @Route("/login", methods={"POST"})
+     * @Route("/api/login", methods={"POST"})
      * @OA\Response(
      *     response=200,
-     *     description="Retourne le User connecté",
-     *     @OA\JsonContent(
-     *        type="array",
-     *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
-     *     )
+     *     description="Retourne un jwt Token dans le format {token:'jwt token'}",
      * )
      * @OA\Parameter(
      *     name="email",
@@ -60,7 +56,8 @@ class SecurityController extends AbstractController
      *     @OA\Schema(type="string")
      * )
      * 
-     * @OA\Tag(name="User")
+     * @OA\Tag(name="Auth")
+     * @Security()
      */
     public function login(Request $request): Response
     {
@@ -125,7 +122,8 @@ class SecurityController extends AbstractController
      *     description="Nom de l'utilisateur",
      *     @OA\Schema(type="string")
      * )
-     * @OA\Tag(name="User")
+     * @OA\Tag(name="Auth")
+     * @Security()
      */
     public function create(Request $request): Response
     {

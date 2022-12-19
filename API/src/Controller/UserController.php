@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\CollocationRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,13 +23,15 @@ class UserController extends AbstractController
 
     private SerializerInterface $serializer;
     private UserRepository $userRepository;
+    private CollocationRepository $collocationRepository;
     private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(SerializerInterface $serializer,UserRepository $userRepository,UserPasswordHasherInterface $passwordHasher)
+    public function __construct(SerializerInterface $serializer, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher,CollocationRepository $collocationRepository)
     {
-        $this->serializer=$serializer;
-        $this->userRepository=$userRepository;
-        $this->passwordHasher=$passwordHasher;
+        $this->serializer = $serializer;
+        $this->userRepository = $userRepository;
+        $this->passwordHasher = $passwordHasher;
+        $this->collocationRepository = $collocationRepository;
     }
 
     /**
@@ -48,8 +51,84 @@ class UserController extends AbstractController
      * @OA\Tag(name="User")
      */
     public function whoami(): Response
-    {   
-        return $this->json($this->getUser(),200,[],["groups" => ["User:read"]]);
+    {
+        return $this->json($this->getUser(), 200, [], ["groups" => ["User:read"]]);
+    }
+
+    // /**
+    //  * Permet à l'utilisateur de quitter la collocation
+    //  *
+    //  *
+    //  * @Route("/{user}/leaveCollocation", methods={"GET"})
+    //  * @OA\Response(
+    //  *     response=200,
+    //  *     description="Retourne l'utilisateur donné",
+    //  *     @OA\JsonContent(
+    //  *        type="array",
+    //  *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
+    //  *     )
+    //  * )
+    //  * 
+    //  * @OA\Tag(name="User")
+    //  */
+    // public function leaveColocation(User $user): Response
+    // {
+    //     $collocation=$user->getCollocation() ?? null;
+    //     if(!$collocation){
+    //         throw new BadRequestHttpException("L'utilisateur n'appartient à aucune collocation");
+    //     }
+    //     if($collocation->getManager()==$user){
+    //         throw new BadRequestHttpException("Le manager ne peux pas quitter la collocation");
+    //     }
+
+    //     $collocation->removeMember($user);
+    //     $this->collocationRepository->save($collocation);
+
+    //     return $this->json($user, 200, [], ["groups" => ["User:read"]]);
+    // }
+
+        /**
+     * Récupère les informations de l'utilisateur
+     *
+     *
+     * @Route("/{user}", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne l'utilisateur donné",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="User")
+     */
+    public function get(User $user): Response
+    {
+        return $this->json($user, 200, [], ["groups" => ["User:read"]]);
+    }
+
+    /**
+     * Récupère le total de points de l'utilisateur donné
+     *
+     *
+     * @Route("/{user}/points", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne le nombre de point de l'utilisateur donné",
+     *     @OA\JsonContent(
+     *          @OA\Property(
+     *              property="points",
+     *              type="number",
+     *              example=""
+     *           )
+     *     )
+     * )
+     * @OA\Tag(name="User")
+     */
+    public function getPoints(User $user, Request $request): Response
+    {
+        return $this->json(["points" => $user->getPoints()]);
     }
 
     /**
@@ -92,23 +171,23 @@ class UserController extends AbstractController
      * 
      * @OA\Tag(name="User")
      */
-    public function update(User $user,Request $request): Response
+    public function update(User $user, Request $request): Response
     {
-        $email=$request->toArray()["email"] ?? null;
-        if($email){
+        $email = $request->toArray()["email"] ?? null;
+        if ($email) {
             throw new BadRequestHttpException("L'email ne peut pas être modifié");
         }
         $this->serializer->deserialize($request->getContent(), User::class, "json", ["groups" => ["User:read"], AbstractNormalizer::OBJECT_TO_POPULATE => $user]);
-        $password=$request->toArray()["password"] ?? null;
-        if($password){
+        $password = $request->toArray()["password"] ?? null;
+        if ($password) {
             $hashedPassword = $this->passwordHasher->hashPassword(
                 $user,
                 $password
             );
             $user->setPassword($hashedPassword);
         }
-        $this->userRepository->save($user,true);
-        
-        return $this->json($user,200,[],["groups" => ["User:read","Collocation:read"]]);
+        $this->userRepository->save($user, true);
+
+        return $this->json($user, 200, [], ["groups" => ["User:read", "Collocation:read"]]);
     }
 }

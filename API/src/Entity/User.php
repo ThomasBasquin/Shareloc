@@ -40,13 +40,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read","Message:read"])]
     private ?string $lastname = null;
 
-    #[ORM\ManyToOne(inversedBy: 'members')]
-    #[Groups(['User:read'])]
-    private ?Collocation $collocation = null;
-
     #[ORM\Column]
-    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read","Message:read"])]
     private ?int $points = null;
+
+    #[ORM\ManyToOne(inversedBy: 'members',cascade: ['persist'])]
+    #[Groups(['User:read',"Invitation:read","Service:read","Message:read"])]
+    private ?Collocation $collocation = null;
 
     public function __construct()
     {
@@ -147,23 +146,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCollocation(): ?Collocation
-    {
-        return $this->collocation;
-    }
-
-    public function setCollocation(Collocation $collocation=null): self
-    {
-        // set the owning side of the relation if necessary
-        if ($collocation->getManager() !== $this) {
-            $collocation->setManager($this);
-        }
-
-        $this->collocation = $collocation;
-
-        return $this;
-    }
-
     public function getPoints(): ?int
     {
         return $this->points;
@@ -184,6 +166,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function resetPoints(): self
     {
         $this->points = 0;
+
+        return $this;
+    }
+
+    public function getCollocation(): ?Collocation
+    {
+        return $this->collocation;
+    }
+
+    public function setCollocation(?Collocation $collocation): self
+    {
+        $this->collocation = $collocation;
 
         return $this;
     }
