@@ -31,63 +31,6 @@ class UserController extends AbstractController
         $this->passwordHasher=$passwordHasher;
     }
 
-
-    /**
-     * Création d'un utilisateur
-     *
-     *
-     * @Route("", methods={"POST"})
-     * @OA\Response(
-     *     response=201,
-     *     description="Retourne l'utilisateur créer",
-     *     @OA\JsonContent(
-     *        type="array",
-     *        @OA\Items(ref=@Model(type=User::class, groups={"User:read"}))
-     *     )
-     * )
-     * @OA\Parameter(
-     *     name="email",
-     *     in="header",
-     *     required=true,
-     *     description="L'email de l'utilisateur",
-     *     @OA\Schema(type="string")
-     * )
-     * @OA\Parameter(
-     *     name="password",
-     *     in="header",
-     *     required=true,
-     *     description="Le mot de passe de l'utilisateur",
-     *     @OA\Schema(type="string")
-     * )
-     * @OA\Parameter(
-     *     name="firstname",
-     *     in="header",
-     *     required=true,
-     *     description="Prénom de l'utilisateur",
-     *     @OA\Schema(type="string")
-     * )
-     * @OA\Parameter(
-     *     name="lastname",
-     *     in="header",
-     *     required=true,
-     *     description="Nom de l'utilisateur",
-     *     @OA\Schema(type="string")
-     * )
-     * @OA\Tag(name="User")
-     */
-    public function create(Request $request): Response
-    {
-        $user = $this->serializer->deserialize($request->getContent(), User::class, "json");
-        $hashedPassword = $this->passwordHasher->hashPassword(
-            $user,
-            $request->toArray()["password"]
-        );
-        $user->setPassword($hashedPassword);
-        $this->userRepository->save($user,true);
-        
-        return $this->json($user,201,[],["groups" => ["User:read","Collocation:read"]]);
-    }
-
     /**
      * Récupère les informations de l'utilisateur connecté
      *
