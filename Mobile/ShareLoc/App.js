@@ -12,7 +12,7 @@ import DetailsService from "./src/screens/DetailsService";
 import ServicesColocation from "./src/screens/ServicesColocation";
 import Signup from "./src/screens/Signup";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -23,7 +23,7 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.blanc }}>
+    <SafeAreaProvider>
       <NavigationContainer style={{ flex: 1, backgroundColor: "white" }}>
         <Stack.Navigator initialRouteName="Authentification">
           <Stack.Screen
@@ -78,7 +78,7 @@ export default function App() {
           />
         </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

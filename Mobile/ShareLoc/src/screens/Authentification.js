@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 import {
   Text,
@@ -10,14 +10,45 @@ import {
   TouchableOpacity,
 } from "react-native";
 import ButtonComponent from "../components/ButtonComponent";
+import useFetch from "../constantes/UseFetch";
+import URLS from "../constantes/Routes";
+import ErrorMessage from "../components/ErrorMessage";
+import { getJWTToken, storeJWTToken } from "../constantes/Fonctions";
 
 const Authentification = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(null);
+
+  useEffect(() => {
+    getJWTToken().then(res=>console.log(res));
+    useFetch(URLS.whoami).then(() => navigation.navigate("Home")).catch(err => console.log(err))
+  }, []);
+
+  function checkLogin(){
+    setIsLoading(true);
+    useFetch(URLS.login,"POST",{email,password})
+    .then(res => {
+      storeJWTToken(res.token);
+      navigation.navigate("Home");
+    })
+    .catch(err =>{
+      if(err.code===401){
+        setError({...err,message:"L'email ou le mot de passe est incorrect"});
+      }else{
+        setError(err);
+      }
+      setEmail("");
+      setPassword("");
+    })
+    .finally(()=>setIsLoading(false));
+  }
 
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/logo.png")} style={styles.image} />
+      {error ? <ErrorMessage text={error.message} /> : null}
       <TextInput
         style={styles.input}
         value={email}
@@ -32,16 +63,15 @@ const Authentification = ({ navigation }) => {
         secureTextEntry={true}
         textContentType="oneTimeCode"
       />
-
       <ButtonComponent
         style={{ width: 200 }}
         primary
-        onPress={() => navigation.navigate("Home")}
+        onPress={checkLogin}
       >
         <Text>Connexion</Text>
       </ButtonComponent>
 
-      <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+      <TouchableOpacity disabled={isLoading} onPress={() => navigation.navigate("Signup")}>
         <Text>Créer un compte</Text>
       </TouchableOpacity>
     </View>
