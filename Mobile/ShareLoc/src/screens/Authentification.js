@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect,useContext } from "react";
 
 import {
   Text,
@@ -13,36 +13,31 @@ import ButtonComponent from "../components/ButtonComponent";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
 import ErrorMessage from "../components/ErrorMessage";
-import { getJWTToken, storeJWTToken } from "../constantes/Fonctions";
+import { AuthContext } from "../Context/AuthContext";
 
 const Authentification = ({ navigation }) => {
+  const {login} = useContext(AuthContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(null);
 
   useEffect(() => {
-    getJWTToken().then(res=>console.log(res));
     useFetch(URLS.whoami).then(() => navigation.navigate("Home")).catch(err => console.log(err))
   }, []);
 
-  function checkLogin(){
+  function loginHandle(){
     setIsLoading(true);
-    useFetch(URLS.login,"POST",{email,password})
-    .then(res => {
-      storeJWTToken(res.token);
-      navigation.navigate("Home");
-    })
+    login(email,password)
     .catch(err =>{
       if(err.code===401){
         setError({...err,message:"L'email ou le mot de passe est incorrect"});
       }else{
         setError(err);
       }
-      setEmail("");
-      setPassword("");
     })
-    .finally(()=>setIsLoading(false));
+    .finally(()=> setIsLoading(false))
   }
 
   return (
@@ -66,7 +61,7 @@ const Authentification = ({ navigation }) => {
       <ButtonComponent
         style={{ width: 200 }}
         primary
-        onPress={checkLogin}
+        onPress={loginHandle}
       >
         <Text>Connexion</Text>
       </ButtonComponent>

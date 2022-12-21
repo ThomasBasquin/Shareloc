@@ -1,23 +1,22 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import {
   Text,
   View,
   TextInput,
   StyleSheet,
-  Pressable,
   TouchableOpacity,
-  Image,
   SafeAreaView,
   ScrollView,
-  Modal,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import ButtonComponent from "../components/ButtonComponent";
 import ModalGeneral from "../components/ModalGeneral";
 import { COLOR } from "../constantes/Color";
+import { AuthContext } from "../Context/AuthContext";
 
 const Profil = ({ navigation }) => {
+  const {logout} = useContext(AuthContext);
   const [modalVisibility, setModalVisibility] = useState(false);
   const [editable, setEditable] = useState(false);
 
@@ -53,7 +52,6 @@ const Profil = ({ navigation }) => {
             >
               <Text style={{ color: "white" }}>Quitter ma colocation</Text>
             </ButtonComponent>
-
             {!editable ? <ShowInfo /> : <EditInfo />}
             <ButtonComponent
               style={{ width: 230, marginLeft: 75, marginTop: -30 }}
@@ -64,6 +62,8 @@ const Profil = ({ navigation }) => {
             >
               <Text>Modifier mes informations</Text>
             </ButtonComponent>
+            <ButtonComponent onPress={logout}>Deconnexion</ButtonComponent>
+
           </View>
         </View>
         <ModalGeneral visible={modalVisibility}>
