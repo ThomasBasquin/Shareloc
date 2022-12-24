@@ -1,28 +1,56 @@
-import React, { useState } from "react";
-
+import React, { useState,useContext } from "react";
 import {
   Text,
   View,
-  Button,
   Image,
   StyleSheet,
   TextInput,
-  TouchableOpacity,
 } from "react-native";
 import ButtonComponent from "../components/ButtonComponent";
+import ErrorMessage from "../components/ErrorMessage";
+import { AuthContext } from "../Context/AuthContext";
 
-const Signup = ({ navigation }) => {
+const Signup = () => {
   const [email, setEmail] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [password, setPassword] = useState("");
+  const [comfirmPassword, setComfirmPassword] = useState("");
+  const [error, setError] = useState(null);
+
+  const {register} = useContext(AuthContext);
+
+  function registerHandle(){
+    if(comfirmPassword != password){
+      setError({message : "Les deux mot de passe ne corresponent pas"});
+      return;
+    }
+    register(email,firstname,lastname,password)
+    .catch(err => setError({message :err.status==409 ? "Cette email a déjà un compte" : "Une erreur est survenue lors de la création de votre compte"}))
+  }
+
 
   return (
     <View style={styles.container}>
       <Image source={require("../../assets/logo.png")} style={styles.image} />
+      {error ? <ErrorMessage text={error.message} /> : null}
       <TextInput
         style={styles.input}
         value={email}
         placeholder="Saisissez votre email"
         onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        value={firstname}
+        placeholder="Saisissez votre prénom"
+        onChangeText={setFirstname}
+      />
+      <TextInput
+        style={styles.input}
+        value={lastname}
+        placeholder="Saisissez votre nom"
+        onChangeText={setLastname}
       />
       <TextInput
         style={styles.input}
@@ -34,16 +62,16 @@ const Signup = ({ navigation }) => {
       />
       <TextInput
         style={styles.input}
-        value={password}
+        value={comfirmPassword}
         placeholder="Confirmez votre mot de passe"
-        onChangeText={setPassword}
+        onChangeText={setComfirmPassword}
         secureTextEntry={true}
         textContentType="oneTimeCode"
       />
 
       <ButtonComponent
         primary
-        onPress={() => navigation.navigate("Authentification")}
+        onPress={registerHandle}
       >
         <Text>Créez</Text>
       </ButtonComponent>

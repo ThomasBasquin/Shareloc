@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import {
   Text,
   View,
@@ -12,14 +12,14 @@ import BoxGrise from "../components/BoxGrise";
 import Box from "../components/Box";
 import { FontAwesome } from "@expo/vector-icons";
 import { COLOR } from "../constantes/Color";
-import { MaterialIcons } from "@expo/vector-icons";
-import { Entypo } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import ServiceComponent from "../components/ServiceComponent";
+import { UserContext } from "../Context/UserContext";
 
 const Accueil = ({ navigation }) => {
+
+  const {user} = useContext(UserContext);
+
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
       <View
