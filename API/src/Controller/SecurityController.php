@@ -14,6 +14,7 @@ use OpenApi\Annotations as OA;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
@@ -127,6 +128,11 @@ class SecurityController extends AbstractController
      */
     public function create(Request $request): Response
     {
+        $email=$request->toArray()["email"] ?? "";
+        $alreadyRegistred=$this->userRepository->findOneBy(["email"=>$email]);
+        if($alreadyRegistred){
+            throw new HttpException("Cette email à déjà un compte",409);
+        }
         $user = $this->serializer->deserialize($request->getContent(), User::class, "json");
         $hashedPassword = $this->passwordHasher->hashPassword(
             $user,
