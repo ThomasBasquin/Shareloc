@@ -131,7 +131,7 @@ class SecurityController extends AbstractController
         $email=$request->toArray()["email"] ?? "";
         $alreadyRegistred=$this->userRepository->findOneBy(["email"=>$email]);
         if($alreadyRegistred){
-            throw new HttpException("Cette email à déjà un compte",409);
+            throw new HttpException(409,"Cette email à déjà un compte");
         }
         $user = $this->serializer->deserialize($request->getContent(), User::class, "json");
         $hashedPassword = $this->passwordHasher->hashPassword(
