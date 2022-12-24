@@ -36,7 +36,7 @@ class SecurityController extends AbstractController
      * 
      * Permet de savoir si la pair email mot de passe est assigné à un utilisateur
      *
-     * @Route("/api/login", methods={"POST"})
+     * @Route("/api/login", methods={"POST"},name="login")
      * @OA\Response(
      *     response=200,
      *     description="Retourne un jwt Token dans le format {token:'jwt token'}",
@@ -78,7 +78,7 @@ class SecurityController extends AbstractController
             throw new BadRequestHttpException("Mauvais mot de passe");
         }
 
-        return $this->json($user,201,[],["groups" => ["User:read","Collocation:read"]]);
+        return $this->json($user,200,[],["groups" => ["User:read","Collocation:read"]]);
     }
 
     /**
@@ -134,7 +134,6 @@ class SecurityController extends AbstractController
         );
         $user->setPassword($hashedPassword);
         $this->userRepository->save($user,true);
-        
         return $this->json($user,201,[],["groups" => ["User:read","Collocation:read"]]);
     }
 }
