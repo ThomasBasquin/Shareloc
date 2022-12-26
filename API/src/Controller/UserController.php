@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\CollocationRepository;
+use App\Repository\ServiceRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -23,15 +24,17 @@ class UserController extends AbstractController
 
     private SerializerInterface $serializer;
     private UserRepository $userRepository;
+    private ServiceRepository $serviceRepository;
     private CollocationRepository $collocationRepository;
     private UserPasswordHasherInterface $passwordHasher;
 
-    public function __construct(SerializerInterface $serializer, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher,CollocationRepository $collocationRepository)
+    public function __construct(SerializerInterface $serializer, UserRepository $userRepository, UserPasswordHasherInterface $passwordHasher,CollocationRepository $collocationRepository,ServiceRepository $serviceRepository)
     {
         $this->serializer = $serializer;
         $this->userRepository = $userRepository;
         $this->passwordHasher = $passwordHasher;
         $this->collocationRepository = $collocationRepository;
+        $this->serviceRepository = $serviceRepository;
     }
 
     /**
@@ -190,4 +193,100 @@ class UserController extends AbstractController
 
         return $this->json($user, 200, [], ["groups" => ["User:read", "Collocation:read"]]);
     }
+
+    /**
+     * Quitte la colocation de l'utilisateur 
+     *
+     *
+     * @Route("/{user}/leaveCollocation", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne OK si l'uitilisateur a bien quitter la colocation",
+     * )
+     * 
+     * @OA\Tag(name="User")
+     */
+    public function leaveColocation(User $user): Response
+    {
+        $collocation=$user->getCollocation() ?? null;
+        if($collocation && $collocation->getManager()==$user){
+            throw new BadRequestHttpException("Le manager ne peut pas quitter la colocation");
+        }
+
+        if($collocation){
+            $collocation->removeMember($user);
+            $this->collocationRepository->save($collocation,true);
+        }
+
+        return $this->json(["message"=>"OK"], 200, [], ["groups" => ["Collocation:read"]]);
+    }
+
+    /**
+     * Récupère les services ou l'utilisateur est bénéficaire
+     *
+     *
+     * @Route("/{user}/services/recipient", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne les services ou l'utilisateur est bénéficaire",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Service::class, groups={"Service:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="User")
+     */
+    public function getServiceRecipient(User $user): Response
+    {
+        $services=$this->serviceRepository->findBy(["recipient"=>$user]);
+
+        return $this->json($services, 200, [], ["groups" => ["Service:read"]]);
+    }
+
+    /**
+     * Récupère les services ou l'utilisateur est actionnaire
+     *
+     *
+     * @Route("/{user}/services/performer", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne les services ou l'utilisateur est actionnaire",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Service::class, groups={"Service:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="User")
+     */
+    public function getServicePerformer(User $user): Response
+    {
+        $services=$this->serviceRepository->findBy(["performer"=>$user]);
+
+        return $this->json($services, 200, [], ["groups" => ["Service:read"]]);
+    }
+
+    // /**
+    //  * Récupère les services validés ou l'utilisateur est actionnaire
+    //  *
+    //  *
+    //  * @Route("/{user}/services/performer/validate", methods={"GET"})
+    //  * @OA\Response(
+    //  *     response=200,
+    //  *     description="Retourne les services validés ou l'utilisateur est actionnaire",
+    //  *     @OA\JsonContent(
+    //  *        type="array",
+    //  *        @OA\Items(ref=@Model(type=Service::class, groups={"Service:read"}))
+    //  *     )
+    //  * )
+    //  * 
+    //  * @OA\Tag(name="User")
+    //  */
+    // public function getServicePerformerValidated(User $user): Response
+    // {
+    //     $services=$this->serviceRepository->findBy(["performer"=>$user]);
+
+    //     return $this->json($services, 200, [], ["groups" => ["Service:read"]]);
+    // }
 }

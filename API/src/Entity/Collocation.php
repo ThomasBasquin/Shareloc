@@ -32,6 +32,7 @@ class Collocation
     private Collection $invitations;
 
     #[ORM\OneToMany(mappedBy: 'collocation', targetEntity: User::class,cascade: ['persist'])]
+    #[Groups(['Collocation:read'])]
     private Collection $members;
 
     public function __construct()

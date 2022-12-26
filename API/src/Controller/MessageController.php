@@ -37,7 +37,7 @@ class MessageController extends AbstractController
     }
 
     /**
-     * Créer une Message
+     * Créer un Message
      *
      *
      * @Route("", methods={"POST"})
@@ -102,5 +102,24 @@ class MessageController extends AbstractController
         $this->messageRepository->save($message,true);
         
         return $this->json($message,201,[],["groups" => ["Message:read"]]);
+    }
+
+    /**
+     * Suppime un Message
+     *
+     *
+     * @Route("/{message}", methods={"DELETE"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne ok",
+     * )
+     * 
+     * @OA\Tag(name="Message")
+     */
+    public function delete(Message $message): Response
+    {
+        $this->messageRepository->remove($message,true);
+        
+        return $this->json(["message"=> "OK"]);
     }
 }

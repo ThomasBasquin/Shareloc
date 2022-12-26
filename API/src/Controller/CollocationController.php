@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Entity\Message;
 use App\Repository\CollocationRepository;
 use App\Repository\MessageRepository;
+use App\Repository\ServiceRepository;
 use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,13 +28,15 @@ class CollocationController extends AbstractController
     private CollocationRepository $collocationRepository;
     private UserRepository $userRepository;
     private MessageRepository $messageRepository;
+    private ServiceRepository $serviceRepository;
 
-    public function __construct(SerializerInterface $serializer,CollocationRepository $collocationRepository,UserRepository $userRepository,MessageRepository $messageRepository)
+    public function __construct(SerializerInterface $serializer,CollocationRepository $collocationRepository,UserRepository $userRepository,MessageRepository $messageRepository,ServiceRepository $serviceRepository)
     {
         $this->serializer=$serializer;
         $this->collocationRepository=$collocationRepository;
         $this->userRepository=$userRepository;
         $this->messageRepository=$messageRepository;
+        $this->serviceRepository=$serviceRepository;
     }
 
     /**
@@ -159,6 +162,27 @@ class CollocationController extends AbstractController
     }
 
     /**
+     * Récupère une collocation
+     *
+     *
+     * @Route("/{collocation}", methods={"GET"})
+     * @OA\Response(
+     *     response=201,
+     *     description="Retourne la collocation",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Collocation::class, groups={"Collocation:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="Collocation")
+     */
+    public function get(Collocation $collocation): Response
+    {        
+        return $this->json($collocation,200,[],["groups" => ["Collocation:read"]]);
+    }
+
+    /**
      * Récupérer les message d'une collocation
      * 
      * les messages sont triés du plus vieux au plus récent
@@ -167,7 +191,7 @@ class CollocationController extends AbstractController
      * @Route("/{collocation}/messages", methods={"GET"})
      * @OA\Response(
      *     response=200,
-     *     description="Retourne le message de la collocation",
+     *     description="Retourne les messages de la collocation",
      *     @OA\JsonContent(
      *        type="array",
      *        @OA\Items(ref=@Model(type=Message::class, groups={"Message:read"}))
@@ -181,5 +205,30 @@ class CollocationController extends AbstractController
         $messages=$this->messageRepository->findBy(["collocation"=>$collocation],["sendAt"=>"DESC"]);
         
         return $this->json($messages,200,[],["groups" => ["Message:read"]]);
+    }
+
+    /**
+     * Récupérer les services d'une collocation
+     * 
+     * les services sont triés par date de création du plus vieux au plus récent
+     *
+     *
+     * @Route("/{collocation}/services", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne les services de la collocation",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Message::class, groups={"Service:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="Collocation")
+     */
+    public function getServices(Collocation $collocation): Response
+    {
+        $services=$this->serviceRepository->findBy(["collocation"=>$collocation],["createdAt"=>"DESC"]);
+        
+        return $this->json($services,200,[],["groups" => ["Service:read"]]);
     }
 }
