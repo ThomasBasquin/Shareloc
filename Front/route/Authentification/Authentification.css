@@ -1,40 +1,51 @@
 .formAuthentification {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bleueFonce)
+  max-height: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bleueFonce);
 }
 
 .imgAuthen {
-    width: 300px;
-    height: 300px;
+  width: 300px;
+  height: 300px;
 }
 
 .form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-family: 'Inter', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Inter", sans-serif;
 }
 
 .formulaire {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
 }
 
 #idEmail,
 #password {
-    height: 40px;
-    width: 400px;
-    margin: 5px;
-    border: 3px solid black;
-    padding: 10px;
-    border-radius: 15px
+  height: 40px;
+  width: 400px;
+  margin: 10px 0;
+  border: 3px solid black;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .titre {
-    font-size: 25px;
-    font-weight: "700";
-    margin-bottom: 10px;
+  font-size: 25px;
+  font-weight: "700";
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  font-weight: "800";
 }

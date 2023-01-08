@@ -2,7 +2,7 @@ import React from "react";
 import { Form, Link, Outlet, useLoaderData, useParams } from "react-router-dom";
 import Box from "../../components/Box/Box";
 import "./Authentification.css";
-import ButtonComponent from "../../components/ButtonComponent/ButtonComponent"
+import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 
 export default function Authentification() {
   return (
@@ -12,9 +12,24 @@ export default function Authentification() {
           <img src="../../src/assets/logo.png" className="imgAuthen" />
           <h1 className="titre">Connectez vous</h1>
           <Form method="get" className="formulaire">
-            <input type="text" name="id" id="idEmail" placeholder="Identifiant"/>
-            <input type="password" name="password" id="password" placeholder="Mot de passe"/>
-            <ButtonComponent primary link='welcome'><p>Connexion</p></ButtonComponent>
+            <input
+              type="text"
+              name="id"
+              id="idEmail"
+              placeholder="Identifiant"
+            />
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="Mot de passe"
+            />
+            <ButtonComponent primary link="welcome">
+              <p>Connexion</p>
+            </ButtonComponent>
+            <Link to="/create-account" className="link">
+              <p>Créer un compte</p>
+            </Link>
           </Form>
         </div>
       </Box>

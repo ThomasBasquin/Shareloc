@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import "./index.css";
 import Authentification from "../route/Authentification/Authentification";
+import CreationCompte from "../route/CreationCompte/CreationCompte";
 import Colocation from "../route/Colocation/Colocation";
 import Compte from "../route/Compte/Compte";
 import Service from "../route/Services/Services";
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Authentification />,
+  },
+  {
+    path: "/create-account",
+    element: <CreationCompte />,
   },
   {
     path: "/welcome",
@@ -38,10 +43,7 @@ const router = createBrowserRouter([
     path: "*",
     element: <Navigate to="/login" />,
   },
-
 ]);
-
-
 
 document.addEventListener("DOMContentLoaded", function (event) {
   //@ts-ignore
