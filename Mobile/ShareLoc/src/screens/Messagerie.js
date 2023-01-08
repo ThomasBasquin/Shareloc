@@ -19,10 +19,13 @@ const Discussion = () => {
     <View style={{ backgroundColor: COLOR.blanc, height: "100%" }}>
       <Box>
         <ScrollView style={{ height: "70%", margin: 5 }}>
-          <View>
+          
             <MessageAutre name="Hugo" hour="12:21"/>
             <MessageAutre name="Hugo" hour="12:21"/>
-          </View>
+          
+          <MessagePerso name="Hugo" hour="12:29"/>
+          <MessagePerso name="Hugo" hour="12:29"/>
+          <MessagePerso name="Hugo" hour="12:29"/>
           <MessagePerso name="Hugo" hour="12:29"/>
         </ScrollView>
       </Box>
@@ -31,7 +34,7 @@ const Discussion = () => {
 };
 
 const MessageAutre = ({name, hour}) => {
-  return (<View>
+  return (<View style={{marginTop: 7}}>
     <NomHeure name={name} hour={hour} />
     <View style={styles.messageAutre}>
       <Text>
@@ -43,20 +46,24 @@ const MessageAutre = ({name, hour}) => {
 };
 
 const MessagePerso = ({name, hour}) => {
-  return (
+  return (<View style={{marginTop: 7, right:0, left : 60}}>
+    <View style={{left :160}}>
+    <NomHeure name={name} hour={hour} />
+    </View>
     <View style={styles.messagePerso}>
-      <NomHeure name={name} hour={hour} />
+      
       <Text style={{color : COLOR.blanc}}>
         TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT
       </Text>
+    </View>
     </View>
   );
 };
 
 const NomHeure = ({name, hour}) => {
   return (
-    <View style={{flexDirection: "row", marginLeft:5}}>
-    <Text>{name}</Text>
+    <View style={{flexDirection: "row", marginLeft:5, marginBottom:5}}>
+    <Text style={{marginRight:5}}>{name}</Text>
     <Text>{hour}</Text>
     </View>
   )

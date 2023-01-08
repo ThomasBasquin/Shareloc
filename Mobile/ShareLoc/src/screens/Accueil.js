@@ -1,4 +1,4 @@
-import React,{useContext} from "react";
+import React,{useContext, useEffect} from "react";
 import {
   Text,
   View,
@@ -15,10 +15,16 @@ import { COLOR } from "../constantes/Color";
 import { Octicons } from "@expo/vector-icons";
 import ServiceComponent from "../components/ServiceComponent";
 import { UserContext } from "../Context/UserContext";
+import useFetch from "../constantes/UseFetch";
+import URLS from "../constantes/Routes";
+import ErrorMessage from "../components/ErrorMessage";
+import { AuthContext } from "../Context/AuthContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Accueil = ({ navigation }) => {
 
   const {user} = useContext(UserContext);
+ 
 
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
@@ -29,6 +35,7 @@ const Accueil = ({ navigation }) => {
           backgroundColor: COLOR.blanc,
         }}
       >
+        
         <Title title="Accueil" />
         <TouchableOpacity
           onPressIn={() => {
