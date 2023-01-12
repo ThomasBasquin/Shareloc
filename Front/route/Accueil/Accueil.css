@@ -5,12 +5,14 @@
 }
 
 .servicesEnCours {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    flex-direction: row;
 }
 
 .titreServicesEnCours {
     font-size: 36px;
     font-weight: 500;
-    margin-left: 12px;
+    margin: 12px;
+    color: var(--blanc)
 }

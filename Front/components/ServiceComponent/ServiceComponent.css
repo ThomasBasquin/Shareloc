@@ -1,5 +1,20 @@
 .infoService {
-    font-size: 30px;
+    font-size: 40px;
     margin-left: 20px;
     font-weight: 800
+}
+
+.chevron {
+    display: flex;
+    flex-direction: row;
+}
+
+.infoDatePersonne {
+    display: flex;
+    flex-direction: row;
+}
+
+.link {
+    text-decoration: none;
+    width: 80%;
 }

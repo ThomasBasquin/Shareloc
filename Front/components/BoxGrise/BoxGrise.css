@@ -1,6 +1,6 @@
 .boxGrise {
     margin: 3%;
-    box-shadow: 0px -5px 10px 0px var(--bleuFonce);
+    box-shadow: 0px 1px 1px 0px var(--bleuFonce);
     padding: 15px;
     background-color: var(--gris);
     border-radius: 15px;

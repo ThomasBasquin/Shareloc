@@ -40,15 +40,16 @@ const MesPoints = () => {
 
 const ServicesEnCours = () => {
   return (<div className="" style={{display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
-    <Box style={{margin : 20, width : 1100}}>
+    <Box style={{margin : 20, width : 1600, backgroundColor : COLOR.bleuFonce}}>
+    <p className="titreServicesEnCours">Mes services en cours :</p>
     <div className="servicesEnCours">
-      <p className="titreServicesEnCours">Mes services en cours :</p>
+      
       <ServiceComponent
           navigation={navigation}
           date="18/02/2022"
           by="Hugo"
           pour="Roméo"
-          label="Passez l'aspirateur"
+          label="Passer l'aspirateur"
           score={10}
         />
         <ServiceComponent
@@ -56,7 +57,7 @@ const ServicesEnCours = () => {
           date="19/02/2022"
           by="Lucas"
           pour="Roméo"
-          label="Passez le balais"
+          label="Embrasser Roméo"
           score={12}
         />
         <ServiceComponent

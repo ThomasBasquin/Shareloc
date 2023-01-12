@@ -3,7 +3,6 @@ import React, { useState,useEffect,useContext } from "react";
 import {
   Text,
   View,
-  Button,
   Image,
   StyleSheet,
   TextInput,
