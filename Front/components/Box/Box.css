@@ -1,8 +1,9 @@
 .box {
-    margin:10px;
+    margin: 10px;
     padding: 12px;
     border-color: var(--gris);
     background-color: var(--blanc);
     border: 1px solid var(--gris);
     border-radius: 15px;
+    box-shadow: 0px -5px 10px 0px var(--bleuFonce);
 }

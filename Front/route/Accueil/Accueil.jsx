@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar"
 import Title from "../../components/Title/Title"
 import BoxGrise from "../../components/BoxGrise/BoxGrise"
+import Box from "../../components/Box/Box"
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { COLOR } from "../../constant/color";
@@ -11,9 +12,12 @@ export default function Accueil() {
   return (
     <>
     <Navbar />
+    <div>
     <div style={{display:'flex', justifyContent: 'space-between'}}>
       <Title title="Accueil" />
       <MesPoints />
+    </div>
+      <ServicesEnCours />
     </div>
       
 
@@ -34,3 +38,13 @@ const MesPoints = () => {
     </BoxGrise>
   );
 };
+
+const ServicesEnCours = () => {
+  return (
+    <Box style={{margin : 20}}>
+    <div className="servicesEnCours">
+      <p className="titreServicesEnCours">Mes services en cours :</p>
+    </div>
+    </Box>
+  )
+}

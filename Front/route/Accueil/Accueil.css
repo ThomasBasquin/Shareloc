@@ -3,3 +3,14 @@
     font-size: 40px;
     font-weight: 700;
 }
+
+.servicesEnCours {
+    display: flex;
+    flex-direction: column;
+}
+
+.titreServicesEnCours {
+    font-size: 36px;
+    font-weight: 500;
+    margin-left: 12px;
+}
