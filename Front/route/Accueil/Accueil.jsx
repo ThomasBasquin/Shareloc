@@ -11,7 +11,7 @@ export default function Accueil() {
   return (
     <>
     <Navbar />
-    <div>
+    <div style={{display : 'flex', justifyContent : 'center', flexDirection : 'column'}}>
     <div style={{display:'flex', justifyContent: 'space-between'}}>
       <Title title="Accueil" />
       <MesPoints />
@@ -39,8 +39,8 @@ const MesPoints = () => {
 };
 
 const ServicesEnCours = () => {
-  return (
-    <Box style={{margin : 20}}>
+  return (<div className="" style={{display : 'flex', justifyContent : 'center', alignItems : 'center'}}>
+    <Box style={{margin : 20, width : 1100}}>
     <div className="servicesEnCours">
       <p className="titreServicesEnCours">Mes services en cours :</p>
       <ServiceComponent
@@ -101,5 +101,6 @@ const ServicesEnCours = () => {
         />
     </div>
     </Box>
+    </div>
   )
 }
