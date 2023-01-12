@@ -1,0 +1,17 @@
+.text {
+    font-size: 60px;
+    color: var(--bleueFonce);
+}
+
+.view {
+    margin: 15px;
+}
+
+.underline {
+    background-color: var(--jaune);
+    width: 60px;
+    height: 6px;
+    left: 10px;
+    position: "relative";
+    border-radius: 15px,
+}
