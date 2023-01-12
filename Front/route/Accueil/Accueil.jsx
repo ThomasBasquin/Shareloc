@@ -45,7 +45,6 @@ const ServicesEnCours = () => {
     <div className="servicesEnCours">
       
       <ServiceComponent
-          navigation={navigation}
           date="18/02/2022"
           by="Hugo"
           pour="Roméo"
@@ -53,7 +52,6 @@ const ServicesEnCours = () => {
           score={10}
         />
         <ServiceComponent
-          navigation={navigation}
           date="19/02/2022"
           by="Lucas"
           pour="Roméo"
@@ -61,7 +59,6 @@ const ServicesEnCours = () => {
           score={12}
         />
         <ServiceComponent
-          navigation={navigation}
           date="25/12/2022"
           by="Thomas"
           pour="Roméo"
@@ -69,7 +66,6 @@ const ServicesEnCours = () => {
           score={25}
         />
         <ServiceComponent
-          navigation={navigation}
           date="15/12/2022"
           by="Thomas"
           pour="Roméo"
@@ -77,7 +73,6 @@ const ServicesEnCours = () => {
           score={25}
         />
         <ServiceComponent
-          navigation={navigation}
           date="25/12/2022"
           by="Thomas"
           pour="Roméo"
@@ -85,7 +80,6 @@ const ServicesEnCours = () => {
           score={25}
         />
         <ServiceComponent
-          navigation={navigation}
           date="25/12/2022"
           by="Thomas"
           pour="Roméo"
@@ -93,7 +87,6 @@ const ServicesEnCours = () => {
           score={25}
         />
         <ServiceComponent
-          navigation={navigation}
           date="25/12/2022"
           by="Thomas"
           pour="Roméo"
