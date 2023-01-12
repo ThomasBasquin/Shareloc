@@ -1,4 +1,4 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   View,
@@ -16,7 +16,7 @@ import { COLOR } from "../constantes/Color";
 import { AuthContext } from "../Context/AuthContext";
 
 const Profil = ({ navigation }) => {
-  const {logout} = useContext(AuthContext);
+  const { logout } = useContext(AuthContext);
   const [modalVisibility, setModalVisibility] = useState(false);
   const [editable, setEditable] = useState(false);
 
@@ -63,7 +63,6 @@ const Profil = ({ navigation }) => {
               <Text>Modifier mes informations</Text>
             </ButtonComponent>
             <ButtonComponent onPress={logout}>Deconnexion</ButtonComponent>
-
           </View>
         </View>
         <ModalGeneral visible={modalVisibility}>
