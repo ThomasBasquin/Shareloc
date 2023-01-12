@@ -23,7 +23,7 @@ export default function Navbar() {
         </Link>
         {/* <img src="../../src/assets/profile-user-svgrepo-com.svg" /> */}
         <Link to="/compte" className="itemNavbar">
-          Compte
+          Profil
         </Link>
       </div>
     </nav>
