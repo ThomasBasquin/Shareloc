@@ -76,6 +76,9 @@ const InfoService = ({ date, by, label }) => {
         Par {by}
       </p>
       </div>
+      <div className="lien">
+        <Link to="/detailsService" style={{textDecoration : 'none'}}>Voir détails</Link>
+      </div>
     </div>
   );
 };

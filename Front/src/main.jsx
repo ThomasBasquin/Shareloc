@@ -13,6 +13,7 @@ import Colocation from "../route/Colocation/Colocation";
 import Compte from "../route/Compte/Compte";
 import Service from "../route/Services/Services";
 import Accueil from "../route/Accueil/Accueil";
+import DetailsService from "../route/DetailsService/DetailsService";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/service",
     element: <Service />,
+  },
+  {
+    path: "/detailsService",
+    element: <DetailsService />,
   },
   {
     path: "*",
