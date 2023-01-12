@@ -31,3 +31,43 @@ button {
   margin-left: 10px;
   cursor: pointer;
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#nav-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.4em;
+  padding: 0.8em 2em;
+  height: 4em;
+}
+
+#button-leave {
+  background-color: rgb(203, 27, 27);
+}
+
+#button-disconnect {
+  background-color: darkred;
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  height: 2.6em;
+}
+
+.button-div {
+  display: flex;
+  margin-top: 1.5em;
+}

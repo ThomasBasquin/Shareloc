@@ -3,12 +3,31 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
+import "./Compte.css";
 
 export default function Profil() {
   return (
     <>
       <Navbar />
-      <Title title="Profil" />
+      <div id="nav-bar">
+        <Title title="Profil" id="title" />
+        <div className="button-div">
+          <div className="button-container">
+            <Link to="/colocation">
+              <button className="button" id="button-leave">
+                Quitter la colocation
+              </button>
+            </Link>
+          </div>
+          <div className="button-container">
+            <Link to="/compte">
+              <button className="button" id="button-disconnect">
+                Déconnexion
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
       <ShowInfo />
       <EditInfo />
     </>
