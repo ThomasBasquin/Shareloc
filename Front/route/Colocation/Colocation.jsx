@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useDebugValue } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Box from "../../components/Box/Box";
 import "./Colocation.css";
 import { COLOR } from "../../constant/color";
 import Title from "../../components/Title/Title";
+import BoxGrise from "../../components/BoxGrise/BoxGrise";
 export default function Colocation() {
   return (
     <>
@@ -12,9 +13,12 @@ export default function Colocation() {
       <div style={{ display: "flex", justifyContent: "space-between"}} >
         <Title title="Colocation" />
         <Resume />
-        
-
       </div>
+      <div style={{ display: "flex", justifyContent: "space-between"}} >
+      <Classement />
+      <ServicesColoc />
+      </div>
+      
     </>
   );
 }
@@ -67,3 +71,38 @@ const Resume = () => {
     </div>
   );
 };
+
+const Classement = () => {
+  return (
+    <BoxGrise style={{width: '50%'}}>
+      <h1 className="titleClassement">Classement :</h1>
+      <ItemClassement prenom="Roméo" role="créateur" points={76}/>
+    </BoxGrise>
+  )
+}
+const ServicesColoc = () => {
+  return (
+    <div>
+      cc
+    </div>
+  )
+}
+
+const ItemClassement = ({ prenom, role, points }) => {
+  return (
+    <div className="itemParticipants">
+      <div style={{display : 'flex', flexDirection : 'row'}}>
+      <p className="prenom">
+        {prenom} 
+      </p>
+      <p className="role">({role})</p>
+      </div>
+      <div style={{display : 'flex', flexDirection : 'row'}}>
+      <p className="nbPoints">
+        {points} 
+      </p>
+      <p style={{ color: COLOR.jaune }}>pts</p>
+      </div>
+    </div>
+  )
+}
