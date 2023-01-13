@@ -7,30 +7,32 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 export default function Authentification() {
   return (
     <div className="formAuthentification">
-      <Box style={{ height: "700px", width: "60%" }}>
+      <Box style={{ height: "80%", width: "45%" }} id="box">
         <div className="form">
           <img src="../../src/assets/logo.png" className="imgAuthen" />
           <h1 className="titre">Connectez vous</h1>
-          <Form method="get" className="formulaire">
-            <input
-              type="text"
-              name="id"
-              id="idEmail"
-              placeholder="Identifiant"
-            />
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Mot de passe"
-            />
-            <ButtonComponent primary link="welcome">
-              <p>Connexion</p>
-            </ButtonComponent>
-            <Link to="/create-account" className="link">
+          <div id="form-div">
+            <Form method="get" className="formulaire" id="form">
+              <input
+                type="text"
+                name="id"
+                id="idEmail"
+                placeholder="Identifiant"
+              />
+              <input
+                type="password"
+                name="password"
+                id="idPassword"
+                placeholder="Mot de passe"
+              />
+              <ButtonComponent primary link="welcome" id="connect-button">
+                <p>Connexion</p>
+              </ButtonComponent>
+            </Form>
+            <Link to="/create-account" className="link" id="create-account">
               <p>Créer un compte</p>
             </Link>
-          </Form>
+          </div>
         </div>
       </Box>
     </div>

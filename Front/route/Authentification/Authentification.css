@@ -1,51 +1,93 @@
+html,
+#root,
+body {
+  height: 100%;
+}
+
+#box {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
 .formAuthentification {
-    max-height: 80%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--bleueFonce);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--bleueFonce);
 }
 
 .imgAuthen {
-    width: 300px;
-    height: 300px;
+  width: 300px;
+  height: 300px;
 }
 
 .form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    font-family: "Inter", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: "Inter", sans-serif;
+}
+
+#form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .formulaire {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+#form-div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#create-account {
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: "800";
+  text-decoration: none;
+  color: black;
 }
 
 #idEmail,
-#password {
-    height: 40px;
-    width: 400px;
-    margin: 10px 0;
-    border: 3px solid black;
-    padding: 10px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+#idPassword {
+  height: 3.5em;
+  width: 35em;
+  margin: 10px 0;
+  border: 3px solid black;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#connect-button {
+  height: 2em;
+  width: 15em;
+  margin: 10px 0;
+  border: 3px solid black;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: var(--bleueFonce);
+  color: white;
+  font-size: 20px;
+  font-weight: "800";
+  text-decoration: none;
 }
 
 .titre {
-    font-size: 25px;
-    font-weight: "700";
-    margin-bottom: 10px;
-    padding: 10px;
-}
-
-.link {
-    text-decoration: none;
-    color: black;
-    font-size: 16px;
-    font-weight: "800";
+  font-size: 25px;
+  font-weight: "700";
+  margin-bottom: 10px;
+  padding: 10px;
 }
