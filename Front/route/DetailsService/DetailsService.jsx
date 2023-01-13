@@ -4,7 +4,7 @@ import Box from "../../components/Box/Box";
 import Navbar from "../../components/Navbar/Navbar";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 
-export default function Authentification() {
+export default function DetailsService() {
   return (
     <div className="">
         <Navbar />

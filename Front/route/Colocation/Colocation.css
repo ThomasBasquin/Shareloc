@@ -1,0 +1,27 @@
+.resume {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.boxResume {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.itemResume {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.titreItemResume {
+    color: var(--jaune);
+    font-size: 30px;
+}
+
+.valeurItemResume {
+    color: var(--jaune);
+    font-size: 25px;
+}
