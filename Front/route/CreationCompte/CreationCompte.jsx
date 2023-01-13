@@ -7,7 +7,7 @@ import Box from "../../components/Box/Box";
 export default function CreationCompte() {
   return (
     <div className="formInscription">
-      <Box style={{ height: "90%", width: "60%" }}>
+      <Box style={{ height: "90%", width: "50%" }}>
         <div className="form">
           <img src="../../src/assets/logo.png" className="imgAuthen" />
           <h1 className="titreInscription">Création de compte</h1>
@@ -56,17 +56,27 @@ export default function CreationCompte() {
                 className="input-alone"
               />
             </div>
-            <input
-              type="password"
-              name="password"
-              id="confirmPassword"
-              placeholder="Confirmer le mot de passe"
-            />
-            <br />
-            <ButtonComponent primary link="login">
-              <p>Créer mon compte</p>
-            </ButtonComponent>
+            <div id="confirm-form" className="div-alone">
+              <label
+                htmlFor="confirmPassword"
+                className="label"
+                id="confirm-label"
+              >
+                Confirmer le mot de passe
+              </label>
+
+              <input
+                type="password"
+                name="password"
+                id="confirmPassword"
+                placeholder="••••••••••"
+                className="input-alone"
+              />
+            </div>
           </Form>
+          <ButtonComponent primary link="login" id="create-button">
+            <p>Créer mon compte</p>
+          </ButtonComponent>
         </div>
       </Box>
     </div>
