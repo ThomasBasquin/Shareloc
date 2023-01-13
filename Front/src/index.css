@@ -1,3 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 :root {
     --bleueFonce: #191641;
     --gris: #e0e0e0;
