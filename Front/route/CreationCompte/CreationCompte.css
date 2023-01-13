@@ -1,5 +1,11 @@
+#root,
+html,
+body {
+  height: 100%;
+}
+
 .formInscription {
-  max-height: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,6 +44,38 @@
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px;
+}
+
+#identity-form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#identity-form input {
+  width: 15em;
+}
+
+#password-label {
+  width: 8rem;
+}
+
+.div-alone {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.input-alone {
+  flex-grow: 1;
+}
+
+.label {
+  font-size: 20px;
+  font-weight: "700";
+  width: 4rem;
+  margin-left: 15px;
+  padding-right: 1em;
 }
 
 /* centrer les label et input au milieu */
