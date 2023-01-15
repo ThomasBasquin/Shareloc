@@ -139,7 +139,7 @@ const ServicesColoc = () => {
   return (
 
     <Box style={{margin : 20, width : "50%",height:600, backgroundColor : COLOR.bleuFonce}}>
-    <p className="titreServicesEncoursColoc">Mes services en cours :</p>
+    <p className="titreServicesEncoursColoc">Les services en cours de la coloc :</p>
     <div className="">
       
       <ServiceComponent
@@ -157,10 +157,11 @@ const ServicesColoc = () => {
           score={12}
         />
         <div style={{display : 'flex', justifyContent : 'center'}}>
-        <Box style={{width:200}}>
-
-         <Link style={{display : 'flex', justifyContent : 'center', fontSize : 20}}> Voir tout </Link>
-        </Box>
+        <Link to="/colocation">
+              <button className="button" id="button-disconnect">
+                Voir tout
+              </button>
+            </Link>
         </div>
        
     </div>

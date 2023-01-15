@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar"
 import Title from "../../components/Title/Title"
@@ -8,12 +8,13 @@ import { COLOR } from "../../constant/color";
 import ServiceComponent from "../../components/ServiceComponent/ServiceComponent";
 import './Accueil.css'
 export default function Accueil() {
+  const [nom, setNom] = useState("Roméo");
   return (
     <>
     <Navbar />
     <div style={{display : 'flex', justifyContent : 'center', flexDirection : 'column'}}>
     <div style={{display:'flex', justifyContent: 'space-between'}}>
-      <Title title="Bonjour, Roméo" />
+      <Title title={"Bonjour, "+nom+"."} />
       <MesPoints />
     </div>
       <ServicesEnCours />
