@@ -6,6 +6,7 @@ import "./Colocation.css";
 import { COLOR } from "../../constant/color";
 import Title from "../../components/Title/Title";
 import BoxGrise from "../../components/BoxGrise/BoxGrise";
+import ServiceComponent from "../../components/ServiceComponent/ServiceComponent";
 export default function Colocation() {
   return (
     <>
@@ -135,7 +136,37 @@ const Classement = () => {
   );
 };
 const ServicesColoc = () => {
-  return <div>cc</div>;
+  return (
+
+    <Box style={{margin : 20, width : "50%",height:600, backgroundColor : COLOR.bleuFonce}}>
+    <p className="titreServicesEncoursColoc">Mes services en cours :</p>
+    <div className="">
+      
+      <ServiceComponent
+          date="18/02/2022"
+          by="Hugo"
+          pour="Roméo"
+          label="Passer l'aspirateur"
+          score={10}
+        />
+        <ServiceComponent
+          date="19/02/2022"
+          by="Lucas"
+          pour="Roméo"
+          label="Embrasser Roméo"
+          score={12}
+        />
+        <div style={{display : 'flex', justifyContent : 'center'}}>
+        <Box style={{width:200}}>
+
+         <Link style={{display : 'flex', justifyContent : 'center', fontSize : 20}}> Voir tout </Link>
+        </Box>
+        </div>
+       
+    </div>
+    </Box>
+  
+  );
 };
 
 const ItemClassement = ({ prenom, role, points }) => {

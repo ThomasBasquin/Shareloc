@@ -33,7 +33,8 @@
     border-radius: 15px;
 }
 
-.titleClassement {
+.titleClassement,
+.titreServicesEncoursColoc {
     font-size: 40px;
     margin: 20px;
     display: flex;
