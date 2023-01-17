@@ -20,6 +20,7 @@ public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $even
 
     $data['data'] = array(
         'roles' => $user->getRoles(),
+        'id' => $user->getId(),
         'email' => $user->getEmail(),
         'lastname' => $user->getLastname(),
         'firstname' => $user->getFirstname(),
