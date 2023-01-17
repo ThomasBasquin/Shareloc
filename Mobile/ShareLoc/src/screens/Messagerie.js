@@ -1,8 +1,9 @@
-import React from "react";
-import { Text, View, ScrollView, StyleSheet } from "react-native";
+import React, {useState} from "react";
+import { Text, View, ScrollView, StyleSheet, TextInput } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import { COLOR } from "../constantes/Color";
+import { FontAwesome } from '@expo/vector-icons';
 import Box from "../components/Box";
 
 const Messagerie = ({ navigation }) => {
@@ -29,6 +30,7 @@ const Discussion = () => {
           <MessagePerso name="Hugo" hour="12:29"/>
         </ScrollView>
       </Box>
+      <AddMessage />
     </View>
   );
 };
@@ -44,6 +46,22 @@ const MessageAutre = ({name, hour}) => {
     </View>
   );
 };
+
+const AddMessage =() => {
+  const [message, setMessage] = useState("");
+  return (
+    <View style={{flexDirection : 'row', padding : 20}}>
+      <TextInput
+      style={styles.input}
+      value={message}
+      placeholder="Nouveau message"
+      onChangeText={setMessage} />
+      <View style={{backgroundColor : COLOR.jaune, padding : 10, borderRadius : "100%", height : 48, marginLeft : 10}}>
+      <FontAwesome name="send" size={24} color="black" />
+    </View>
+    </View>
+  )
+}
 
 const MessagePerso = ({name, hour}) => {
   return (<View style={{marginTop: 7, right:0, left : 60}}>
@@ -85,6 +103,14 @@ const styles = new StyleSheet.create({
     borderBottomLeftRadius: 10,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
+  },
+  input: {
+    height: 40,
+    width: 250,
+    margin: 5,
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 15,
   },
 });
 export default Messagerie;
