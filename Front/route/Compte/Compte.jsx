@@ -7,7 +7,11 @@ import "./Compte.css";
 
 export default function Profil() {
   const { logout } = useContext(AuthContext);
-  const { editable, setEditable } = useState(false);
+  const [editable, setEditable] = useState(false);
+
+  const handleEditable = () => {
+    setEditable(!editable);
+  };
 
   return (
     <>
@@ -29,7 +33,13 @@ export default function Profil() {
         </div>
       </div>
 
-      {!editable ? <ShowInfo /> : <EditInfo />}
+      <div className="parent-div">
+        {!editable ? <ShowInfo /> : <EditInfo />}
+
+        <button id="edit-button" onClick={() => handleEditable()}>
+          {!editable ? "Modifier" : "Enregistrer"}
+        </button>
+      </div>
     </>
   );
 }
