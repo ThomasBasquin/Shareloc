@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 
 import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
+import { AuthContext } from "../../context/AuthContext";
 import "./Compte.css";
 
 export default function Profil() {
+  const {logout} = useContext(AuthContext);
+
   return (
     <>
-      <Navbar />
       <div id="nav-bar">
         <Title title="Profil" id="title" />
         <div className="button-div">
@@ -20,11 +21,9 @@ export default function Profil() {
             </Link>
           </div>
           <div className="button-container">
-            <Link to="/compte">
-              <button className="button" id="button-disconnect">
+              <button onClick={logout} className="button" id="button-disconnect">
                 Déconnexion
               </button>
-            </Link>
           </div>
         </div>
       </div>

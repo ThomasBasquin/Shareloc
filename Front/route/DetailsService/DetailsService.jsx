@@ -17,7 +17,6 @@ export default function DetailsService() {
 
   return (
     <div className="">
-        <Navbar />
         <Title title={label} />
         <div style={{display : 'flex', justifyContent : 'center'}}>
           <BoxGrise style={{width : '70%', height : 400, alignItems : 'center'}}>

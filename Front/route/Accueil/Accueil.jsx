@@ -11,7 +11,6 @@ export default function Accueil() {
   const [nom, setNom] = useState("Roméo");
   return (
     <>
-    <Navbar />
     <div style={{display : 'flex', justifyContent : 'center', flexDirection : 'column'}}>
     <div style={{display:'flex', justifyContent: 'space-between'}}>
       <Title title={"Bonjour, "+nom+"."} />

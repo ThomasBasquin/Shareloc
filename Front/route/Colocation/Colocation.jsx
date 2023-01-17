@@ -10,7 +10,6 @@ import ServiceComponent from "../../components/ServiceComponent/ServiceComponent
 export default function Colocation() {
   return (
     <>
-      <Navbar />
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Title title="Colocation" />
         <Resume />
