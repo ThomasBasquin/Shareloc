@@ -4,6 +4,7 @@ const URLS={
     login:DOMAINS+"/login_check",
     register:DOMAINS+"/register",
     whoami:DOMAINS+"/user/whoami",
+    updateUser:DOMAINS+"/user/{id}",
 }
 
 export default URLS;

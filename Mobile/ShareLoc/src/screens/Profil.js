@@ -14,15 +14,23 @@ import ButtonComponent from "../components/ButtonComponent";
 import ModalGeneral from "../components/ModalGeneral";
 import { COLOR } from "../constantes/Color";
 import { AuthContext } from "../Context/AuthContext";
+import { UserContext } from "../Context/UserContext";
+import useFetch from "../constantes/UseFetch";
+import URLS from "../constantes/Routes";
 
 const Profil = ({ navigation }) => {
   const { logout } = useContext(AuthContext);
   const [modalVisibility, setModalVisibility] = useState(false);
-  const [editable, setEditable] = useState(false);
+  const [editable, setEditable] = useState(true);
 
   const handleEditable = () => {
     setEditable(!editable);
   };
+
+  function updateUser(userInfo){
+    useFetch(URLS.updateUser.replace("{id}",user.id),"PUT",{userInfo})
+    .then(()=>setEditable(false));
+  }
 
   const annuler = () => {
     setModalVisibility(!modalVisibility);
@@ -52,20 +60,7 @@ const Profil = ({ navigation }) => {
             >
               <Text style={{ color: "white" }}>Quitter ma colocation</Text>
             </ButtonComponent>
-            {!editable ? <ShowInfo /> : <EditInfo />}
-            <ButtonComponent
-              style={{ width: 230, marginLeft: 75, marginTop: -30 }}
-              primary
-              onPress={() => {
-                handleEditable();
-              }}
-            >
-              {!editable ? (
-                <Text>Modifier mes informations</Text>
-              ) : (
-                <Text>Valider</Text>
-              )}
-            </ButtonComponent>
+            {!editable ? <ShowInfo /> : <EditInfo setEditable={setEditable} />}
             <ButtonComponent onPress={logout}>Deconnexion</ButtonComponent>
           </View>
         </View>
@@ -91,11 +86,13 @@ const Profil = ({ navigation }) => {
 };
 
 const ShowInfo = () => {
-  const [Nom, setNom] = useState("Basquin");
-  const [Prenom, setPrenom] = useState("Thomas");
-  const [Email, setEmail] = useState("thomas.basquin2@gmail.com");
-  const [number, setNumber] = useState("06 12 34 56 78");
-  const [Password, setPassword] = useState("PetitCoquin");
+
+  const {user} = useContext(UserContext);
+
+  const [lastname, setLastname] = useState(user.lastname);
+  const [firstname, setFirstname] = useState(user.firstname);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState("");
 
   return (
     <View>
@@ -112,29 +109,22 @@ const ShowInfo = () => {
         <Text style={[styles.label]}>Nom :</Text>
         <TextInput
           style={styles.input}
-          value={Nom}
-          onChangeText={setNom}
+          value={lastname}
+          onChangeText={setLastname}
           editable={false}
         />
         <Text style={styles.label}>Prénom :</Text>
         <TextInput
           style={styles.input}
-          value={Prenom}
-          onChangeText={setPrenom}
+          value={firstname}
+          onChangeText={setFirstname}
           editable={false}
         />
         <Text style={styles.label}>Email :</Text>
         <TextInput
           style={styles.input}
-          value={Email}
+          value={email}
           onChangeText={setEmail}
-          editable={false}
-        />
-        <Text style={styles.label}>Numéro de portable :</Text>
-        <TextInput
-          style={styles.input}
-          value={number}
-          onChangeText={setNumber}
           editable={false}
         />
         <Text style={styles.label}>Mot de passe :</Text>
@@ -164,7 +154,7 @@ const ShowInfo = () => {
                 marginLeft: 10,
               },
             ]}
-            value={Password}
+            value={password}
             onChangeText={setPassword}
             secureTextEntry={true}
             textContentType="oneTimeCode"
@@ -176,17 +166,25 @@ const ShowInfo = () => {
   );
 };
 
-const EditInfo = () => {
-  const [Nom, setNom] = useState("Basquin");
-  const [Prenom, setPrenom] = useState("Thomas");
-  const [Email, setEmail] = useState("thomas.basquin2@gmail.com");
-  const [number, setNumber] = useState("06 12 34 56 78");
-  const [Password, setPassword] = useState("PetitCoquin");
+const EditInfo = (setEditable) => {
+  const {user} = useContext(UserContext);
+
+  const [lastname, setLastname] = useState(user.lastname);
+  const [firstname, setFirstname] = useState(user.firstname);
   const [showPassword, setShowPassword] = useState(false);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState("");
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
+
+  function updateUser(){
+    const passwordBody=password.length ? {password}:{};
+    useFetch(URLS.updateUser.replace("{id}",user.id),"PUT",{...passwordBody,lastname,firstname,email})
+    .then(()=>setEditable(false))
+    .catch(e => console.log(e));
+  }
 
   return (
     <View>
@@ -203,30 +201,23 @@ const EditInfo = () => {
         <Text style={[styles.label]}>Nom :</Text>
         <TextInput
           style={styles.input}
-          value={Nom}
-          onChangeText={setNom}
+          value={lastname}
+          onChangeText={setLastname}
           editable={true}
         />
         <Text style={styles.label}>Prénom :</Text>
         <TextInput
           style={styles.input}
-          value={Prenom}
-          onChangeText={setPrenom}
+          value={firstname}
+          onChangeText={setFirstname}
           editable={true}
         />
         <Text style={styles.label}>Email :</Text>
         <TextInput
           style={styles.input}
-          value={Email}
+          value={email}
           onChangeText={setEmail}
-          editable={true}
-        />
-        <Text style={styles.label}>Numéro de portable :</Text>
-        <TextInput
-          style={styles.input}
-          value={number}
-          onChangeText={setNumber}
-          editable={true}
+          editable={false}
         />
         <Text style={styles.label}>Mot de passe :</Text>
         <View
@@ -255,7 +246,7 @@ const EditInfo = () => {
                 marginLeft: 10,
               },
             ]}
-            value={Password}
+            value={password}
             onChangeText={setPassword}
             secureTextEntry={!showPassword ? true : false}
             textContentType="oneTimeCode"
@@ -274,6 +265,7 @@ const EditInfo = () => {
             />
           </TouchableOpacity>
         </View>
+          <ButtonComponent primary onPress={updateUser}>Valider</ButtonComponent>
       </View>
     </View>
   );
