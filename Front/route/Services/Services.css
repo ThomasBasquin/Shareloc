@@ -1,0 +1,22 @@
+.service-div {
+  background-color: rgb(255, 255, 255);
+  padding: 2em;
+  margin: 4em;
+  /* border: 1px solid #ddd; */
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.service-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.service-title {
+  font-size: 1.6em;
+  font-weight: 600;
+  color: #000;
+  margin-bottom: 0.5em;
+}
