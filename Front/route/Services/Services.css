@@ -36,3 +36,18 @@
   flex-direction: row;
   justify-content: space-between;
 }
+
+#right-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#add-service-button {
+  background-color: #f5f5f5;
+  border-radius: 20px;
+  margin-top: 3.5em;
+  padding: 1em;
+  margin-right: 3em;
+}

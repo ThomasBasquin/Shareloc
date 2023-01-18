@@ -15,11 +15,20 @@ export default function Service() {
   const [label, setLabel] = useState("Réparer la porte");
   const [score, setScore] = useState(5);
 
+  const handleAdd = () => {
+    console.log("add");
+  };
+
   return (
     <>
       <div id="header">
         <Title title="Services" />
-        <PointsCounter points={45} />
+        <div id="right-header">
+          <PointsCounter points={80} />
+          <button id="add-service-button" onClick={handleAdd()}>
+            <p>Ajouter un service</p>
+          </button>
+        </div>
       </div>
       <div className="service-div" style={{ backgroundColor: COLOR.bleuFonce }}>
         <div className="service-container">
