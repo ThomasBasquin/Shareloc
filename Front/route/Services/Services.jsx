@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
 import ServiceComponent from "../../components/ServiceComponent/ServiceComponent.jsx";
 import { COLOR } from "../../constant/color";
+import PointsCounter from "../../components/PointsCounter/PointsCounter";
 
 import "./Services.css";
 
@@ -16,7 +17,10 @@ export default function Service() {
 
   return (
     <>
-      <Title title="Services" />
+      <div id="header">
+        <Title title="Services" />
+        <PointsCounter points={45} />
+      </div>
       <div className="service-div" style={{ backgroundColor: COLOR.bleuFonce }}>
         <div className="service-container">
           <h2 className="service-title" style={{ color: COLOR.jaune }}>
