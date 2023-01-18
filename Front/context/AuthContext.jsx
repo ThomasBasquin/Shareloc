@@ -1,6 +1,6 @@
 import React, {createContext,useState,useEffect,useContext} from "react";
-import URLS from "../constantes/Routes";
-import useFetch from "../constantes/UseFetch";
+import URLS from "../constant/Routes";
+import useFetch from "../constant/UseFetch";
 import { UserContext } from "./UserContext";
 
 export const AuthContext= createContext();
@@ -14,7 +14,7 @@ export function AuthProvider({children}){
         .then(({token,data}) => {
             setUserToken(token);
             setUserInfo(data);
-            AsyncStorage.setItem("userToken",token);
+            localStorage.setItem("userToken",token);
         })
     }
 
@@ -31,13 +31,9 @@ export function AuthProvider({children}){
         removeUserInfo();
     }
 
-    async function isLoggedIn(){
-        try{
-            let userToken = await AsyncStorage.getItem("userToken");
+    function isLoggedIn(){
+            let userToken = localStorage.getItem("userToken");
             setUserToken(userToken);
-        }catch(e){
-            console.error('Error dans l\'authentification :'+e);
-        }
     }
 
     useEffect(()=>{
