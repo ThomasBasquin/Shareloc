@@ -24,6 +24,8 @@ public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $even
         'email' => $user->getEmail(),
         'lastname' => $user->getLastname(),
         'firstname' => $user->getFirstname(),
+        'colocation' => $user->getCollocation() ? $user->getCollocation()->getId():null,
+        'points' => $user->getPoints(),
     );
 
     $event->setData($data);

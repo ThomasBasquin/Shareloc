@@ -163,4 +163,27 @@ class InvitationController extends AbstractController
 
         return $this->json($invitation, 200, [], ["groups" => ["Invitation:read"]]);
     }
+
+    /**
+     * Récupère les invitations recu par l'utilisateur
+     * 
+     *
+     * @Route("", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne les invitations",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Invitation::class, groups={"Invitation:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="Invitation")
+     */
+    public function get(): Response
+    {
+        $invitations = $this->invitationRepository->findBy(["receipter"=>$this->getUser(),"accepted"=>null]);
+
+        return $this->json($invitations, 200, [], ["groups" => ["Invitation:read"]]);
+    }
 }
