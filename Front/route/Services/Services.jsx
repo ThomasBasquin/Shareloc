@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
 import ServiceComponent from "../../components/ServiceComponent/ServiceComponent.jsx";
+import { COLOR } from "../../constant/color";
+
 import "./Services.css";
 
 export default function Service() {
@@ -15,28 +17,85 @@ export default function Service() {
   return (
     <>
       <Title title="Services" />
-      <div className="service-div">
-        <ServicesAsked
-          date={date}
-          by={by}
-          pour={pour}
-          label={label}
-          score={score}
-        />
-        <ServicesToDo
-          date={date}
-          by={by}
-          pour={pour}
-          label={label}
-          score={score}
-        />
-        <ServicesDone
-          date={date}
-          by={by}
-          pour={pour}
-          label={label}
-          score={score}
-        />
+      <div className="service-div" style={{ backgroundColor: COLOR.bleuFonce }}>
+        <div className="service-container">
+          <h2 className="service-title" style={{ color: COLOR.jaune }}>
+            Mes services demandés :
+          </h2>
+          <ServicesAsked
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+          <ServicesAsked
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+          <ServicesAsked
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+        </div>
+        <div className="service-container">
+          <h2 className="service-title" style={{ color: COLOR.jaune }}>
+            Mes services en cours :
+          </h2>
+          <ServicesToDo
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+          <ServicesToDo
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+          <ServicesToDo
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+        </div>
+        <div className="service-container">
+          <h2 className="service-title" style={{ color: COLOR.jaune }}>
+            Mes services effectués :
+          </h2>
+          <ServicesDone
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+          <ServicesDone
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+          <ServicesDone
+            date={date}
+            by={by}
+            pour={pour}
+            label={label}
+            score={score}
+          />
+        </div>
       </div>
     </>
   );
@@ -45,17 +104,14 @@ export default function Service() {
 const ServicesAsked = ({ date, by, pour, label, score }) => {
   return (
     <>
-      <div className="service-container">
-        <h2 className="service-title">Mes services demandés :</h2>
-        <ServiceComponent
-          className="service-component"
-          date={date}
-          by={by}
-          pour={pour}
-          label={label}
-          score={score}
-        />
-      </div>
+      <ServiceComponent
+        className="service-component"
+        date={date}
+        by={by}
+        pour={pour}
+        label={label}
+        score={score}
+      />
     </>
   );
 };
@@ -63,19 +119,14 @@ const ServicesAsked = ({ date, by, pour, label, score }) => {
 const ServicesToDo = ({ date, by, pour, label, score }) => {
   return (
     <>
-      <div className="service-container">
-        <h2 className="service-title">Mes services :</h2>
-        <div className="service-container">
-          <ServiceComponent
-            className="service-component"
-            date={date}
-            by={by}
-            pour={pour}
-            label={label}
-            score={score}
-          />
-        </div>
-      </div>
+      <ServiceComponent
+        className="service-component"
+        date={date}
+        by={by}
+        pour={pour}
+        label={label}
+        score={score}
+      />
     </>
   );
 };
@@ -83,19 +134,14 @@ const ServicesToDo = ({ date, by, pour, label, score }) => {
 const ServicesDone = ({ date, by, pour, label, score }) => {
   return (
     <>
-      <div className="service-container">
-        <h2 className="service-title">Mes services effectués :</h2>
-        <div className="service-container">
-          <ServiceComponent
-            className="service-component"
-            date={date}
-            by={by}
-            pour={pour}
-            label={label}
-            score={score}
-          />
-        </div>
-      </div>
+      <ServiceComponent
+        className="service-component"
+        date={date}
+        by={by}
+        pour={pour}
+        label={label}
+        score={score}
+      />
     </>
   );
 };
