@@ -16,8 +16,8 @@ import ModalGeneral from "../components/ModalGeneral";
 import { UserContext } from "../Context/UserContext";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
-import moment from "moment";
 import DropDownPicker from "react-native-dropdown-picker";
+
 
 const Services = ({ navigation }) => {
   const [modalVisibility, setModalVisibility] = useState(false);

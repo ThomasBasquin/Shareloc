@@ -7,7 +7,10 @@ import { COLOR } from "../../constant/color";
 import PointsCounter from "../../components/PointsCounter/PointsCounter";
 import Button from "../../components/Button/Button";
 import { UserContext } from "../../context/UserContext";
+import useFetch from "../../constant/UseFetch";
+import URLS from "../../constant/Routes"
 import "./Services.css";
+import moment from "moment";
 
 export default function Service() {
   const [date, setDate] = useState("25/02/2023");
@@ -17,7 +20,23 @@ export default function Service() {
   const [score, setScore] = useState(5);
   const [showAdd, setShowAdd] = useState(false);
 
+  const [modalVisibility, setModalVisibility] = useState(false);
+
+  const [title, setTitle] = useState("");
+  const [performer, setPerformer] = useState(null);
+  const [recipient, setRecipient] = useState(null);
+  const [cost, setCost] = useState(0);
   const { user } = useContext(UserContext);
+
+  const [openPickerPerformer, setOpenPickerPerformer] = useState(false);
+  const [openPickerRecipient, setOpenPickerRecipient] = useState(false);
+  const [recipientServices, setRecipientServices] = useState([]);
+  const [performerServices, setPerformerServices] = useState([]);
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
 
   const handleAdd = () => {
     setShowAdd(!showAdd);
@@ -25,6 +44,47 @@ export default function Service() {
 
   const handleReturn = () => {
     setShowAdd(!showAdd);
+  };
+  function fetchServices(){
+    let promiseAll = [];
+    promiseAll.push(
+      useFetch(URLS.getServicesRecipient.replace("{user}", user.id))
+    );
+    promiseAll.push(
+      useFetch(URLS.getServicesPerformer.replace("{user}", user.id))
+    );
+    if (user.colocation) {
+      useFetch(
+        URLS.getCollocation.replace("{collocation}", user.colocation)
+      ).then((c) => setMembers(c.members.map(m => ({label : m.firstname + " " + m.lastname,value:m.id}))));
+    }
+
+    Promise.all(promiseAll).then(([recipient, performer]) => {
+      setRecipientServices(recipient);
+      setPerformerServices(performer);
+      setTitle("");
+      setPerformer(null);
+      setRecipient(null);
+      setCost(0);
+      setModalVisibility(false);
+    });
+  }
+
+
+  const annuler = () => {
+    setModalVisibility(!modalVisibility);
+    setTitle("");
+    setPerformer(null);
+    setRecipient(null);
+    setCost(0);
+  };
+
+  const valider = () => {
+    useFetch(URLS.createService, "POST", {title,performer,recipient,cost,collocation:user.colocation})
+    .then(()=>{
+      fetchServices();
+    })
+    .catch(e => console.log(e))
   };
 
   return (
@@ -34,9 +94,10 @@ export default function Service() {
           <Title title="Services" />
           <div id="right-header">
             <PointsCounter id="counter-services" points={user.points} />
+            {user.colocation !== null ? (
             <Button id="add-service-button" primary onClick={() => handleAdd()}>
               <p>Ajouter un service</p>
-            </Button>
+            </Button>) : null}
           </div>
         </div>
       </div>
@@ -50,79 +111,62 @@ export default function Service() {
             <h2 className="service-title" style={{ color: COLOR.jaune }}>
               Mes services demandés :
             </h2>
-            <ServicesAsked
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
-            <ServicesAsked
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
-            <ServicesAsked
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
+            {performerServices.length ? (
+        performerServices.map((s) => (
+          <ServiceComponent
+            id={s.id}
+            date={moment(s.createdAt).format("LL")}
+            by={s.performer.firstname}
+            pour={s.recipient.firstname}
+            label={s.title}
+            score={s.cost}
+          />
+        ))
+      ) : (
+        <p>Vous n'avez aucun services en tant que actionnaire</p>
+      )}
           </div>
           <div className="service-container">
             <h2 className="service-title" style={{ color: COLOR.jaune }}>
               Mes services en cours :
             </h2>
-            <ServicesToDo
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
-            <ServicesToDo
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
-            <ServicesToDo
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
+            {recipientServices.length ? (
+        recipientServices.map((s) => (
+          <ServiceComponent
+            id={s.id}
+            date={moment(s.createdAt).format("LL")}
+            by={s.performer.firstname}
+            pour={s.recipient.firstname}
+            label={s.title}
+            score={s.cost}
+          />
+        ))
+      ) : (
+        <p>Vous n'avez aucun services en tant que bénéficiaire</p>
+      )}
           </div>
           <div className="service-container">
             <h2 className="service-title" style={{ color: COLOR.jaune }}>
               Mes services effectués :
             </h2>
-            <ServicesDone
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
-            <ServicesDone
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
-            <ServicesDone
-              date={date}
-              by={by}
-              pour={pour}
-              label={label}
-              score={score}
-            />
+            {[...recipientServices, ...performerServices].filter(
+          (s) => s.validatedAt !== null
+        ).length ? (
+          [...recipientServices, ...performerServices].filter(
+            (s) => s.validatedAt !== null
+          ).map((s) => (
+          <ServiceComponent
+            id={s.id}
+            date={moment(s.createdAt).format("LL")}
+            by={s.performer.firstname}
+            pour={s.recipient.firstname}
+            label={s.title}
+            score={s.cost}
+          />
+        ))
+      ) : (
+        <p>Vous n'avez aucun services terminés</p>
+      )}
           </div>
         </div>
       </div>
