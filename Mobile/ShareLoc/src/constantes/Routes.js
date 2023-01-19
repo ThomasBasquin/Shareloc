@@ -10,6 +10,8 @@ const URLS={
     getCollocation:DOMAINS+"/collocation/{collocation}",
     getInvitations:DOMAINS+"/invitation",
     answerInvitation:DOMAINS+"/invitation/{invitation}/replied",
+    getMessageFromColocation:DOMAINS+"/collocation/{idColoc}/messages",
+    addMessage:DOMAINS+"/message",
 }
 
 export default URLS;
