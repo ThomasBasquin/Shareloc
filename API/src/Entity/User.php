@@ -178,7 +178,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setCollocation(?Collocation $collocation): self
     {
-        dump($collocation);
         $this->collocation = $collocation;
 
         return $this;

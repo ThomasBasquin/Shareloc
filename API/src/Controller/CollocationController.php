@@ -149,7 +149,6 @@ class CollocationController extends AbstractController
         if($collocation->getManager()===$member){
             throw new BadRequestHttpException("On ne peut pas viré le manager de la collocation");
         }
-        dump($this->getUser());
         if($collocation->getManager()==$this->getUser()){
             throw new BadRequestHttpException("Il n'y a que le manager qui peut virer des membres");
         }
@@ -202,7 +201,7 @@ class CollocationController extends AbstractController
      */
     public function getMessageFromCollocation(Collocation $collocation): Response
     {
-        $messages=$this->messageRepository->findBy(["collocation"=>$collocation],["sendAt"=>"DESC"]);
+        $messages=$this->messageRepository->findBy(["collocation"=>$collocation],["sendAt"=>"ASC"]);
         
         return $this->json($messages,200,[],["groups" => ["Message:read"]]);
     }

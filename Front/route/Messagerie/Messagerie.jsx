@@ -1,36 +1,54 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import useFetch from "../../constant/UseFetch";
 import Box from "../../components/Box/Box";
 import { Link } from "react-router-dom";
 import Title from "../../components/Title/Title";
 import { COLOR } from "../../constant/color"
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
+import {UserContext} from "../../context/UserContext";
+import URLS from "../../constant/Routes";
 import "./Messagerie.css";
 
+
 export default function Messagerie() {
+const [messages, setMessages] = useState([]);
+  const {user}= useContext(UserContext);
+
+  async function addMessage(prenom, heure, message) {
+    return useFetch(URLS.register,"POST",{email,firstname,lastname,password})
+    .then(() => {
+        login(email,password);
+    })
+}
+
+  useEffect(() => {
+    useFetch(URLS.getMessageFromColocation.replace("{idColoc}",user.colocation))
+    .then(setMessages)
+  }, []);
+
+  console.log({messages});
   return (
     <div className="">
       <Title title="Messagerie" id="title" />
-      <Discussion />
+      <Discussion messages={messages} user={user}/>
     </div>
   );
 }
 
-const Discussion = () => {
+const Discussion = ({messages, user}) => {
   return (
     <div className="center">
       <Box style={{ width: "80%", height: 650 }}>
         <div style={{overflow: "scroll",overflowX:'none',  height : '100%'}}>
-        <MessageAutre name="Hugo" hour="12:21" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-            <MessageAutre name="Hugo" hour="12:21" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-          
-          <MessagePerso name="Hugo" hour="12:29" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-          <MessagePerso name="Hugo" hour="12:29" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-          <MessagePerso name="Hugo" hour="12:29" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-          <MessagePerso name="Hugo" hour="12:29" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-          <MessageAutre name="Hugo" hour="12:21" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-          <MessageAutre name="Hugo" hour="12:21" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-          <MessageAutre name="Hugo" hour="12:21" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
-          <MessageAutre name="Hugo" hour="12:21" message='TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT'/>
+        {messages.length ? messages.map((m)=>
+           {if(m.sender.firstname == user.firstname){
+            return <MessagePerso name={m.sender.firstname} hour={m.sendAt} message={m.message}/>
+           }
+        else{
+            return <MessageAutre name={m.sender.firstname} hour={m.sendAt} message={m.message} />
+        }}   
+          ) : <p style={{marginLeft:20, color : 'white', fontSize: 20}}>Aucun message pour la colocation.</p> }
+        
         </div>
       </Box>
       <AddMessage />

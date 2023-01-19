@@ -1,4 +1,4 @@
-import React,{useContext,useEffect,useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -20,15 +20,32 @@ import URLS from "../constantes/Routes";
 import { UserContext } from "../Context/UserContext";
 
 const Colocation = ({ navigation }) => {
-
-  const {user} = useContext(UserContext);
+  const { user,setUserInfo } = useContext(UserContext);
 
   const [colocation, setColocation] = useState(null);
+  const [invitations, setInvitations] = useState([]);
 
   useEffect(() => {
-    useFetch(URLS.getCollocation.replace("{collocation}",user.colocation))
-    .then(setColocation)
+    if (!user.colocation) {
+      useFetch(URLS.getInvitations).then(setInvitations);
+    } else {
+      useFetch(
+        URLS.getCollocation.replace("{collocation}", user.colocation)
+      ).then(setColocation);
+    }
   }, []);
+
+  function answerInvitation(invitation, accepted) {
+    useFetch(URLS.answerInvitation.replace("{invitation}", invitation), "PUT", {
+      accepted,
+    })
+    .then(()=>{
+      invitations.filter((i)=> i.id!==invitation.id)
+      console.log("heyyyyyyy");
+      if(accepted)setUserInfo({...user,collocation:invitation.collocation.id})
+    })
+    .catch((e)=>console.log("heyy :",e))
+  }
 
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
@@ -55,9 +72,53 @@ const Colocation = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <Resume />
-        <Participants />
-        <ServicesEnCours navigation={navigation} />
+        {user.colocation ? (
+          <>
+            <Resume />
+            <Participants />
+            <ServicesEnCours navigation={navigation} />
+          </>
+        ) : (
+          <View>
+            <Text>Vous n'avez pas de colocation en cours</Text>
+            <Text>Mes invitations :</Text>
+            <View>
+              {invitations.length ? (
+                invitations.map((i) => (
+                  <View
+                    style={{
+                      margin: "2.5%",
+                      borderRadius: 15,
+                      padding: 20,
+                      backgroundColor: COLOR.gris,
+                    }}
+                  >
+                    <Text
+                      style={{ fontSize: 20, color: COLOR.bleuFonce }}
+                    >{`Invitation de ${i.sender.firstname} ${i.sender.lastname} pour rejoindre la colocation ${i.collocation.name}`}</Text>
+                    <View
+                      style={{ flexDirection: "row", justifyContent: "center" }}
+                    >
+                      <ButtonComponent
+                        onPress={() => answerInvitation(i.id, false)}
+                      >
+                        <Text>Rejeter</Text>
+                      </ButtonComponent>
+                      <ButtonComponent
+                        primary
+                        onPress={() => answerInvitation(i.id, true)}
+                      >
+                        <Text>Rejoindre</Text>
+                      </ButtonComponent>
+                    </View>
+                  </View>
+                ))
+              ) : (
+                <Text>Vous n'avez pas d'invitations</Text>
+              )}
+            </View>
+          </View>
+        )}
       </View>
     </ScrollView>
   );
