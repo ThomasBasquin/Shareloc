@@ -16,7 +16,6 @@
     "@react-navigation/native-stack": "^6.9.5",
     "@types/react": "~18.0.24",
     "@types/react-native": "~0.70.6",
-    "date-fns": "^2.29.3",
     "expo": "~47.0.8",
     "expo-status-bar": "~1.4.2",
     "moment": "^2.29.4",

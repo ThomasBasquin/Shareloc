@@ -15,7 +15,6 @@ import Box from "../components/Box";
 import { UserContext } from "../Context/UserContext";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
-import { format, isToday, isYesterday } from "date-fns";
 import moment from "moment";
 
 const Messagerie = ({ navigation }) => {
