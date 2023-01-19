@@ -22,9 +22,15 @@ export default function Navbar() {
           Services
         </Link>
         {/* <img src="../../src/assets/profile-user-svgrepo-com.svg" /> */}
+        
+        <Link to="/messagerie" className="itemNavbar">
+          Messagerie
+        </Link>
         <Link to="/compte" className="itemNavbar">
           Profil
         </Link>
+        
+       
       </div>
     </nav>
   );
