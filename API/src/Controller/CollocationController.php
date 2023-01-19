@@ -201,7 +201,7 @@ class CollocationController extends AbstractController
      */
     public function getMessageFromCollocation(Collocation $collocation): Response
     {
-        $messages=$this->messageRepository->findBy(["collocation"=>$collocation],["sendAt"=>"DESC"]);
+        $messages=$this->messageRepository->findBy(["collocation"=>$collocation],["sendAt"=>"ASC"]);
         
         return $this->json($messages,200,[],["groups" => ["Message:read"]]);
     }
