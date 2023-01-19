@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import Box from "../components/Box";
@@ -23,6 +22,7 @@ import URLS from "../constantes/Routes";
 import { UserContext } from "../Context/UserContext";
 import moment from "moment";
 import DropDownPicker from "react-native-dropdown-picker";
+import ModalGeneral from "../components/ModalGeneral";
 
 const Colocation = ({ navigation }) => {
   const { user, setUserInfo } = useContext(UserContext);
@@ -30,6 +30,7 @@ const Colocation = ({ navigation }) => {
   const [colocation, setColocation] = useState(null);
   const [invitations, setInvitations] = useState([]);
   const [services, setServices] = useState([]);
+  const [showModalCreationColocation, setshowModalCreationColocation] = useState(false);
 
   useEffect(() => {
     if (!user.colocation) {
@@ -97,7 +98,7 @@ const Colocation = ({ navigation }) => {
           ) : null}
         </View>
 
-        {user.colocation && colocation && services.length ? (
+        {user.colocation && colocation ? (
           <>
             {colocation.manager.id === user.id && (
               <>
@@ -113,9 +114,16 @@ const Colocation = ({ navigation }) => {
           </>
         ) : (
           <View>
-            <Text>Vous n'avez pas de colocation en cours</Text>
-            <Text>Mes invitations :</Text>
-            <View>
+            <CreationColocationModal isOpen={showModalCreationColocation} setIsOpen={setshowModalCreationColocation} user={user} setUserInfo={setUserInfo} />
+            <Text style={{fontSize:20}}>Vous n'avez pas de colocation en cours</Text>
+            <ButtonComponent onPress={() => setshowModalCreationColocation(true)}>
+              <Text>Créer une colocation</Text>
+            </ButtonComponent>
+            <View style={{width:"100%",justifyContent:"center",flexDirection:"row"}}>
+              <Text style={{fontSize:20,fontWeight:"700"}}>ou</Text>
+            </View>
+            <Text style={{fontSize:20}}>Mes invitations :</Text>
+            <View style={{flexDirection:"row",justifyContent:"center"}}>
               {invitations.length ? (
                 invitations.map((i) => (
                   <View
@@ -147,7 +155,7 @@ const Colocation = ({ navigation }) => {
                   </View>
                 ))
               ) : (
-                <Text>Vous n'avez pas d'invitations</Text>
+                <Text style={{fontSize:16,marginVertical:10}}>Vous n'avez pas d'invitations</Text>
               )}
             </View>
           </View>
@@ -156,6 +164,41 @@ const Colocation = ({ navigation }) => {
     </ScrollView>
   );
 };
+
+function CreationColocationModal({isOpen,setIsOpen,user,setUserInfo}){
+
+  const [name, setName] = useState("");
+
+  function createColocation(){
+    useFetch(URLS.createColocation,"POST",{manager : user.id,name})
+    .then(e => {
+      setUserInfo({...user,colocation:e.id});
+      setIsOpen(false);
+    })
+    .catch(e => console.log(e))
+  }
+
+  return (<ModalGeneral visible={isOpen}>
+        <Text style={styles.titreModal}>Créer une colocation</Text>
+        <Text>Titre de la colocation :</Text>
+        <TextInput
+          style={styles.input}
+          value={name}
+          onChangeText={setName}
+        />
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <ButtonComponent onPress={createColocation}>
+            Confirmer
+          </ButtonComponent>
+          <ButtonComponent
+            primary
+            onPress={() => setIsOpen(false)}
+          >
+            <Text>Annuler</Text>
+          </ButtonComponent>
+        </View>
+  </ModalGeneral>);
+}
 
 const InviteMembers = ({ user }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -250,7 +293,7 @@ const Resume = ({ colocation, services }) => {
   return (
     <Box>
       <View>
-        <Text style={styles.text}>Résumé</Text>
+        <Text style={styles.text}>{colocation.name}</Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <BoxResume>
             <Text style={styles.titreBoxResume}>Participants</Text>
@@ -377,18 +420,23 @@ const ServicesEnCours = ({ navigation, services }) => {
       <Text style={styles.titreParticipants}>Services en cours :</Text>
       {services.map((s) => (
         <ServiceComponent
-          id={s.id}
           navigation={navigation}
-          dateCreation={moment(s.createdAt).format("LL")}
-          dateTermine={
-            s.validatedAt ? moment(s.validatedAt).format("LL") : null
-          }
+          date={moment(s.createdAt).format("LL")}
           by={s.performer.firstname}
           pour={s.recipient.firstname}
           label={s.title}
           score={s.cost}
         />
       ))}
+
+      {/* <ButtonComponent
+        primary
+        onPress={() => {
+          navigation.navigate("ServicesColocation");
+        }}
+      >
+        Voir tout
+      </ButtonComponent> */}
     </View>
   );
 };
@@ -487,6 +535,41 @@ const styles = new StyleSheet.create({
   modalButtonsDiv: {
     flexDirection: "row",
     justifyContent: "space-evenly",
+  },
+  date: {
+    fontSize: 20,
+    fontWeight: "600",
+    marginLeft: 5,
+  },
+  row: {
+    flexDirection: "row",
+  },
+  column: {
+    flexDirection: "column",
+    marginLeft: 5,
+  },
+  titreModal: {
+    fontSize: 26,
+    fontWeight: "bold",
+    marginBottom: 18,
+  },
+  contenu: {
+    fontSize: 15,
+  },
+  input: {
+    height: 40,
+    width: 275,
+    margin: 5,
+    marginLeft: 0,
+    marginTop: 7,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: COLOR.grisFonce,
+    padding: 10,
+    borderRadius: 15,
+    color: COLOR.bleuFonce,
+    fontWeight: "500",
+    fontSize: 14,
   },
 });
 

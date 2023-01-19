@@ -20,6 +20,7 @@ const URLS={
     createInvitation:DOMAINS + "/invitation",
     leaveColocation:DOMAINS+"/user/{user}/leaveCollocation",
     validService:DOMAINS+"/service/{service}/valid",
+    createColocation:DOMAINS+"/collocation",
 }
 
 export default URLS;

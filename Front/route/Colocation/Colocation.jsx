@@ -1,4 +1,10 @@
-import React, { useDebugValue, useContext, useEffect, useState } from "react";
+import React, {
+  useDebugValue,
+  useContext,
+  useEffect,
+  useState,
+  Select,
+} from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Box from "../../components/Box/Box";
@@ -10,6 +16,7 @@ import ServiceComponent from "../../components/ServiceComponent/ServiceComponent
 import useFetch from "../../constant/UseFetch";
 import URLS from "../../constant/Routes";
 import { UserContext } from "../../context/UserContext";
+import Button from "../../components/Button/Button";
 import moment from "moment";
 
 export default function Colocation() {
@@ -66,6 +73,11 @@ export default function Colocation() {
 
             <Resume colocation={colocation} services={services} />
           </div>
+          {colocation.manager.id === user.id && (
+            <>
+              <InviteMembers user={user} />
+            </>
+          )}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Classement
               members={colocation.members}

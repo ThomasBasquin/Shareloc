@@ -17,6 +17,7 @@ import { UserContext } from "../Context/UserContext";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
 import DropDownPicker from "react-native-dropdown-picker";
+import moment from "moment";
 
 
 const Services = ({ navigation }) => {

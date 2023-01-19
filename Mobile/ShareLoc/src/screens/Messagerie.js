@@ -15,7 +15,7 @@ import Box from "../components/Box";
 import { UserContext } from "../Context/UserContext";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
-import moment from "moment-with-locales-es6";
+import moment from "moment";
 
 moment.locale("fr");
 
