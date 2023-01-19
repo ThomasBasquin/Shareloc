@@ -241,15 +241,7 @@ const AddService = ({ handleReturn }) => {
     <div className="add-service" id="add-service">
       <h2 className="add-service-title">Ajouter un service</h2>
       <div className="add-service-container">
-        <div className="add-service-input">
-          <label className="add-service-label">Date :</label>
-          <input
-            // className="add-service-input"
-            type="date"
-            name="date"
-            placeholder="Date"
-          />
-        </div>
+        
         <div className="add-service-input">
           <label className="add-service-label">Pour :</label>
           <input
