@@ -129,7 +129,7 @@ export default function Service() {
               Mes services demandés :
             </h2>
             {performerServices.length ? (
-              performerServices.map((s) => (
+              performerServices.filter(s=>s.validatedAt==null).map((s) => (
                 <ServiceComponent
                   id={s.id}
                   date={moment(s.createdAt).format("LL")}
@@ -148,7 +148,7 @@ export default function Service() {
               Mes services en cours :
             </h2>
             {recipientServices.length ? (
-              recipientServices.map((s) => (
+              recipientServices.filter(s=>s.validatedAt==null).map((s) => (
                 <ServiceComponent
                   id={s.id}
                   date={moment(s.createdAt).format("LL")}
@@ -241,15 +241,7 @@ const AddService = ({ handleReturn }) => {
     <div className="add-service" id="add-service">
       <h2 className="add-service-title">Ajouter un service</h2>
       <div className="add-service-container">
-        <div className="add-service-input">
-          <label className="add-service-label">Date :</label>
-          <input
-            // className="add-service-input"
-            type="date"
-            name="date"
-            placeholder="Date"
-          />
-        </div>
+        
         <div className="add-service-input">
           <label className="add-service-label">Pour :</label>
           <input

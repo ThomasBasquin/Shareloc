@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import { Form, Link, Outlet, useLoaderData, useParams } from "react-router-dom";
 import BoxGrise from "../../components/BoxGrise/BoxGrise";
 import Box from "../../components/Box/Box";
 import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
 import { COLOR } from "../../constant/color";
+import { Link, Navigate, useNavigate  } from "react-router-dom";
+import { UserContext } from "../../context/UserContext";
+import URLS from "../../constant/Routes";
+import useFetch from "../../constant/UseFetch";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import Button from "../../components/Button/Button";
 import "./DetailsService.css";
@@ -16,7 +19,13 @@ export default function DetailsService() {
   const [by, setBy] = useState(service.by);
   const [pour, setPour] = useState(service.pour);
   const [label, setLabel] = useState(service.label);
-
+  const navigate = useNavigate();
+  const validService = () => {
+    console.log("cc")
+    useFetch(URLS.validService.replace("{service}", service.id), "PUT").then(() =>
+      navigate("/colocation")
+    );
+  };
   return (
     <div className="">
       <Title title={label} />
@@ -25,11 +34,11 @@ export default function DetailsService() {
           <h2 className="detail-title">Détails du service</h2>
           <Details points={points} date={date} by={by} pour={pour} />
           <div className="button-details-div">
-            <Link to="/" style={{ margin: 20 }}>
-              <Button className="button" id="button-validate" primary>
+            
+              <Button className="button" id="button-validate" primary onClick={()=>validService()}>
                 Valider le service
               </Button>
-            </Link>
+            
             <Link to="/" style={{ margin: 20 }}>
               <Button className="button" id="button-return-details" red>
                 Retour
