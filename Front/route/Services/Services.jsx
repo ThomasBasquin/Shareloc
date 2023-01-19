@@ -129,7 +129,7 @@ export default function Service() {
               Mes services demandés :
             </h2>
             {performerServices.length ? (
-              performerServices.map((s) => (
+              performerServices.filter(s=>s.validatedAt==null).map((s) => (
                 <ServiceComponent
                   id={s.id}
                   date={moment(s.createdAt).format("LL")}
@@ -148,7 +148,7 @@ export default function Service() {
               Mes services en cours :
             </h2>
             {recipientServices.length ? (
-              recipientServices.map((s) => (
+              recipientServices.filter(s=>s.validatedAt==null).map((s) => (
                 <ServiceComponent
                   id={s.id}
                   date={moment(s.createdAt).format("LL")}
