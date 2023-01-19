@@ -3,6 +3,7 @@ import BoxGrise from "../BoxGrise/BoxGrise";
 import { COLOR } from "../../constant/Color";
 import { Link } from "react-router-dom";
 import "./ServiceComponent.css";
+import moment from "moment/moment";
 
 const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {
   return (
@@ -74,7 +75,7 @@ const InfoService = ({ date, by, label }) => {
             fontWeight: "",
           }}
         >
-          {date}
+          {moment(date).format('LL')}
         </p>
         <img
           src="../../src/assets/people-arrows-solid.svg"
