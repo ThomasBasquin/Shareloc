@@ -19,15 +19,16 @@ export default function DetailsService() {
     <div className="">
       <Title title={label} />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <BoxGrise style={{ width: "70%", height: 500, alignItems: "center" }}>
+        <BoxGrise style={{ width: "70%", height: 530, alignItems: "center" }}>
+          <h2 className="detail-title">Détails du service</h2>
           <Details points={points} date={date} by={by} pour={pour} />
           <div className="button-details-div">
-            <Link to="/colocation" style={{ margin: 20 }}>
+            <Link to="/" style={{ margin: 20 }}>
               <Button className="button" id="button-validate" primary>
                 Valider le service
               </Button>
             </Link>
-            <Link to="/colocation" style={{ margin: 20 }}>
+            <Link to="/" style={{ margin: 20 }}>
               <Button className="button" id="button-return-details" red>
                 Retour
               </Button>
@@ -61,8 +62,10 @@ const Details = ({ points, date, by, pour }) => {
                 justifyContent: "center",
               }}
             >
-              <p className="titreItemResume">Points</p>
-              <p className="valeurItemResume">{points}</p>
+              <div className="detail-div">
+                <p className="valeurItemResume">{points}</p>
+                <p className="titreItemResume"> Points</p>
+              </div>
             </div>
           </Box>
           <Box
@@ -81,8 +84,10 @@ const Details = ({ points, date, by, pour }) => {
                 justifyContent: "center",
               }}
             >
-              <p className="titreItemResume">Fait le</p>
-              <p className="valeurItemResume">{date}</p>
+              <div className="detail-div">
+                <p className="titreItemResume">Fait le </p>
+                <p className="valeurItemResume">{date}</p>
+              </div>
             </div>
           </Box>
         </div>
@@ -103,8 +108,10 @@ const Details = ({ points, date, by, pour }) => {
                 justifyContent: "center",
               }}
             >
-              <p className="titreItemResume">De</p>
-              <p className="valeurItemResume">{by}</p>
+              <div className="detail-div">
+                <p className="titreItemResume">De </p>
+                <p className="valeurItemResume">{by}</p>
+              </div>
             </div>
           </Box>
           <Box
@@ -123,8 +130,10 @@ const Details = ({ points, date, by, pour }) => {
                 justifyContent: "center",
               }}
             >
-              <p className="titreItemResume">Pour</p>
-              <p className="valeurItemResume">{pour}</p>
+              <div className="detail-div">
+                <p className="titreItemResume">Pour</p>
+                <p className="valeurItemResume">{pour}</p>
+              </div>
             </div>
           </Box>
         </div>
