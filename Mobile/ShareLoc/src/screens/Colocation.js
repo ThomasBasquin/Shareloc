@@ -18,33 +18,52 @@ import ButtonComponent from "../components/ButtonComponent";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
 import { UserContext } from "../Context/UserContext";
+import moment from "moment";
 
 const Colocation = ({ navigation }) => {
-  const { user,setUserInfo } = useContext(UserContext);
+  const { user, setUserInfo } = useContext(UserContext);
 
   const [colocation, setColocation] = useState(null);
   const [invitations, setInvitations] = useState([]);
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     if (!user.colocation) {
       useFetch(URLS.getInvitations).then(setInvitations);
     } else {
-      useFetch(
-        URLS.getCollocation.replace("{collocation}", user.colocation)
-      ).then(setColocation);
+      let promiseAll = [];
+      promiseAll.push(
+        useFetch(
+          URLS.getServicesFromColocation.replace(
+            "{collocation}",
+            user.colocation
+          )
+        )
+      );
+      promiseAll.push(
+        useFetch(URLS.getCollocation.replace("{collocation}", user.colocation))
+      );
+
+      Promise.all(promiseAll).then(([services, colocation]) => {
+        setServices(services);
+        setColocation(colocation);
+      });
     }
-  }, []);
+  }, [user]);
 
   function answerInvitation(invitation, accepted) {
-    useFetch(URLS.answerInvitation.replace("{invitation}", invitation), "PUT", {
-      accepted,
-    })
-    .then(()=>{
-      invitations.filter((i)=> i.id!==invitation.id)
-      console.log("heyyyyyyy");
-      if(accepted)setUserInfo({...user,collocation:invitation.collocation.id})
-    })
-    .catch((e)=>console.log("heyy :",e))
+    useFetch(
+      URLS.answerInvitation.replace("{invitation}", invitation.id),
+      "PUT",
+      {
+        accepted,
+      }
+    ).then(() => {
+      setInvitations(invitations.filter((i) => i.id !== invitation.id));
+      if (accepted) {
+        setUserInfo({ ...user, colocation: invitation.collocation.id });
+      }
+    });
   }
 
   return (
@@ -72,11 +91,14 @@ const Colocation = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {user.colocation ? (
+        {user.colocation && colocation && services.length ? (
           <>
-            <Resume />
-            <Participants />
-            <ServicesEnCours navigation={navigation} />
+            <Resume colocation={colocation} services={services} />
+            <Participants
+              members={colocation.members}
+              manager={colocation.manager}
+            />
+            <ServicesEnCours navigation={navigation} services={services} />
           </>
         ) : (
           <View>
@@ -100,13 +122,13 @@ const Colocation = ({ navigation }) => {
                       style={{ flexDirection: "row", justifyContent: "center" }}
                     >
                       <ButtonComponent
-                        onPress={() => answerInvitation(i.id, false)}
+                        onPress={() => answerInvitation(i, false)}
                       >
                         <Text>Rejeter</Text>
                       </ButtonComponent>
                       <ButtonComponent
                         primary
-                        onPress={() => answerInvitation(i.id, true)}
+                        onPress={() => answerInvitation(i, true)}
                       >
                         <Text>Rejoindre</Text>
                       </ButtonComponent>
@@ -124,7 +146,7 @@ const Colocation = ({ navigation }) => {
   );
 };
 
-const Resume = () => {
+const Resume = ({colocation,services}) => {
   return (
     <Box>
       <View>
@@ -142,7 +164,7 @@ const Resume = () => {
               <Text
                 style={{ color: COLOR.blanc, marginLeft: 10, marginTop: 3 }}
               >
-                5
+                {colocation.members.length}
               </Text>
             </View>
           </BoxResume>
@@ -158,7 +180,7 @@ const Resume = () => {
               <Text
                 style={{ color: COLOR.blanc, marginLeft: 10, marginTop: 3 }}
               >
-                5
+                {services.length}
               </Text>
             </View>
           </BoxResume>
@@ -176,7 +198,7 @@ const Resume = () => {
               <Text
                 style={{ color: COLOR.blanc, marginLeft: 10, marginTop: 3 }}
               >
-                67
+                {colocation.members.reduce((accumulator,m)=>accumulator+m.points,0)}
               </Text>
             </View>
           </BoxResume>
@@ -192,7 +214,13 @@ const Resume = () => {
               <Text
                 style={{ color: COLOR.blanc, marginLeft: 10, marginTop: 3 }}
               >
-                Roméo
+                {colocation.members.reduce((accumulator,m)=>{
+                  if(accumulator){
+                    return (accumulator.points > m.points ? accumulator : m )
+                  }else{
+                    return m;
+                  }
+                },null).firstname}
               </Text>
             </View>
           </BoxResume>
@@ -202,16 +230,15 @@ const Resume = () => {
   );
 };
 
-const Participants = () => {
+const Participants = ({members,manager}) => {
   return (
     <View style={styles.participants}>
       <Text style={styles.titreParticipants}>Participants :</Text>
       <Box>
-        <ItemParticipants prenom="Roméo" role="créateur" points={76} />
-        <ItemParticipants prenom="Thomas" role="participant" points={50} />
-        <ItemParticipants prenom="Hugo" role="participant" points={35} />
-        <ItemParticipants prenom="Gaytan" role="participant" points={14} />
-        <ItemParticipants prenom="Lucas" role="participant" points={0} />
+        <ItemParticipants prenom={manager.firstname} role={"Créateur"} points={manager.points} />
+        {members.filter(m => m.id!==manager.id).map(m => (
+          <ItemParticipants prenom={m.firstname} role={"Membre"} points={m.points} />
+        )) }
       </Box>
     </View>
   );
@@ -229,43 +256,30 @@ const ItemParticipants = ({ prenom, role, points }) => {
   );
 };
 
-const ServicesEnCours = ({ navigation }) => {
+const ServicesEnCours = ({ navigation,services }) => {
+  console.log(services);
   return (
     <View style={styles.participants}>
       <Text style={styles.titreParticipants}>Services en cours :</Text>
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
+      {services.map(s => (
+        <ServiceComponent
+          navigation={navigation}
+          date={moment(s.createdAt).format("LL")}
+          by={s.performer.firstname}
+          pour={s.recipient.firstname}
+          label={s.title}
+          score={s.cost}
+        />
+      ))}
 
-      <ButtonComponent
+      {/* <ButtonComponent
         primary
         onPress={() => {
           navigation.navigate("ServicesColocation");
         }}
       >
         Voir tout
-      </ButtonComponent>
+      </ButtonComponent> */}
     </View>
   );
 };
