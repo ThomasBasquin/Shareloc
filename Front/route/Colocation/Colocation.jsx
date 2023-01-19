@@ -247,7 +247,7 @@ const ServicesColoc = ({services}) => {
       <p className="titreServicesEncoursColoc">
         Les services en cours de la coloc :
       </p>
-      <div style={{overflow : 'scroll', maxHeight : 450, overflowX : "hidden"}}>
+      <div style={{overflow : 'scroll', maxHeight : 450, overflowX : "hidden", }}>
       {services.map(s => (
         <ServiceComponent
           navigation={navigation}
