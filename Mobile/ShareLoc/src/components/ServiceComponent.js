@@ -14,7 +14,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import moment from "moment";
 
-const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {
+const ServiceComponent = ({ navigation,id, dateCreation, dateTermine, by, pour, label, score }) => {
   return (
     <View>
       <BoxGrise>
@@ -31,12 +31,14 @@ const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {
               color={COLOR.bleuFonce}
               size={30}
             />
-            <InfoService date={date} by={by} pour={pour} label={label} />
+            <InfoService date={dateCreation} by={by} pour={pour} label={label} />
           </View>
           <ScoreService
+            id={id}
             points={score}
             navigation={navigation}
-            date={date}
+            dateCreation={dateCreation}
+            dateTermine={dateTermine}
             by={by}
             pour={pour}
             label={label}
@@ -47,15 +49,17 @@ const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {
   );
 };
 
-const ScoreService = ({ points, navigation, date, by, pour, label }) => {
+const ScoreService = ({ points, id, navigation, dateCreation, dateTermine, by, pour, label }) => {
   return (
     <Text style={{ fontSize: 21, fontWeight: "600" }}>
       {points} pts <FontAwesome name="star" size={24} color={COLOR.jaune} />
       <TouchableOpacity
         onPressIn={() => {
           navigation.navigate("Détails", {
+            id: id,
             points: points,
-            date: date,
+            dateCreation: dateCreation,
+            dateTermine: dateTermine,
             by: by,
             pour: pour,
             label: label,

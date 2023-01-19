@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, View, TouchableOpacity, StyleSheet, Modal } from "react-native";
+import { Text, View, StyleSheet } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import { Octicons } from "@expo/vector-icons";
@@ -11,9 +11,13 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import ModalGeneral from "../components/ModalGeneral";
+import useFetch from "../constantes/UseFetch";
+import URLS from "../constantes/Routes";
 
 const DetailsService = ({ route, navigation }) => {
-  const { points, date, by, pour, label } = route.params;
+  const { id, points, dateCreation, dateTermine, by, pour, label } =
+    route.params;
+
   return (
     <View style={{ backgroundColor: COLOR.blanc, margin: 5, height: "100%" }}>
       <View style={{ flexDirection: "column" }}>
@@ -24,7 +28,7 @@ const DetailsService = ({ route, navigation }) => {
               <Text
                 style={{ color: COLOR.jaune, fontSize: 16, fontWeight: "600" }}
               >
-                En cours
+                {dateTermine ? "Terminé" : "En cours"}
               </Text>
             </View>
           </BoxResume>
@@ -32,7 +36,9 @@ const DetailsService = ({ route, navigation }) => {
       </View>
       <ContenuDetails
         points={points}
-        date={date}
+        dateCreation={dateCreation}
+        dateTermine={dateTermine}
+        id={id}
         by={by}
         pour={pour}
         label={label}
@@ -42,11 +48,22 @@ const DetailsService = ({ route, navigation }) => {
   );
 };
 
-const ContenuDetails = ({ points, date, by, pour, label, navigation }) => {
+const ContenuDetails = ({
+  points,
+  id,
+  dateCreation,
+  dateTermine,
+  by,
+  pour,
+  label,
+  navigation,
+}) => {
   const [modalVisibility, setModalVisibility] = useState(false);
 
   const validService = (navigation) => {
-    navigation.goBack();
+    useFetch(URLS.validService.replace("{service}", id), "PUT").then(() =>
+      navigation.goBack()
+    );
   };
 
   return (
@@ -54,7 +71,7 @@ const ContenuDetails = ({ points, date, by, pour, label, navigation }) => {
       <BoxGrise>
         <View style={styles.row}>
           <AntDesign name="calendar" size={24} color={COLOR.bleuFonce} />
-          <Text style={styles.date}>{date}</Text>
+          <Text style={styles.date}>{dateCreation}</Text>
         </View>
       </BoxGrise>
       <BoxGrise>
@@ -83,13 +100,15 @@ const ContenuDetails = ({ points, date, by, pour, label, navigation }) => {
           </View>
         </View>
       </BoxGrise>
-      <ButtonComponent onPress={() => setModalVisibility(!modalVisibility)}>
-        <Text>Valider le service</Text>
-      </ButtonComponent>
+      {!dateTermine ? (
+        <ButtonComponent onPress={() => setModalVisibility(!modalVisibility)}>
+          <Text>Valider le service</Text>
+        </ButtonComponent>
+      ) : null}
       <ModalGeneral visible={modalVisibility}>
         <Text style={styles.titreModal}>Etes vous sûr ?</Text>
         <Text style={styles.contenu}>
-          Vous êtes sur le point de confirmer le service suivant :{" "}
+          Vous êtes sur le point de confirmer le service suivant :
           <Text style={{ fontWeight: "700", fontSize: 20 }}>{label}</Text>
         </Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>

@@ -1,4 +1,4 @@
-import React, { useState,useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
 import {
   Text,
@@ -15,7 +15,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import { AuthContext } from "../Context/AuthContext";
 
 const Authentification = ({ navigation }) => {
-  const {login} = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,20 +23,25 @@ const Authentification = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(null);
 
   useEffect(() => {
-    useFetch(URLS.whoami).then(() => navigation.navigate("Home")).catch(err => console.log(err))
+    useFetch(URLS.whoami)
+      .then(() => navigation.navigate("Home"))
+      .catch((err) => console.log(err));
   }, []);
 
-  function loginHandle(){
+  function loginHandle() {
     setIsLoading(true);
-    login(email,password)
-    .catch(err =>{
-      if(err.code===401){
-        setError({...err,message:"L'email ou le mot de passe est incorrect"});
-      }else{
-        setError(err);
-      }
-    })
-    .finally(()=> setIsLoading(false))
+    login(email, password)
+      .catch((err) => {
+        if (err.code === 401) {
+          setError({
+            ...err,
+            message: "L'email ou le mot de passe est incorrect",
+          });
+        } else {
+          setError(err);
+        }
+      })
+      .finally(() => setIsLoading(false));
   }
 
   return (
@@ -57,15 +62,14 @@ const Authentification = ({ navigation }) => {
         secureTextEntry={true}
         textContentType="oneTimeCode"
       />
-      <ButtonComponent
-        style={{ width: 200 }}
-        primary
-        onPress={loginHandle}
-      >
+      <ButtonComponent style={{ width: 200 }} primary onPress={loginHandle}>
         <Text>Connexion</Text>
       </ButtonComponent>
 
-      <TouchableOpacity disabled={isLoading} onPress={() => navigation.navigate("Signup")}>
+      <TouchableOpacity
+        disabled={isLoading}
+        onPress={() => navigation.navigate("Signup")}
+      >
         <Text>Créer un compte</Text>
       </TouchableOpacity>
     </View>
