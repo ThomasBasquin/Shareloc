@@ -5,6 +5,7 @@ import Title from "../../components/Title/Title";
 import ServiceComponent from "../../components/ServiceComponent/ServiceComponent.jsx";
 import { COLOR } from "../../constant/color";
 import PointsCounter from "../../components/PointsCounter/PointsCounter";
+import Button from "../../components/Button/Button";
 
 import "./Services.css";
 
@@ -25,9 +26,9 @@ export default function Service() {
         <Title title="Services" />
         <div id="right-header">
           <PointsCounter points={80} />
-          <button id="add-service-button" onClick={handleAdd()}>
+          <Button id="add-service-button" primary onClick={handleAdd()}>
             <p>Ajouter un service</p>
-          </button>
+          </Button>
         </div>
       </div>
       <div className="service-div" style={{ backgroundColor: COLOR.bleuFonce }}>
