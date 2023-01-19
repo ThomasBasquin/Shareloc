@@ -15,6 +15,7 @@ import ServiceComponent from "../components/ServiceComponent";
 import { UserContext } from "../Context/UserContext";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
+import moment from "moment";
 
 const Accueil = ({ navigation }) => {
   const { user } = useContext(UserContext);
@@ -22,15 +23,16 @@ const Accueil = ({ navigation }) => {
   const [points, setPoints] = useState(0);
 
   useEffect(() => {
-    let promiseAll=[];
-    promiseAll.push(useFetch(URLS.getPoints.replace("{user}",user.id)));
-    promiseAll.push(useFetch(URLS.getServicesRecipient.replace("{user}", user.id)))
+    let promiseAll = [];
+    promiseAll.push(useFetch(URLS.getPoints.replace("{user}", user.id)));
+    promiseAll.push(
+      useFetch(URLS.getServicesRecipient.replace("{user}", user.id))
+    );
 
-    Promise.all(promiseAll)
-    .then(([points,services])=>{
+    Promise.all(promiseAll).then(([points, services]) => {
       setPoints(points.points);
       setServices(services);
-    })
+    });
   }, []);
 
   return (
@@ -43,28 +45,33 @@ const Accueil = ({ navigation }) => {
         }}
       >
         <Title title="Accueil" />
-        { user.colocation ?
-        <TouchableOpacity
-          onPressIn={() => {
-            navigation.navigate("Messagerie");
-          }}
-        >
-          <Octicons
-            name="feed-discussion"
-            size={35}
-            color={COLOR.bleuFonce}
-            style={{ margin: 25 }}
-          />
-        </TouchableOpacity> : null}
+        {user.colocation ? (
+          <TouchableOpacity
+            onPressIn={() => {
+              navigation.navigate("Messagerie");
+            }}
+          >
+            <Octicons
+              name="feed-discussion"
+              size={35}
+              color={COLOR.bleuFonce}
+              style={{ margin: 25 }}
+            />
+          </TouchableOpacity>
+        ) : null}
       </View>
       <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
-        <MesPoints points={user.points} />
+        <MesPoints points={points} />
         <Text style={styles.titreMesServices}>Mes services en cours :</Text>
         {services.length ? (
           services.map((s) => (
             <ServiceComponent
+              id={s.id}
               navigation={navigation}
-              date={s.createdAt}
+              dateCreation={moment(s.createdAt).format("LL")}
+              dateTermine={
+                s.validatedAt ? moment(s.validatedAt).format("LL") : null
+              }
               by={s.performer.firstname}
               pour={s.recipient.firstname}
               label={s.title}
@@ -79,13 +86,13 @@ const Accueil = ({ navigation }) => {
   );
 };
 
-const MesPoints = ({points}) => {
+const MesPoints = ({ points }) => {
   return (
     <BoxGrise>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.points}>Mes points</Text>
         <Text style={styles.pointsScore}>
-        {points} <FontAwesome name="star" size={24} color={COLOR.jaune} />
+          {points} <FontAwesome name="star" size={24} color={COLOR.jaune} />
         </Text>
       </View>
     </BoxGrise>

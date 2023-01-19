@@ -1,11 +1,5 @@
-import React, { useState,useContext } from "react";
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  TextInput,
-} from "react-native";
+import React, { useState, useContext } from "react";
+import { Text, View, Image, StyleSheet, TextInput } from "react-native";
 import ButtonComponent from "../components/ButtonComponent";
 import ErrorMessage from "../components/ErrorMessage";
 import { AuthContext } from "../Context/AuthContext";
@@ -18,17 +12,22 @@ const Signup = () => {
   const [comfirmPassword, setComfirmPassword] = useState("");
   const [error, setError] = useState(null);
 
-  const {register} = useContext(AuthContext);
+  const { register } = useContext(AuthContext);
 
-  function registerHandle(){
-    if(comfirmPassword != password){
-      setError({message : "Les deux mot de passe ne corresponent pas"});
+  function registerHandle() {
+    if (comfirmPassword != password) {
+      setError({ message: "Les deux mot de passe ne corresponent pas" });
       return;
     }
-    register(email,firstname,lastname,password)
-    .catch(err => setError({message :err.status==409 ? "Cette email a déjà un compte" : "Une erreur est survenue lors de la création de votre compte"}))
+    register(email, firstname, lastname, password).catch((err) =>
+      setError({
+        message:
+          err.status == 409
+            ? "Cette email a déjà un compte"
+            : "Une erreur est survenue lors de la création de votre compte",
+      })
+    );
   }
-
 
   return (
     <View style={styles.container}>
@@ -69,10 +68,7 @@ const Signup = () => {
         textContentType="oneTimeCode"
       />
 
-      <ButtonComponent
-        primary
-        onPress={registerHandle}
-      >
+      <ButtonComponent primary onPress={registerHandle}>
         <Text>Créez</Text>
       </ButtonComponent>
     </View>

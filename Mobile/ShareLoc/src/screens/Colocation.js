@@ -70,8 +70,6 @@ const Colocation = ({ navigation }) => {
     });
   }
 
-
-
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
       <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -83,19 +81,20 @@ const Colocation = ({ navigation }) => {
           }}
         >
           <Title title="Ma colocation" />
-        { user.colocation ?
-          <TouchableOpacity
-            onPressIn={() => {
-              navigation.navigate("Messagerie");
-            }}
-          >
-            <Octicons
-              name="feed-discussion"
-              size={35}
-              color={COLOR.bleuFonce}
-              style={{ margin: 25 }}
-            />
-          </TouchableOpacity> : null}
+          {user.colocation ? (
+            <TouchableOpacity
+              onPressIn={() => {
+                navigation.navigate("Messagerie");
+              }}
+            >
+              <Octicons
+                name="feed-discussion"
+                size={35}
+                color={COLOR.bleuFonce}
+                style={{ margin: 25 }}
+              />
+            </TouchableOpacity>
+          ) : null}
         </View>
 
         {user.colocation && colocation && services.length ? (
@@ -164,18 +163,26 @@ const InviteMembers = ({ user }) => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [openPicker, setOpenPicker] = useState(false);
 
-  function openModal(){
+  function openModal() {
     setModalVisible(true);
-    useFetch(URLS.getUsersWithoutColocation)
-    .then(users => setUserWithoutColocation(users.map(u => ({label : u.firstname + " " + u.lastname, value: u.id}))));
+    useFetch(URLS.getUsersWithoutColocation).then((users) =>
+      setUserWithoutColocation(
+        users.map((u) => ({
+          label: u.firstname + " " + u.lastname,
+          value: u.id,
+        }))
+      )
+    );
   }
 
-
-  function sendInvitation(){
-    useFetch(URLS.createInvitation,"POST",{collocation:user.colocation,sender:user.id,receipter:selectedUser})
-    .then((e)=>{
+  function sendInvitation() {
+    useFetch(URLS.createInvitation, "POST", {
+      collocation: user.colocation,
+      sender: user.id,
+      receipter: selectedUser,
+    }).then((e) => {
       setModalVisible(false);
-    })
+    });
   }
 
   return (
@@ -231,10 +238,7 @@ const InviteMembers = ({ user }) => {
           alignItems: "flex-start",
         }}
       >
-        <ButtonComponent
-          onPress={openModal}
-          style={{ width: "30%" }}
-        >
+        <ButtonComponent onPress={openModal} style={{ width: "30%" }}>
           <Text>Inviter</Text>
         </ButtonComponent>
       </View>
@@ -373,23 +377,18 @@ const ServicesEnCours = ({ navigation, services }) => {
       <Text style={styles.titreParticipants}>Services en cours :</Text>
       {services.map((s) => (
         <ServiceComponent
+          id={s.id}
           navigation={navigation}
-          date={moment(s.createdAt).format("LL")}
+          dateCreation={moment(s.createdAt).format("LL")}
+          dateTermine={
+            s.validatedAt ? moment(s.validatedAt).format("LL") : null
+          }
           by={s.performer.firstname}
           pour={s.recipient.firstname}
           label={s.title}
           score={s.cost}
         />
       ))}
-
-      {/* <ButtonComponent
-        primary
-        onPress={() => {
-          navigation.navigate("ServicesColocation");
-        }}
-      >
-        Voir tout
-      </ButtonComponent> */}
     </View>
   );
 };
