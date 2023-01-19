@@ -58,11 +58,11 @@ class UserController extends AbstractController
         return $this->json($this->getUser(), 200, [], ["groups" => ["User:read"]]);
     }
 
-            /**
+    /**
      * Récupère les utilisateur qui ne sont pas dans une colocation
      *
      *
-     * @Route("/whitoutColocation", methods={"GET"})
+     * @Route("/withoutColocation", methods={"GET"})
      * @OA\Response(
      *     response=200,
      *     description="Retourne les services ou l'utilisateur est actionnaire",
