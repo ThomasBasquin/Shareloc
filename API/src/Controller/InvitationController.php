@@ -161,7 +161,7 @@ class InvitationController extends AbstractController
 
         $this->invitationRepository->save($invitation, true);
 
-        return $this->json($invitation, 200, [], ["groups" => ["Invitation:read"]]);
+        return $this->json(["message"=>"ok"], 204, [], ["groups" => ["Invitation:read"]]);
     }
 
     /**
