@@ -3,21 +3,15 @@ import {
   Text,
   View,
   StyleSheet,
-  ScrollView,
   TouchableOpacity,
 } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import Title from "../components/Title";
 import BoxGrise from "../components/BoxGrise";
-import Box from "../components/Box";
 import { FontAwesome } from "@expo/vector-icons";
 import { COLOR } from "../constantes/Color";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
-import { Octicons } from "@expo/vector-icons";
-import BoxService from "../components/BoxService";
 import moment from "moment";
 
 const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {

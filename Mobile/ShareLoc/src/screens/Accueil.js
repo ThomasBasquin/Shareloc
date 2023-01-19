@@ -19,14 +19,19 @@ import URLS from "../constantes/Routes";
 const Accueil = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const [services, setServices] = useState([]);
+  const [points, setPoints] = useState(0);
 
   useEffect(() => {
-    useFetch(URLS.getServicesRecipient.replace("{user}", user.id)).then(
-      setServices
-    );
-  }, []);
+    let promiseAll=[];
+    promiseAll.push(useFetch(URLS.getPoints.replace("{user}",user.id)));
+    promiseAll.push(useFetch(URLS.getServicesRecipient.replace("{user}", user.id)))
 
-  console.log(services);
+    Promise.all(promiseAll)
+    .then(([points,services])=>{
+      setPoints(points.points);
+      setServices(services);
+    })
+  }, []);
 
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
@@ -52,7 +57,7 @@ const Accueil = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
-        <MesPoints />
+        <MesPoints points={points} />
         <Text style={styles.titreMesServices}>Mes services en cours :</Text>
         {services.length ? (
           services.map((s) => (
@@ -73,13 +78,13 @@ const Accueil = ({ navigation }) => {
   );
 };
 
-const MesPoints = () => {
+const MesPoints = ({points}) => {
   return (
     <BoxGrise>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.points}>Mes points</Text>
         <Text style={styles.pointsScore}>
-          76 <FontAwesome name="star" size={24} color={COLOR.jaune} />
+        {points} <FontAwesome name="star" size={24} color={COLOR.jaune} />
         </Text>
       </View>
     </BoxGrise>

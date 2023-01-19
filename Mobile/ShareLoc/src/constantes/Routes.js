@@ -6,6 +6,7 @@ const URLS={
     whoami:DOMAINS+"/user/whoami",
     updateUser:DOMAINS+"/user/{id}",
     getServicesRecipient:DOMAINS+"/user/{user}/services/recipient",
+    getPoints:DOMAINS+"/user/{user}/points",
 }
 
 export default URLS;
