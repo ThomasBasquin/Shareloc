@@ -1,15 +1,24 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
+import React, { useEffect, useContext, useState } from "react";
+import useFetch from "../../constant/UseFetch";
 import Title from "../../components/Title/Title";
-import BoxGrise from "../../components/BoxGrise/BoxGrise";
 import Box from "../../components/Box/Box";
 import { COLOR } from "../../constant/color";
 import ServiceComponent from "../../components/ServiceComponent/ServiceComponent";
 import PointsCounter from "../../components/PointsCounter/PointsCounter";
+import {UserContext} from "../../context/UserContext";
+import URLS from "../../constant/Routes";
 import "./Accueil.css";
 export default function Accueil() {
-  const [nom, setNom] = useState("Roméo");
+
+  const [services, setServices] = useState([]);
+
+  const {user}= useContext(UserContext);
+
+  useEffect(() => {
+    useFetch(URLS.getServicesRecipient.replace("{user}",user.id))
+    .then(setServices)
+  }, []);
+
   return (
     <>
       <div
@@ -20,16 +29,16 @@ export default function Accueil() {
         }}
       >
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <Title title={"Bonjour, " + nom + "."} />
+          <Title title={"Bonjour, " + user.firstname + "."} />
           <PointsCounter points={80} />
         </div>
-        <ServicesEnCours />
+        <ServicesEnCours services={services} />
       </div>
     </>
   );
 }
 
-const ServicesEnCours = () => {
+const ServicesEnCours = ({services}) => {
   return (
     <div
       className=""
@@ -44,55 +53,16 @@ const ServicesEnCours = () => {
       >
         <p className="titreServicesEnCours">Mes services en cours :</p>
         <div className="servicesEnCours">
-          <ServiceComponent
-            date="18/02/2022"
-            by="Hugo"
-            pour="Roméo"
-            label="Passer l'aspirateur"
-            score={10}
-          />
-          <ServiceComponent
-            date="19/02/2022"
-            by="Lucas"
-            pour="Roméo"
-            label="Embrasser Roméo"
-            score={12}
-          />
-          <ServiceComponent
-            date="25/12/2022"
-            by="Thomas"
-            pour="Roméo"
-            label="Faire le repas de Noël"
-            score={25}
-          />
-          <ServiceComponent
-            date="15/12/2022"
-            by="Thomas"
-            pour="Roméo"
-            label="Me faire des bisous"
-            score={25}
-          />
-          <ServiceComponent
-            date="25/12/2022"
-            by="Thomas"
-            pour="Roméo"
-            label="Me faire des bisous"
-            score={25}
-          />
-          <ServiceComponent
-            date="25/12/2022"
-            by="Thomas"
-            pour="Roméo"
-            label="Me faire des bisous"
-            score={25}
-          />
-          <ServiceComponent
-            date="25/12/2022"
-            by="Thomas"
-            pour="Roméo"
-            label="Me faire des bisous"
-            score={25}
-          />
+          {services.length ? services.map((s)=>(
+              <ServiceComponent
+              key={s.id}
+              date={s.createdAt}
+              by={s.performer}
+              pour={s.recipient}
+              label={s.title}
+              score={s.cost}
+            />
+          )) : <p>Vous n'avez aucun services en cours</p> }
         </div>
       </Box>
     </div>
