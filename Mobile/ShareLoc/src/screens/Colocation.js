@@ -218,7 +218,7 @@ const InviteMembers = ({ navigation }) => {
           onPress={() => {
             setModalVisible(true);
           }}
-          style={{ width: "30%" }}
+          style={{ width: "91.7%" }}
         >
           <Text>Inviter</Text>
         </ButtonComponent>

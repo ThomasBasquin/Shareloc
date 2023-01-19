@@ -1,5 +1,12 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity } from "react-native";
+import {
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import { COLOR } from "../constantes/Color";
@@ -8,6 +15,8 @@ import Box from "../components/Box";
 import { UserContext } from "../Context/UserContext";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
+import { format, isToday, isYesterday } from "date-fns";
+import moment from "moment";
 
 const Messagerie = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
@@ -33,19 +42,40 @@ const Discussion = ({ messages, setMessages, user }) => {
         <ScrollView style={{ height: "70%", margin: 5 }}>
           {messages.length ? (
             messages.map((m) => {
+              const messageDate = moment(m.sendAt);
+              const today = moment();
+              const yesterday = moment().subtract(1, "days");
+
+              let messageDateFormatted;
+              if (messageDate.isSame(today, "day")) {
+                messageDateFormatted = messageDate.format("HH:mm");
+              } else if (messageDate.isSame(yesterday, "day")) {
+                messageDateFormatted = "Hier " + messageDate.format("HH:mm");
+              } else {
+                messageDateFormatted = messageDate.format("DD/MM/YYYY");
+              }
+
               if (m.sender.firstname == user.firstname) {
                 return (
                   <MessagePerso
-                    name={m.sender.firstname}
-                    hour={m.sendAt}
+                    name={
+                      <Text style={{ fontWeight: "bold" }}>
+                        {m.sender.firstname}
+                      </Text>
+                    }
+                    hour={messageDateFormatted}
                     message={m.message}
                   />
                 );
               } else {
                 return (
                   <MessageAutre
-                    name={m.sender.firstname}
-                    hour={m.sendAt}
+                    name={
+                      <Text style={{ fontWeight: "bold" }}>
+                        {m.sender.firstname}
+                      </Text>
+                    }
+                    hour={messageDateFormatted}
                     message={m.message}
                   />
                 );
@@ -58,7 +88,7 @@ const Discussion = ({ messages, setMessages, user }) => {
           )}
         </ScrollView>
       </Box>
-      
+
       <AddMessage user={user} setMessages={setMessages} />
     </View>
   );
@@ -102,22 +132,21 @@ const AddMessage = ({ user, setMessages }) => {
         onChangeText={setMessage}
       />
       <TouchableOpacity
-          onPressIn={() => {
-            addMessage(user.colocation, user.id, message)
-          }}
-        >
-      <View
-        style={{
-          backgroundColor: COLOR.jaune,
-          padding: 10,
-          borderRadius: 20,
-          height: 48,
-          marginLeft: 10,
+        onPressIn={() => {
+          addMessage(user.colocation, user.id, message);
         }}
       >
-
-        <FontAwesome name="send" size={24} color="black" />
-      </View>
+        <View
+          style={{
+            backgroundColor: COLOR.jaune,
+            padding: 10,
+            borderRadius: 20,
+            height: 48,
+            marginLeft: 10,
+          }}
+        >
+          <FontAwesome name="send" size={24} color="black" />
+        </View>
       </TouchableOpacity>
     </View>
   );
