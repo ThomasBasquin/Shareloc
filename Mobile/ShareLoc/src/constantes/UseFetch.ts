@@ -13,6 +13,7 @@ async function checkStatus(response: Response) {
     const error = await response.json();
     throw error;
   }
+  if(response.status==204)return null;
   return await response.json();
 }
 

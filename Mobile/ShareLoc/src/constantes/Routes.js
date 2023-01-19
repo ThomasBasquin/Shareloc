@@ -8,6 +8,8 @@ const URLS={
     getServicesRecipient:DOMAINS+"/user/{user}/services/recipient",
     getPoints:DOMAINS+"/user/{user}/points",
     getCollocation:DOMAINS+"/collocation/{collocation}",
+    getInvitations:DOMAINS+"/invitation",
+    answerInvitation:DOMAINS+"/invitation/{invitation}/replied",
 }
 
 export default URLS;
