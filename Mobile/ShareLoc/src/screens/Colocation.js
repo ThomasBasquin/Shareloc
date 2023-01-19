@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext,useEffect,useState} from "react";
 import {
   Text,
   View,
@@ -15,8 +15,21 @@ import { FontAwesome } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import ServiceComponent from "../components/ServiceComponent";
 import ButtonComponent from "../components/ButtonComponent";
+import useFetch from "../constantes/UseFetch";
+import URLS from "../constantes/Routes";
+import { UserContext } from "../Context/UserContext";
 
 const Colocation = ({ navigation }) => {
+
+  const {user} = useContext(UserContext);
+
+  const [colocation, setColocation] = useState(null);
+
+  useEffect(() => {
+    useFetch(URLS.getCollocation.replace("{collocation}",user.colocation))
+    .then(setColocation)
+  }, []);
+
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
       <View style={{ flex: 1, backgroundColor: "white" }}>
