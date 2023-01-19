@@ -21,13 +21,13 @@ const Discussion = () => {
       <Box>
         <ScrollView style={{ height: "70%", margin: 5 }}>
           
-            <MessageAutre name="Hugo" hour="12:21"/>
-            <MessageAutre name="Hugo" hour="12:21"/>
+            <MessageAutre name="Hugo" hour="12:21" message="Coucou bande de nouille"/>
+            <MessageAutre name="Hugo" hour="12:21" message="Coucou bande de nouille"/>
           
-          <MessagePerso name="Hugo" hour="12:29"/>
-          <MessagePerso name="Hugo" hour="12:29"/>
-          <MessagePerso name="Hugo" hour="12:29"/>
-          <MessagePerso name="Hugo" hour="12:29"/>
+          <MessagePerso name="Hugo" hour="12:29" message="Coucou bande de nouille"/>
+          <MessagePerso name="Hugo" hour="12:29" message="Coucou bande de nouille"/>
+          <MessagePerso name="Hugo" hour="12:29" message="Coucou bande de nouille"/>
+          <MessagePerso name="Hugo" hour="12:29" message="Coucou bande de nouille"/>
         </ScrollView>
       </Box>
       <AddMessage />
@@ -35,12 +35,12 @@ const Discussion = () => {
   );
 };
 
-const MessageAutre = ({name, hour}) => {
+const MessageAutre = ({name, hour, message}) => {
   return (<View style={{marginTop: 7}}>
     <NomHeure name={name} hour={hour} />
     <View style={styles.messageAutre}>
       <Text>
-        TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT
+        {message}
       </Text>
     </View>
     </View>
@@ -63,7 +63,7 @@ const AddMessage =() => {
   )
 }
 
-const MessagePerso = ({name, hour}) => {
+const MessagePerso = ({name, hour, message}) => {
   return (<View style={{marginTop: 7, right:0, left : 60}}>
     <View style={{left :160}}>
     <NomHeure name={name} hour={hour} />
@@ -71,7 +71,7 @@ const MessagePerso = ({name, hour}) => {
     <View style={styles.messagePerso}>
       
       <Text style={{color : COLOR.blanc}}>
-        TEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXTTEXT
+        {message}
       </Text>
     </View>
     </View>
