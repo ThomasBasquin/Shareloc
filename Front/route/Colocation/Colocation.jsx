@@ -63,7 +63,7 @@ export default function Colocation() {
       }
     });
   }
-
+  
   return (
     <>
       {user.colocation && colocation && services.length ? (
@@ -73,11 +73,6 @@ export default function Colocation() {
 
             <Resume colocation={colocation} services={services} />
           </div>
-          {colocation.manager.id === user.id && (
-            <>
-              <InviteMembers user={user} />
-            </>
-          )}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Classement
               members={colocation.members}
@@ -133,9 +128,9 @@ export default function Colocation() {
 
 const InviteMembers = ({ user }) => {
   const [userWithoutColocation, setUserWithoutColocation] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-  function getUsersWithoutColocation() {
-   
+  const [selectedUser, setSelectedUser] = useState(0);
+
+  useEffect(() => {
     useFetch(URLS.getUsersWithoutColocation).then((users) =>
       setUserWithoutColocation(
         users.map((u) => ({
@@ -144,7 +139,7 @@ const InviteMembers = ({ user }) => {
         }))
       )
     );
-  }
+  }, []);
 
   function sendInvitation() {
     useFetch(URLS.createInvitation, "POST", {
@@ -152,13 +147,12 @@ const InviteMembers = ({ user }) => {
       sender: user.id,
       receipter: selectedUser,
     }).then((e) => {
-      setModalVisible(false);
-    });
+      console.log(e)
+    }).catch((e) => {
+      console.log(e)
+    })
   }
 
-  
-  getUsersWithoutColocation();
-  
   return (
     <div
       style={{
@@ -167,20 +161,34 @@ const InviteMembers = ({ user }) => {
         alignItems: "center",
       }}
     >
-      
-      <Box>
-        <label for="listMembres">Inviter un membre</label>
-        <select name="listMembres" value={selectedUser} OnChange={e=>setSelectedUser(e.target.value)}>
-          <option value=""></option>
-          {userWithoutColocation.map((u) => (<option value={u.id}>{u.label}</option>))}
+      <Box
+        style={{
+          padding: "2rem",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
+        <h2>Inviter un membre</h2>
+        <select
+          style={{ margin: "2rem" }}
+          value={selectedUser}
+          onChange={(e) => setSelectedUser(e.target.value)}
+        >
+          <option value={0} selected />
+          {userWithoutColocation.map((u, i) => (
+            <option selected={i == 0} value={u.value}>
+              {u.label}
+            </option>
+          ))}
         </select>
+        <Button onClick={sendInvitation}>Valider</Button>
       </Box>
     </div>
   );
 };
 
 const Resume = ({ colocation, services }) => {
-  
   return (
     <div className="resume">
       <Box style={{ width: "56rem", marginRight: "2.5em", marginTop: 70 }}>
