@@ -95,12 +95,11 @@ const Colocation = ({ navigation }) => {
 
         {user.colocation && colocation && services.length ? (
           <>
-            {colocation.manager.id === user.id &&
-              colocation.members.length < 5 && (
-                <>
-                  <InviteMembers navigation={navigation} />
-                </>
-              )}
+            {colocation.manager.id === user.id && (
+              <>
+                <InviteMembers navigation={navigation} />
+              </>
+            )}
             <Resume colocation={colocation} services={services} />
             <Participants
               members={colocation.members}
@@ -342,7 +341,7 @@ const ItemParticipants = ({ prenom, role, points }) => {
   );
 };
 
-const ServicesEnCours = ({ navigation,services }) => {
+const ServicesEnCours = ({ navigation, services }) => {
   return (
     <View style={styles.participants}>
       <Text style={styles.titreParticipants}>Services en cours :</Text>
