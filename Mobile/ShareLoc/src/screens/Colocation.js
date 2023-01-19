@@ -24,27 +24,28 @@ const Colocation = ({ navigation }) => {
 
   const [colocation, setColocation] = useState(null);
   const [invitations, setInvitations] = useState([]);
+  const [services, setServices] = useState([]);
 
   useEffect(() => {
     if (!user.colocation) {
-      useFetch(URLS.getInvitations).then(setInvitations);
+      useFetch(URLS.getInvitations).then(setInvitations)
     } else {
       useFetch(
         URLS.getCollocation.replace("{collocation}", user.colocation)
       ).then(setColocation);
     }
-  }, []);
+  }, [user]);
 
   function answerInvitation(invitation, accepted) {
-    useFetch(URLS.answerInvitation.replace("{invitation}", invitation), "PUT", {
+    useFetch(URLS.answerInvitation.replace("{invitation}", invitation.id), "PUT", {
       accepted,
     })
     .then(()=>{
-      invitations.filter((i)=> i.id!==invitation.id)
-      console.log("heyyyyyyy");
-      if(accepted)setUserInfo({...user,collocation:invitation.collocation.id})
+      setInvitations(invitations.filter((i)=> i.id!==invitation.id));
+      if(accepted){
+        setUserInfo({...user,colocation:invitation.collocation.id})
+      };
     })
-    .catch((e)=>console.log("heyy :",e))
   }
 
   return (
@@ -72,11 +73,11 @@ const Colocation = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        {user.colocation ? (
+        {user.colocation && colocation ? (
           <>
-            <Resume />
-            <Participants />
-            <ServicesEnCours navigation={navigation} />
+            <Resume colocation={colocation}  />
+            <Participants members={colocation.members} manager={colocation.manager} />
+            <ServicesEnCours navigation={navigation} services={services} />
           </>
         ) : (
           <View>
@@ -100,13 +101,13 @@ const Colocation = ({ navigation }) => {
                       style={{ flexDirection: "row", justifyContent: "center" }}
                     >
                       <ButtonComponent
-                        onPress={() => answerInvitation(i.id, false)}
+                        onPress={() => answerInvitation(i, false)}
                       >
                         <Text>Rejeter</Text>
                       </ButtonComponent>
                       <ButtonComponent
                         primary
-                        onPress={() => answerInvitation(i.id, true)}
+                        onPress={() => answerInvitation(i, true)}
                       >
                         <Text>Rejoindre</Text>
                       </ButtonComponent>
