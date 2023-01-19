@@ -34,7 +34,7 @@ export default function DetailsService() {
         </Link>
         <Link to="/colocation" style={{ margin: 20 }}>
           <button className="button" id="button-leave" style={{ fontSize: 40 }}>
-            Retour en arrière
+            Retour
           </button>
         </Link>
       </div>

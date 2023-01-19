@@ -34,6 +34,10 @@ export default function CreationCompte() {
     );
   }
 
+  function returnHandle() {
+    window.location.href = "/";
+  }
+
   return (
     <div className="formInscription">
       <Box style={{ height: "90%", width: "50%" }}>
@@ -125,9 +129,14 @@ export default function CreationCompte() {
               />
             </div>
           </Form>
-          <Button onClick={registerHandle} primary id="create-button">
-            Créer mon compte
-          </Button>
+          <div className="button-div">
+            <Button onClick={returnHandle} red id="return-button">
+              Retour
+            </Button>
+            <Button onClick={registerHandle} primary id="create-button">
+              Créer mon compte
+            </Button>
+          </div>
         </div>
       </Box>
     </div>
