@@ -245,6 +245,29 @@ class UserController extends AbstractController
     }
 
     /**
+     * Récupère les utilisateur qui ne sont pas dans une colocation
+     *
+     *
+     * @Route("/whitoutColocation", methods={"GET"})
+     * @OA\Response(
+     *     response=200,
+     *     description="Retourne les services ou l'utilisateur est actionnaire",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Service::class, groups={"Service:read"}))
+     *     )
+     * )
+     * 
+     * @OA\Tag(name="User")
+     */
+    public function getUserWithoutColocation(): Response
+    {
+        $users=$this->serviceRepository->findBy(["collocation"=> null]);
+
+        return $this->json($users, 200, [], ["groups" => ["User:read"]]);
+    }
+
+    /**
      * Récupère les services ou l'utilisateur est actionnaire
      *
      *
