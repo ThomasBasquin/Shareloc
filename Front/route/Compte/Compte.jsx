@@ -1,29 +1,41 @@
 import React, { useState, useContext } from "react";
 
-import { Link } from "react-router-dom";
 import Title from "../../components/Title/Title";
 import { AuthContext } from "../../context/AuthContext";
+import { UserContext } from "../../context/UserContext";
+import URLS from "../../constant/Routes";
+import useFetch from "../../constant/UseFetch";
+import { Link, Navigate, useNavigate  } from "react-router-dom";
 import "./Compte.css";
 
 export default function Profil() {
   const { logout } = useContext(AuthContext);
+  const {user, setUserInfo} = useContext(UserContext);
   const [editable, setEditable] = useState(false);
-
+  const navigate = useNavigate();
   const handleEditable = () => {
     setEditable(!editable);
   };
 
+  const quit = () => {
+    useFetch(
+      URLS.leaveColocation.replace("{user}", user.id)
+    ).then(()=>{
+      setUserInfo({...user, colocation:null});
+      navigate("/colocation")
+    });
+  }
   return (
     <>
       <div id="account-bar">
         <Title title="Profil" id="title" />
         <div className="button-div">
           <div className="button-container">
-            <Link to="/colocation">
-              <button className="button" id="button-leave">
+            {user.colocation !== null ? <button className="button" id="button-leave" onClick={()=> quit()}>
                 Quitter la colocation
-              </button>
-            </Link>
+              </button> : null}
+              
+            
           </div>
           <div className="button-container">
             <button onClick={logout} className="button" id="button-disconnect">
