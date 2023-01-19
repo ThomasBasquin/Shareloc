@@ -18,6 +18,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Octicons } from "@expo/vector-icons";
 import BoxService from "../components/BoxService";
+import moment from "moment";
 
 const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {
   return (
@@ -87,7 +88,7 @@ const InfoService = ({ date, by, label }) => {
         }}
       >
         <AntDesign name="calendar" size={16} color={COLOR.bleuFonce} />
-        {date}
+        {moment(date).format('LL')}
       </Text>
       <Text
         style={{

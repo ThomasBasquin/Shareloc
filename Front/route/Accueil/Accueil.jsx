@@ -57,8 +57,8 @@ const ServicesEnCours = ({services}) => {
               <ServiceComponent
               key={s.id}
               date={s.createdAt}
-              by={s.performer}
-              pour={s.recipient}
+              by={s.performer.firstname}
+              pour={s.recipient.firstname}
               label={s.title}
               score={s.cost}
             />
