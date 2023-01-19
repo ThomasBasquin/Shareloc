@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
@@ -40,7 +40,7 @@ export default function Service() {
           </div>
         </div>
       </div>
-      {showAdd ? <AddService /> : null}
+      {showAdd ? <AddService handleReturn={handleReturn} /> : null}
       <div className={`blur-background ${showAdd ? "active" : ""}`}>
         <div
           className="service-div"
@@ -175,7 +175,7 @@ const ServicesDone = ({ date, by, pour, label, score }) => {
   );
 };
 
-const AddService = () => {
+const AddService = ({ handleReturn }) => {
   return (
     <div className="add-service" id="add-service">
       <h2 className="add-service-title">Ajouter un service</h2>
