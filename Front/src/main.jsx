@@ -39,6 +39,12 @@ const router = createBrowserRouter([
           {
             path: "/colocation",
             element: <Colocation />,
+            children : [
+              {
+                path: ":idService",
+                element: <DetailsService />,
+              },
+            ]
           },
           {
             path: "/compte",
@@ -48,10 +54,7 @@ const router = createBrowserRouter([
             path: "/service",
             element: <Service />,
           },
-          {
-            path: "/detailsService",
-            element: <DetailsService />,
-          },
+          
         ],
       },
       {

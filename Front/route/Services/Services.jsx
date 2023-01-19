@@ -213,6 +213,7 @@ const AddService = ({ handleReturn }) => {
             // className="add-service-input"
             type="number"
             name="score"
+            min="0"
             placeholder="Score"
           />
         </div>
