@@ -7,6 +7,7 @@ import ServiceComponent from "../../components/ServiceComponent/ServiceComponent
 import PointsCounter from "../../components/PointsCounter/PointsCounter";
 import { UserContext } from "../../context/UserContext";
 import URLS from "../../constant/Routes";
+import moment from "moment";
 import "./Accueil.css";
 export default function Accueil() {
   const [services, setServices] = useState([]);
@@ -62,8 +63,8 @@ const ServicesEnCours = ({ services }) => {
           {services.length ? (
             services.map((s) => (
               <ServiceComponent
-                key={s.id}
-                date={s.createdAt}
+                id={s.id}
+                date={moment(s.createdAt).format("LL")}
                 by={s.performer.firstname}
                 pour={s.recipient.firstname}
                 label={s.title}

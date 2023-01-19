@@ -9,11 +9,13 @@ import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
 import Button from "../../components/Button/Button";
 import "./DetailsService.css";
 export default function DetailsService() {
-  const [points, setPoints] = useState(5);
-  const [date, setDate] = useState("20/12/2022");
-  const [by, setBy] = useState("Hugo");
-  const [pour, setPour] = useState("Roméo");
-  const [label, setLabel] = useState("La vaisselle");
+  const service = JSON.parse(localStorage.getItem("service"));
+  console.log(service);
+  const [points, setPoints] = useState(service.points);
+  const [date, setDate] = useState(service.date);
+  const [by, setBy] = useState(service.by);
+  const [pour, setPour] = useState(service.pour);
+  const [label, setLabel] = useState(service.label);
 
   return (
     <div className="">

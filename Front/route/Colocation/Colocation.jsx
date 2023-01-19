@@ -250,6 +250,7 @@ const ServicesColoc = ({services}) => {
       <div style={{overflow : 'scroll', maxHeight : 450, overflowX : "hidden", }}>
       {services.map(s => (
         <ServiceComponent
+          id={s.id}
           date={moment(s.createdAt).format("LL")}
           by={s.performer.firstname}
           pour={s.recipient.firstname}

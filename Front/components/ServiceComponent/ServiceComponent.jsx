@@ -1,14 +1,14 @@
 import React from "react";
 import BoxGrise from "../BoxGrise/BoxGrise";
 import { COLOR } from "../../constant/Color";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate  } from "react-router-dom";
 import "./ServiceComponent.css";
 import moment from "moment/moment";
 
-const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {
+const ServiceComponent = ({ id , date, by, pour, label, score }) => {
   return (
     <div className="" style={{ display: "flex", justifyContent: "center" }}>
-      <Link to="/colocation"></Link>
+      
       <BoxGrise style={{ width: "80%", transform: "scale(1.05)" }}>
         <div
           style={{
@@ -25,7 +25,7 @@ const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {
               flexDirection: "row",
             }}
           >
-            <InfoService date={date} by={by} pour={pour} label={label} />
+            <InfoService id={id} points={score} date={date} by={by} pour={pour} label={label} />
           </div>
           <ScoreService
             points={score}
@@ -40,7 +40,7 @@ const ServiceComponent = ({ navigation, date, by, pour, label, score }) => {
   );
 };
 
-const ScoreService = ({ points, date, by, pour, label }) => {
+const ScoreService = ({ points }) => {
   return (
     <div className="chevron">
       <p
@@ -57,7 +57,14 @@ const ScoreService = ({ points, date, by, pour, label }) => {
   );
 };
 
-const InfoService = ({ date, by, label }) => {
+const InfoService = ({ id, points, date, by,pour, label }) => {
+  const navigate = useNavigate();
+  const details = (service) => {
+    
+    console.log(service)
+    localStorage.setItem("service", JSON.stringify(service));
+    navigate("/detailsService");
+  }
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <p className="infoService">{label}</p>
@@ -93,8 +100,8 @@ const InfoService = ({ date, by, label }) => {
         </p>
       </div>
       <div className="lien">
-        <Link
-          to="/detailsService"
+        <button
+          onClick = {()=> details({id, points, date, by, pour, label})}
           style={{
             textDecoration: "none",
             color: COLOR.bleuFonce,
@@ -104,7 +111,7 @@ const InfoService = ({ date, by, label }) => {
           }}
         >
           Voir détails
-        </Link>
+        </button>
       </div>
     </div>
   );
