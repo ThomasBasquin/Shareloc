@@ -64,12 +64,14 @@ export default function Colocation() {
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Title title="Colocation" />
 
-            <Resume colocation={colocation} services={services}/>
+            <Resume colocation={colocation} services={services} />
           </div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
-            <Classement  members={colocation.members}
-              manager={colocation.manager}/>
-            <ServicesColoc services={services}/>
+            <Classement
+              members={colocation.members}
+              manager={colocation.manager}
+            />
+            <ServicesColoc services={services} />
           </div>
         </div>
       ) : (
@@ -96,10 +98,7 @@ export default function Colocation() {
                     <button onClick={() => answerInvitation(i, false)}>
                       <p>Rejeter</p>
                     </button>
-                    <button
-                      primary
-                      onClick={() => answerInvitation(i, true)}
-                    >
+                    <button primary onClick={() => answerInvitation(i, true)}>
                       <p>Rejoindre</p>
                     </button>
                   </div>
@@ -115,10 +114,10 @@ export default function Colocation() {
   );
 }
 
-const Resume = ({colocation,services}) => {
+const Resume = ({ colocation, services }) => {
   return (
     <div className="resume">
-      <Box style={{ width: "60%", marginRight: 700, marginTop: 40 }}>
+      <Box style={{ width: "56rem", marginRight: "2.5em", marginTop: 70 }}>
         <div className="text-white">
           <div
             style={{ display: "flex", justifyContent: "center", margin: 10 }}
@@ -185,7 +184,12 @@ const Resume = ({colocation,services}) => {
                 }}
               >
                 <p className="titreItemResume">Points</p>
-                <p className="valeurItemResume">{colocation.members.reduce((accumulator,m)=>accumulator+m.points,0)}</p>
+                <p className="valeurItemResume">
+                  {colocation.members.reduce(
+                    (accumulator, m) => accumulator + m.points,
+                    0
+                  )}
+                </p>
               </div>
             </Box>
             <Box
@@ -205,13 +209,17 @@ const Resume = ({colocation,services}) => {
                 }}
               >
                 <p className="titreItemResume">Top coloc</p>
-                <p className="valeurItemResume">{colocation.members.reduce((accumulator,m)=>{
-                  if(accumulator){
-                    return (accumulator.points > m.points ? accumulator : m )
-                  }else{
-                    return m;
+                <p className="valeurItemResume">
+                  {
+                    colocation.members.reduce((accumulator, m) => {
+                      if (accumulator) {
+                        return accumulator.points > m.points ? accumulator : m;
+                      } else {
+                        return m;
+                      }
+                    }, null).firstname
                   }
-                },null).firstname}</p>
+                </p>
               </div>
             </Box>
           </div>
@@ -221,48 +229,61 @@ const Resume = ({colocation,services}) => {
   );
 };
 
-const Classement = ({members,manager}) => {
+const Classement = ({ members, manager }) => {
   return (
     <BoxGrise
-      style={{ width: "50%", backgroundColor: COLOR.bleuFonce, padding: 20 }}
+      style={{
+        width: "65rem",
+        backgroundColor: COLOR.bleuFonce,
+        padding: 20,
+        margin: 20,
+      }}
     >
       <h1 className="titleClassement">Participants :</h1>
-      <ItemClassement prenom={manager.firstname} role={"Créateur"} points={manager.points} />
-        {members.filter(m => m.id!==manager.id).map(m => (
-          <ItemClassement prenom={m.firstname} role={"Membre"} points={m.points} />
-        )) }
+      <ItemClassement
+        prenom={manager.firstname}
+        role={"Créateur"}
+        points={manager.points}
+      />
+      {members
+        .filter((m) => m.id !== manager.id)
+        .map((m) => (
+          <ItemClassement
+            prenom={m.firstname}
+            role={"Membre"}
+            points={m.points}
+          />
+        ))}
     </BoxGrise>
   );
 };
-const ServicesColoc = ({services}) => {
+const ServicesColoc = ({ services }) => {
   return (
-    <Box
+    <BoxGrise
       style={{
         margin: 20,
-        width: "50%",
+        padding: 20,
+        width: "65rem",
         height: 600,
         backgroundColor: COLOR.bleuFonce,
       }}
     >
       <p className="titreServicesEncoursColoc">
-        Les services en cours de la coloc :
+        Services en cours dans la coloc :
       </p>
-      <div style={{overflow : 'scroll', maxHeight : 450, overflowX : "hidden", }}>
-      {services.map(s => (
-        <ServiceComponent
-          id={s.id}
-          date={moment(s.createdAt).format("LL")}
-          by={s.performer.firstname}
-          pour={s.recipient.firstname}
-          label={s.title}
-          score={s.cost}
-        />
-      ))}
-      
-      
+      <div style={{ overflow: "scroll", maxHeight: 450, overflowX: "hidden" }}>
+        {services.map((s) => (
+          <ServiceComponent
+            id={s.id}
+            date={moment(s.createdAt).format("LL")}
+            by={s.performer.firstname}
+            pour={s.recipient.firstname}
+            label={s.title}
+            score={s.cost}
+          />
+        ))}
       </div>
-        
-    </Box>
+    </BoxGrise>
   );
 };
 

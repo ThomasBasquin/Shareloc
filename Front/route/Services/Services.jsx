@@ -8,7 +8,7 @@ import PointsCounter from "../../components/PointsCounter/PointsCounter";
 import Button from "../../components/Button/Button";
 import { UserContext } from "../../context/UserContext";
 import useFetch from "../../constant/UseFetch";
-import URLS from "../../constant/Routes"
+import URLS from "../../constant/Routes";
 import "./Services.css";
 import moment from "moment";
 
@@ -45,7 +45,7 @@ export default function Service() {
   const handleReturn = () => {
     setShowAdd(!showAdd);
   };
-  function fetchServices(){
+  function fetchServices() {
     let promiseAll = [];
     promiseAll.push(
       useFetch(URLS.getServicesRecipient.replace("{user}", user.id))
@@ -56,7 +56,14 @@ export default function Service() {
     if (user.colocation) {
       useFetch(
         URLS.getCollocation.replace("{collocation}", user.colocation)
-      ).then((c) => setMembers(c.members.map(m => ({label : m.firstname + " " + m.lastname,value:m.id}))));
+      ).then((c) =>
+        setMembers(
+          c.members.map((m) => ({
+            label: m.firstname + " " + m.lastname,
+            value: m.id,
+          }))
+        )
+      );
     }
 
     Promise.all(promiseAll).then(([recipient, performer]) => {
@@ -70,7 +77,6 @@ export default function Service() {
     });
   }
 
-
   const annuler = () => {
     setModalVisibility(!modalVisibility);
     setTitle("");
@@ -80,11 +86,17 @@ export default function Service() {
   };
 
   const valider = () => {
-    useFetch(URLS.createService, "POST", {title,performer,recipient,cost,collocation:user.colocation})
-    .then(()=>{
-      fetchServices();
+    useFetch(URLS.createService, "POST", {
+      title,
+      performer,
+      recipient,
+      cost,
+      collocation: user.colocation,
     })
-    .catch(e => console.log(e))
+      .then(() => {
+        fetchServices();
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -95,9 +107,14 @@ export default function Service() {
           <div id="right-header">
             <PointsCounter id="counter-services" points={user.points} />
             {user.colocation !== null ? (
-            <Button id="add-service-button" primary onClick={() => handleAdd()}>
-              <p>Ajouter un service</p>
-            </Button>) : null}
+              <Button
+                id="add-service-button"
+                primary
+                onClick={() => handleAdd()}
+              >
+                <p>Ajouter un service</p>
+              </Button>
+            ) : null}
           </div>
         </div>
       </div>
@@ -112,61 +129,61 @@ export default function Service() {
               Mes services demandés :
             </h2>
             {performerServices.length ? (
-        performerServices.map((s) => (
-          <ServiceComponent
-            id={s.id}
-            date={moment(s.createdAt).format("LL")}
-            by={s.performer.firstname}
-            pour={s.recipient.firstname}
-            label={s.title}
-            score={s.cost}
-          />
-        ))
-      ) : (
-        <p>Vous n'avez aucun services en tant que actionnaire</p>
-      )}
+              performerServices.map((s) => (
+                <ServiceComponent
+                  id={s.id}
+                  date={moment(s.createdAt).format("LL")}
+                  by={s.performer.firstname}
+                  pour={s.recipient.firstname}
+                  label={s.title}
+                  score={s.cost}
+                />
+              ))
+            ) : (
+              <p>Vous n'avez aucun services en tant que actionnaire</p>
+            )}
           </div>
           <div className="service-container">
             <h2 className="service-title" style={{ color: COLOR.jaune }}>
               Mes services en cours :
             </h2>
             {recipientServices.length ? (
-        recipientServices.map((s) => (
-          <ServiceComponent
-            id={s.id}
-            date={moment(s.createdAt).format("LL")}
-            by={s.performer.firstname}
-            pour={s.recipient.firstname}
-            label={s.title}
-            score={s.cost}
-          />
-        ))
-      ) : (
-        <p>Vous n'avez aucun services en tant que bénéficiaire</p>
-      )}
+              recipientServices.map((s) => (
+                <ServiceComponent
+                  id={s.id}
+                  date={moment(s.createdAt).format("LL")}
+                  by={s.performer.firstname}
+                  pour={s.recipient.firstname}
+                  label={s.title}
+                  score={s.cost}
+                />
+              ))
+            ) : (
+              <p>Vous n'avez aucun services en tant que bénéficiaire</p>
+            )}
           </div>
           <div className="service-container">
             <h2 className="service-title" style={{ color: COLOR.jaune }}>
               Mes services effectués :
             </h2>
             {[...recipientServices, ...performerServices].filter(
-          (s) => s.validatedAt !== null
-        ).length ? (
-          [...recipientServices, ...performerServices].filter(
-            (s) => s.validatedAt !== null
-          ).map((s) => (
-          <ServiceComponent
-            id={s.id}
-            date={moment(s.createdAt).format("LL")}
-            by={s.performer.firstname}
-            pour={s.recipient.firstname}
-            label={s.title}
-            score={s.cost}
-          />
-        ))
-      ) : (
-        <p>Vous n'avez aucun services terminés</p>
-      )}
+              (s) => s.validatedAt !== null
+            ).length ? (
+              [...recipientServices, ...performerServices]
+                .filter((s) => s.validatedAt !== null)
+                .map((s) => (
+                  <ServiceComponent
+                    id={s.id}
+                    date={moment(s.createdAt).format("LL")}
+                    by={s.performer.firstname}
+                    pour={s.recipient.firstname}
+                    label={s.title}
+                    score={s.cost}
+                  />
+                ))
+            ) : (
+              <p>Vous n'avez aucun services terminés</p>
+            )}
           </div>
         </div>
       </div>
