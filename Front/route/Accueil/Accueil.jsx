@@ -5,19 +5,19 @@ import Box from "../../components/Box/Box";
 import { COLOR } from "../../constant/color";
 import ServiceComponent from "../../components/ServiceComponent/ServiceComponent";
 import PointsCounter from "../../components/PointsCounter/PointsCounter";
-import {UserContext} from "../../context/UserContext";
+import { UserContext } from "../../context/UserContext";
 import URLS from "../../constant/Routes";
 import "./Accueil.css";
 export default function Accueil() {
-
   const [services, setServices] = useState([]);
 
-  const {user}= useContext(UserContext);
-  console.log({user})
+  const { user } = useContext(UserContext);
+  console.log({ user });
 
   useEffect(() => {
-    useFetch(URLS.getServicesRecipient.replace("{user}",user.id))
-    .then(setServices)
+    useFetch(URLS.getServicesRecipient.replace("{user}", user.id)).then(
+      setServices
+    );
   }, []);
 
   return (
@@ -39,7 +39,7 @@ export default function Accueil() {
   );
 }
 
-const ServicesEnCours = ({services}) => {
+const ServicesEnCours = ({ services }) => {
   return (
     <div
       className=""
@@ -50,20 +50,31 @@ const ServicesEnCours = ({services}) => {
       }}
     >
       <Box
-        style={{ margin: 20, width: 1600, backgroundColor: COLOR.bleuFonce }}
+        style={{
+          margin: 20,
+          width: 1600,
+          backgroundColor: COLOR.bleuFonce,
+          minHeight: "37.5em",
+        }}
       >
         <p className="titreServicesEnCours">Mes services en cours :</p>
         <div className="servicesEnCours">
-          {services.length ? services.map((s)=>(
+          {services.length ? (
+            services.map((s) => (
               <ServiceComponent
-              key={s.id}
-              date={s.createdAt}
-              by={s.performer.firstname}
-              pour={s.recipient.firstname}
-              label={s.title}
-              score={s.cost}
-            />
-          )) : <p style={{marginLeft:20, color : 'white', fontSize: 20}}>Vous n'avez aucun service en cours.</p> }
+                key={s.id}
+                date={s.createdAt}
+                by={s.performer.firstname}
+                pour={s.recipient.firstname}
+                label={s.title}
+                score={s.cost}
+              />
+            ))
+          ) : (
+            <p style={{ marginLeft: 20, color: "white", fontSize: 20 }}>
+              Vous n'avez aucun service en cours.
+            </p>
+          )}
         </div>
       </Box>
     </div>
