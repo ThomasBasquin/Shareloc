@@ -17,6 +17,7 @@ import Accueil from "../route/Accueil/Accueil";
 import DetailsService from "../route/DetailsService/DetailsService";
 import { UserProvider } from "../context/UserContext";
 import { AuthContext, AuthProvider } from "../context/AuthContext";
+import useFetch from "../constant/UseFetch";
 import Navbar from "../components/Navbar/Navbar";
 
 const router = createBrowserRouter([
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
               {
                 path: ":idService",
                 element: <DetailsService />,
+                loader : loaderService,
               },
             ]
           },
@@ -109,6 +111,14 @@ function Auth() {
 
 function isLoggedIn() {
   return true;
+}
+
+async function loaderService({ request, params }) {
+  const id = params.idService;
+  console.log(id);
+  useFetch(URLS.getMessageFromColocation.replace("{idColoc}",user.colocation))
+    .then(setMessages)
+  return res.json();
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
