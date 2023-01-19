@@ -33,6 +33,7 @@ export default function Service() {
           </Button>
         </div>
       </div>
+      <AddService />
       <div className="service-div" style={{ backgroundColor: COLOR.bleuFonce }}>
         <div className="service-container">
           <h2 className="service-title" style={{ color: COLOR.jaune }}>
@@ -158,6 +159,59 @@ const ServicesDone = ({ date, by, pour, label, score }) => {
         label={label}
         score={score}
       />
+    </>
+  );
+};
+
+const AddService = () => {
+  return (
+    <>
+      <div className="add-service">
+        <h2 className="add-service-title">Ajouter un service</h2>
+        <div className="add-service-container">
+          <div className="add-service-input">
+            <label className="add-service-label">Date</label>
+            <input
+              className="add-service-input"
+              type="date"
+              name="date"
+              placeholder="Date"
+            />
+          </div>
+          <div className="add-service-input">
+            <label className="add-service-label">Pour</label>
+            <input
+              className="add-service-input"
+              type="text"
+              name="pour"
+              placeholder="Pour"
+            />
+          </div>
+          <div className="add-service-input">
+            <label className="add-service-label">Label</label>
+            <input
+              className="add-service-input"
+              type="text"
+              name="label"
+              placeholder="Label"
+            />
+          </div>
+          <div className="add-service-input">
+            <label className="add-service-label">Score</label>
+            <input
+              className="add-service-input"
+              type="number"
+              name="score"
+              placeholder="Score"
+            />
+          </div>
+        </div>
+        <div className="add-service-button">
+          <Button primary>
+            <p>Valider</p>
+          </Button>
+        </div>
+      </div>
     </>
   );
 };

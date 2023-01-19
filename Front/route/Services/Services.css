@@ -57,3 +57,7 @@
   font-size: 1.15em;
   font-weight: 600;
 }
+
+.add-service {
+  display: none;
+}
