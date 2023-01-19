@@ -56,7 +56,7 @@ const AddMessage =() => {
       value={message}
       placeholder="Nouveau message"
       onChangeText={setMessage} />
-      <View style={{backgroundColor : COLOR.jaune, padding : 10, borderRadius : "100%", height : 48, marginLeft : 10}}>
+      <View style={{backgroundColor : COLOR.jaune, padding : 10, borderRadius : 20, height : 48, marginLeft : 10}}>
       <FontAwesome name="send" size={24} color="black" />
     </View>
     </View>
