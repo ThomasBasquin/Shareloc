@@ -3,8 +3,10 @@ import {
   Text,
   View,
   StyleSheet,
+  Modal,
   ScrollView,
   TouchableOpacity,
+  TextInput,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
@@ -93,6 +95,12 @@ const Colocation = ({ navigation }) => {
 
         {user.colocation && colocation && services.length ? (
           <>
+            {colocation.manager.id === user.id &&
+              colocation.members.length < 5 && (
+                <>
+                  <InviteMembers navigation={navigation} />
+                </>
+              )}
             <Resume colocation={colocation} services={services} />
             <Participants
               members={colocation.members}
@@ -146,7 +154,70 @@ const Colocation = ({ navigation }) => {
   );
 };
 
-const Resume = ({colocation,services}) => {
+const InviteMembers = ({ navigation }) => {
+  const [modalVisible, setModalVisible] = useState(false);
+
+  return (
+    <View>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Inviter un membre</Text>
+            <Text style={styles.modalLabel}>Adresse email :</Text>
+            <TextInput
+              style={styles.modalInput}
+              placeholder="Entrez l'adresse email"
+            />
+            <View style={styles.modalButtonsDiv}>
+              <TouchableOpacity
+                style={[styles.modalButton, { backgroundColor: COLOR.rouge }]}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={styles.modalButtonText}>Retour</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modalButton}
+                onPress={() => {
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <Text style={[styles.modalButtonText, { color: COLOR.jaune }]}>
+                  Envoyer
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "flex-start",
+        }}
+      >
+        <ButtonComponent
+          onPress={() => {
+            setModalVisible(true);
+          }}
+          style={{ width: "30%" }}
+        >
+          <Text>Inviter</Text>
+        </ButtonComponent>
+      </View>
+    </View>
+  );
+};
+
+const Resume = ({ colocation, services }) => {
   return (
     <Box>
       <View>
@@ -198,7 +269,10 @@ const Resume = ({colocation,services}) => {
               <Text
                 style={{ color: COLOR.blanc, marginLeft: 10, marginTop: 3 }}
               >
-                {colocation.members.reduce((accumulator,m)=>accumulator+m.points,0)}
+                {colocation.members.reduce(
+                  (accumulator, m) => accumulator + m.points,
+                  0
+                )}
               </Text>
             </View>
           </BoxResume>
@@ -214,13 +288,15 @@ const Resume = ({colocation,services}) => {
               <Text
                 style={{ color: COLOR.blanc, marginLeft: 10, marginTop: 3 }}
               >
-                {colocation.members.reduce((accumulator,m)=>{
-                  if(accumulator){
-                    return (accumulator.points > m.points ? accumulator : m )
-                  }else{
-                    return m;
-                  }
-                },null).firstname}
+                {
+                  colocation.members.reduce((accumulator, m) => {
+                    if (accumulator) {
+                      return accumulator.points > m.points ? accumulator : m;
+                    } else {
+                      return m;
+                    }
+                  }, null).firstname
+                }
               </Text>
             </View>
           </BoxResume>
@@ -230,15 +306,25 @@ const Resume = ({colocation,services}) => {
   );
 };
 
-const Participants = ({members,manager}) => {
+const Participants = ({ members, manager }) => {
   return (
     <View style={styles.participants}>
       <Text style={styles.titreParticipants}>Participants :</Text>
       <Box>
-        <ItemParticipants prenom={manager.firstname} role={"Créateur"} points={manager.points} />
-        {members.filter(m => m.id!==manager.id).map(m => (
-          <ItemParticipants prenom={m.firstname} role={"Membre"} points={m.points} />
-        )) }
+        <ItemParticipants
+          prenom={manager.firstname}
+          role={"Créateur"}
+          points={manager.points}
+        />
+        {members
+          .filter((m) => m.id !== manager.id)
+          .map((m) => (
+            <ItemParticipants
+              prenom={m.firstname}
+              role={"Membre"}
+              points={m.points}
+            />
+          ))}
       </Box>
     </View>
   );
@@ -256,12 +342,12 @@ const ItemParticipants = ({ prenom, role, points }) => {
   );
 };
 
-const ServicesEnCours = ({ navigation,services }) => {
+const ServicesEnCours = ({ navigation, services }) => {
   console.log(services);
   return (
     <View style={styles.participants}>
       <Text style={styles.titreParticipants}>Services en cours :</Text>
-      {services.map(s => (
+      {services.map((s) => (
         <ServiceComponent
           navigation={navigation}
           date={moment(s.createdAt).format("LL")}
@@ -335,6 +421,49 @@ const styles = new StyleSheet.create({
     fontSize: 18,
     fontWeight: "600",
     margin: 10,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: "80%",
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    alignSelf: "center",
+  },
+  modalLabel: {
+    fontSize: 18,
+    marginVertical: 6,
+  },
+  modalInput: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    borderRadius: 5,
+  },
+  modalButton: {
+    marginTop: 25,
+    backgroundColor: COLOR.bleuFonce,
+    padding: 10,
+    alignSelf: "center",
+    borderRadius: 5,
+  },
+  modalButtonText: {
+    color: "white",
+    fontWeight: "bold",
+  },
+  modalButtonsDiv: {
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
 });
 

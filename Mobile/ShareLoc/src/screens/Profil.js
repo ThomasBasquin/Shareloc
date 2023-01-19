@@ -27,9 +27,10 @@ const Profil = ({ navigation }) => {
     setEditable(!editable);
   };
 
-  function updateUser(userInfo){
-    useFetch(URLS.updateUser.replace("{id}",user.id),"PUT",{userInfo})
-    .then(()=>setEditable(false));
+  function updateUser(userInfo) {
+    useFetch(URLS.updateUser.replace("{id}", user.id), "PUT", {
+      userInfo,
+    }).then(() => setEditable(false));
   }
 
   const annuler = () => {
@@ -86,8 +87,7 @@ const Profil = ({ navigation }) => {
 };
 
 const ShowInfo = () => {
-
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [lastname, setLastname] = useState(user.lastname);
   const [firstname, setFirstname] = useState(user.firstname);
@@ -167,7 +167,7 @@ const ShowInfo = () => {
 };
 
 const EditInfo = (setEditable) => {
-  const {user} = useContext(UserContext);
+  const { user } = useContext(UserContext);
 
   const [lastname, setLastname] = useState(user.lastname);
   const [firstname, setFirstname] = useState(user.firstname);
@@ -179,11 +179,18 @@ const EditInfo = (setEditable) => {
     setShowPassword(!showPassword);
   };
 
-  function updateUser(){
-    const passwordBody=password.length ? {password}:{};
-    useFetch(URLS.updateUser.replace("{id}",user.id),"PUT",{...passwordBody,lastname,firstname,email})
-    .then((u)=>{setEditable(false),console.log(u)})
-    .catch(e => console.log(e));
+  function updateUser() {
+    const passwordBody = password.length ? { password } : {};
+    useFetch(URLS.updateUser.replace("{id}", user.id), "PUT", {
+      ...passwordBody,
+      lastname,
+      firstname,
+      email,
+    })
+      .then((u) => {
+        setEditable(false), console.log(u);
+      })
+      .catch((e) => console.log(e));
   }
 
   return (
@@ -265,7 +272,9 @@ const EditInfo = (setEditable) => {
             />
           </TouchableOpacity>
         </View>
-          <ButtonComponent primary onPress={updateUser}>Valider</ButtonComponent>
+        <ButtonComponent primary onPress={updateUser}>
+          Valider
+        </ButtonComponent>
       </View>
     </View>
   );
