@@ -12,6 +12,7 @@ import CreationCompte from "../route/CreationCompte/CreationCompte";
 import Colocation from "../route/Colocation/Colocation";
 import Compte from "../route/Compte/Compte";
 import Service from "../route/Services/Services";
+import Messagerie from "../route/Messagerie/Messagerie";
 import Accueil from "../route/Accueil/Accueil";
 import DetailsService from "../route/DetailsService/DetailsService";
 import { UserProvider } from "../context/UserContext";
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
           {
             path: "/welcome",
             element: <Accueil />,
+          },
+          {
+            path: "/messagerie",
+            element: <Messagerie />,
           },
           {
             path: "/colocation",
