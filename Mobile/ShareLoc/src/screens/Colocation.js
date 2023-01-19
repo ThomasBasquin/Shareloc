@@ -342,8 +342,7 @@ const ItemParticipants = ({ prenom, role, points }) => {
   );
 };
 
-const ServicesEnCours = ({ navigation, services }) => {
-  console.log(services);
+const ServicesEnCours = ({ navigation,services }) => {
   return (
     <View style={styles.participants}>
       <Text style={styles.titreParticipants}>Services en cours :</Text>

@@ -13,6 +13,9 @@ const URLS={
     getMessageFromColocation:DOMAINS+"/collocation/{idColoc}/messages",
     addMessage:DOMAINS+"/message",
     getServicesFromColocation:DOMAINS+"/collocation/{collocation}/services",
+    getServicesRecipient:DOMAINS+"/user/{user}/services/recipient",
+    getServicesPerformer:DOMAINS+"/user/{user}/services/performer",
+    createService: DOMAINS +"/service",
 }
 
 export default URLS;

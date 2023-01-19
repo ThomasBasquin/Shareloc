@@ -7,6 +7,10 @@ const URLS={
     getServicesRecipient:DOMAINS+"/user/{user}/services/recipient",
     getMessageFromColocation:DOMAINS+"/collocation/{idColoc}/messages",
     addMessage:DOMAINS+"/message",
+    getServicesFromColocation:DOMAINS+"/collocation/{collocation}/services",
+    getInvitations:DOMAINS+"/invitation",
+    answerInvitation:DOMAINS+"/invitation/{invitation}/replied",
+    getCollocation:DOMAINS+"/collocation/{collocation}",
 }
 
 export default URLS;

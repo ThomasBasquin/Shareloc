@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext,useEffect } from "react";
 import {
   Text,
   View,
@@ -7,35 +7,56 @@ import {
   StyleSheet,
   TextInput,
 } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import { Octicons } from "@expo/vector-icons";
 import { COLOR } from "../constantes/Color";
 import ButtonComponent from "../components/ButtonComponent";
 import ServiceComponent from "../components/ServiceComponent";
 import ModalGeneral from "../components/ModalGeneral";
+import { UserContext } from "../Context/UserContext";
+import useFetch from "../constantes/UseFetch";
+import URLS from "../constantes/Routes";
+import moment from "moment";
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const Services = ({ navigation }) => {
   const [modalVisibility, setModalVisibility] = useState(false);
-  const [nomService, setNomService] = useState("");
-  const [actionnaire, setActionnaire] = useState("");
-  const [beneficiaire, setBeneficiaire] = useState("");
-  const [nbPoints, setNbPoints] = useState(0);
+  const [serviceCreated, setServiceCreated] = useState({title:"",performer:"",recipient:"",cost:0});
+
+  const { user } = useContext(UserContext);
+
+  const [recipientServices, setRecipientServices] = useState([]);
+  const [performerServices, setPerformerServices] = useState([]);
+  const [members, setMembers] = useState([]);
+
+  useEffect(() => {
+    let promiseAll=[];
+    promiseAll.push(useFetch(URLS.getServicesRecipient.replace("{user}", user.id)));
+    promiseAll.push(useFetch(URLS.getServicesPerformer.replace("{user}", user.id)));
+    if(user.colocation){
+      useFetch(URLS.getCollocation.replace("{collocation}", user.colocation))
+  .then((c)=> setMembers(c.members))
+    }
+
+    Promise.all(promiseAll)
+    .then(([recipient,performer])=>{
+      setRecipientServices(recipient);
+      setPerformerServices(performer);
+    })
+  }, []);
+
+  console.log(members);
+
 
   const annuler = () => {
     setModalVisibility(!modalVisibility);
-    setActionnaire("");
-    setNbPoints(0);
-    setBeneficiaire("");
-    setNomService("");
+    setServiceCreated({title:"",performer:"",recipient:"",cost:0});
   };
 
   const valider = () => {
     setModalVisibility(!modalVisibility);
-    setActionnaire("");
-    setNbPoints(0);
-    setBeneficiaire("");
-    setNomService("");
+    setServiceCreated({title:"",performer:"",recipient:"",cost:0});
+    useFetch(URLS.createService,"POST",{})
   };
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
@@ -60,41 +81,42 @@ const Services = ({ navigation }) => {
           />
         </TouchableOpacity>
       </View>
-      <ButtonComponent
-        primary
-        onPress={() => setModalVisibility(!modalVisibility)}
-      >
-        <Text>Créer un service</Text>
-      </ButtonComponent>
-      <ServiceBeneficiaire navigation={navigation} />
-      <ServiceActionnaire navigation={navigation} />
-
-      <ServiceFinis navigation={navigation} />
+      {user.colocation !== null ? (
+        <ButtonComponent
+          primary
+          onPress={() => setModalVisibility(!modalVisibility)}
+        >
+          <Text>Créer un service</Text>
+        </ButtonComponent>
+      ) : null}
+      <ServiceBeneficiaire navigation={navigation} services={recipientServices} />
+      <ServiceActionnaire navigation={navigation} services={performerServices} />
+      <ServiceFinis navigation={navigation} services={[...recipientServices,...performerServices].filter(s => s.validatedAt!==null)} />
       <ModalGeneral visible={modalVisibility}>
         <Text style={styles.titreModal}>Créez un service</Text>
         <TextInput
           style={styles.input}
-          value={nomService}
+          value={serviceCreated.title}
           placeholder="Nom du service"
-          onChangeText={setNomService}
+          onChangeText={e => setServiceCreated({...serviceCreated,title:e})}
         />
         <TextInput
           style={styles.input}
-          value={actionnaire}
+          value={serviceCreated.performer}
           placeholder="Actionnaire"
-          onChangeText={setActionnaire}
+          onChangeText={e => setServiceCreated({...serviceCreated,performer:e})}
         />
         <TextInput
           style={styles.input}
-          value={beneficiaire}
+          value={serviceCreated.recipient}
           placeholder="Bénéficiaire"
-          onChangeText={setBeneficiaire}
+          onChangeText={e => setServiceCreated({...serviceCreated,recipient:e})}
         />
         <TextInput
           style={styles.input}
-          value={nbPoints}
+          value={serviceCreated.cost}
           placeholder="Nombre de points"
-          onChangeText={setNbPoints}
+          onChangeText={e => setServiceCreated({...serviceCreated,cost:parseInt(e)})}
           keyboardType="numeric"
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -108,100 +130,60 @@ const Services = ({ navigation }) => {
   );
 };
 
-const ServiceActionnaire = ({ navigation }) => {
+const ServiceActionnaire = ({ navigation, services }) => {
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
       <Text style={styles.titrePartie}>
         Mes services en tant que actionnaire :
       </Text>
-      <ServiceComponent
+      { services.length ? services.map(s => (
+        <ServiceComponent
         navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
+        date={moment(s.createdAt).format("LL")}
+        by={s.performer.firstname}
+        pour={s.recipient.firstname}
+        label={s.title}
+        score={s.cost}
       />
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
+        )) : <Text>Vous n'avez aucun services en tant que actionnaire</Text> }
     </View>
   );
 };
 
-const ServiceBeneficiaire = ({ navigation }) => {
+const ServiceBeneficiaire = ({ navigation,services }) => {
+
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
       <Text style={styles.titrePartie}>Mes services en cours :</Text>
-      <ServiceComponent
+      { services.length ? services.map(s => (
+        <ServiceComponent
         navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
+        date={moment(s.createdAt).format("LL")}
+        by={s.performer.firstname}
+        pour={s.recipient.firstname}
+        label={s.title}
+        score={s.cost}
       />
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
+        )) : <Text>Vous n'avez aucun services en tant que bénéficiaire</Text> }
     </View>
   );
 };
 
-const ServiceFinis = ({ navigation }) => {
+const ServiceFinis = ({ navigation, services }) => {
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
       <Text style={styles.titrePartie}>Mes services terminés :</Text>
-      <ServiceComponent
+      { services.length ? services.map(s => (
+        <ServiceComponent
         navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
+        date={moment(s.createdAt).format("LL")}
+        by={s.performer.firstname}
+        pour={s.recipient.firstname}
+        label={s.title}
+        score={s.cost}
       />
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
-      <ServiceComponent
-        navigation={navigation}
-        date="18/02/2022"
-        by="Hugo"
-        pour="Roméo"
-        label="Passez l'aspirateur"
-        score={10}
-      />
+        )) : <Text>Vous n'avez aucun services terminés</Text> }
+
     </View>
   );
 };
