@@ -60,7 +60,11 @@ const Profil = ({ navigation }) => {
                 handleEditable();
               }}
             >
-              <Text>Modifier mes informations</Text>
+              {!editable ? (
+                <Text>Modifier mes informations</Text>
+              ) : (
+                <Text>Valider</Text>
+              )}
             </ButtonComponent>
             <ButtonComponent onPress={logout}>Deconnexion</ButtonComponent>
           </View>

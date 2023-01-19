@@ -20,9 +20,12 @@ public function onAuthenticationSuccessResponse(AuthenticationSuccessEvent $even
 
     $data['data'] = array(
         'roles' => $user->getRoles(),
+        'id' => $user->getId(),
         'email' => $user->getEmail(),
         'lastname' => $user->getLastname(),
         'firstname' => $user->getFirstname(),
+        'colocation' => $user->getCollocation() ? $user->getCollocation()->getId():null,
+        'points' => $user->getPoints(),
     );
 
     $event->setData($data);

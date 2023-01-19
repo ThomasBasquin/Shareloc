@@ -1,5 +1,3 @@
-import { getJWTToken } from "./Fonctions";
-
 type IFetchMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";
 type IFetchType = "JSON" | "MULTIPART/FORM-DATA";
 

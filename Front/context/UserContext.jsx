@@ -1,43 +1,31 @@
-import React, {createContext,useState,useEffect} from "react";
+import React, { createContext, useState, useEffect } from "react";
 
-export const UserContext= createContext();
+export const UserContext = createContext();
 
-export function UserProvider({children}){
-const [user, setUser] = useState(null);
+export function UserProvider({ children }) {
+  const [user, setUser] = useState(null);
 
-    async function setUserInfo(userInfo){
-        try{
-            await localStorage.setItem("user",JSON.stringify(userInfo));
-            setUser(userInfo);
-        }catch(e){
-            console.error('Error dans l\'authentification :'+e);
-        }
-    }
+  function setUserInfo(userInfo) {
+    localStorage.setItem("user", JSON.stringify(userInfo));
+    setUser(userInfo);
+  }
 
-    async function isUserInfoSaved(){
-        try{
-            let userInfo = await localStorage.getItem("user");
-            setUser(JSON.parse(userInfo));
-        }catch(e){
-            console.error('Error lors de la récupération des infos user :'+e);
-        }
-    }
+  function isUserInfoSaved() {
+    let userInfo = localStorage.getItem("user");
+    setUser(JSON.parse(userInfo));
+  }
 
-    async function removeUserInfo(){
-        try{
-            await localStorage.removeItem("user");
-        }catch(e){
-            console.error('Error lors de la suppression des infos user :'+e);
-        }
-    }
+  function removeUserInfo() {
+    localStorage.removeItem("user");
+  }
 
-    useEffect(()=>{
-        isUserInfoSaved();
-    },[]);
+  useEffect(() => {
+    isUserInfoSaved();
+  }, []);
 
-    return (
-        <UserContext.Provider value={{user,setUserInfo,removeUserInfo}}>
-            {children}
-        </UserContext.Provider>
-    )
+  return (
+    <UserContext.Provider value={{ user, setUserInfo, removeUserInfo }}>
+      {children}
+    </UserContext.Provider>
+  );
 }
