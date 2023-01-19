@@ -1,91 +1,149 @@
-import React, {useState} from "react";
-import { Text, View, ScrollView, StyleSheet, TextInput } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { Text, View, ScrollView, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import { COLOR } from "../constantes/Color";
-import { FontAwesome } from '@expo/vector-icons';
+import { FontAwesome } from "@expo/vector-icons";
 import Box from "../components/Box";
+import { UserContext } from "../Context/UserContext";
+import useFetch from "../constantes/UseFetch";
+import URLS from "../constantes/Routes";
 
 const Messagerie = ({ navigation }) => {
+  const [messages, setMessages] = useState([]);
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    useFetch(
+      URLS.getMessageFromColocation.replace("{idColoc}", user.colocation)
+    ).then(setMessages);
+  }, []);
   return (
     <View style={{ flex: 1, backgroundColor: COLOR.blanc }}>
       <Title title="Messagerie" />
-      <Discussion />
+      <Discussion messages={messages} setMessages={setMessages} user={user} />
     </View>
   );
 };
 
-const Discussion = () => {
+const Discussion = ({ messages, setMessages, user }) => {
   return (
     <View style={{ backgroundColor: COLOR.blanc, height: "100%" }}>
       <Box>
         <ScrollView style={{ height: "70%", margin: 5 }}>
-          
-            <MessageAutre name="Hugo" hour="12:21" message="Coucou bande de nouille"/>
-            <MessageAutre name="Hugo" hour="12:21" message="Coucou bande de nouille"/>
-          
-          <MessagePerso name="Hugo" hour="12:29" message="Coucou bande de nouille"/>
-          <MessagePerso name="Hugo" hour="12:29" message="Coucou bande de nouille"/>
-          <MessagePerso name="Hugo" hour="12:29" message="Coucou bande de nouille"/>
-          <MessagePerso name="Hugo" hour="12:29" message="Coucou bande de nouille"/>
+          {messages.length ? (
+            messages.map((m) => {
+              if (m.sender.firstname == user.firstname) {
+                return (
+                  <MessagePerso
+                    name={m.sender.firstname}
+                    hour={m.sendAt}
+                    message={m.message}
+                  />
+                );
+              } else {
+                return (
+                  <MessageAutre
+                    name={m.sender.firstname}
+                    hour={m.sendAt}
+                    message={m.message}
+                  />
+                );
+              }
+            })
+          ) : (
+            <Text style={{ marginLeft: 20, color: "white", fontSize: 20 }}>
+              Aucun message pour la colocation.
+            </Text>
+          )}
         </ScrollView>
       </Box>
-      <AddMessage />
-    </View>
-  );
-};
-
-const MessageAutre = ({name, hour, message}) => {
-  return (<View style={{marginTop: 7}}>
-    <NomHeure name={name} hour={hour} />
-    <View style={styles.messageAutre}>
-      <Text>
-        {message}
-      </Text>
-    </View>
-    </View>
-  );
-};
-
-const AddMessage =() => {
-  const [message, setMessage] = useState("");
-  return (
-    <View style={{flexDirection : 'row', padding : 20}}>
-      <TextInput
-      style={styles.input}
-      value={message}
-      placeholder="Nouveau message"
-      onChangeText={setMessage} />
-      <View style={{backgroundColor : COLOR.jaune, padding : 10, borderRadius : 20, height : 48, marginLeft : 10}}>
-      <FontAwesome name="send" size={24} color="black" />
-    </View>
-    </View>
-  )
-}
-
-const MessagePerso = ({name, hour, message}) => {
-  return (<View style={{marginTop: 7, right:0, left : 60}}>
-    <View style={{left :160}}>
-    <NomHeure name={name} hour={hour} />
-    </View>
-    <View style={styles.messagePerso}>
       
-      <Text style={{color : COLOR.blanc}}>
-        {message}
-      </Text>
-    </View>
+      <AddMessage user={user} setMessages={setMessages} />
     </View>
   );
 };
 
-const NomHeure = ({name, hour}) => {
+const MessageAutre = ({ name, hour, message }) => {
   return (
-    <View style={{flexDirection: "row", marginLeft:5, marginBottom:5}}>
-    <Text style={{marginRight:5}}>{name}</Text>
-    <Text>{hour}</Text>
+    <View style={{ marginTop: 7 }}>
+      <NomHeure name={name} hour={hour} />
+      <View style={styles.messageAutre}>
+        <Text>{message}</Text>
+      </View>
     </View>
-  )
-}
+  );
+};
+
+const AddMessage = ({ user, setMessages }) => {
+  const [message, setMessage] = useState("");
+
+  async function addMessage(collocation, sender, message) {
+    return useFetch(URLS.addMessage, "POST", {
+      collocation,
+      sender,
+      message,
+    }).then(() => {
+      useFetch(
+        URLS.getMessageFromColocation.replace("{idColoc}", user.colocation)
+      ).then((messages) => {
+        setMessages(messages);
+        setMessage("");
+      });
+    });
+  }
+
+  return (
+    <View style={{ flexDirection: "row", padding: 20 }}>
+      <TextInput
+        style={styles.input}
+        value={message}
+        placeholder="Nouveau message"
+        onChangeText={setMessage}
+      />
+      <TouchableOpacity
+          onPressIn={() => {
+            addMessage(user.colocation, user.id, message)
+          }}
+        >
+      <View
+        style={{
+          backgroundColor: COLOR.jaune,
+          padding: 10,
+          borderRadius: 20,
+          height: 48,
+          marginLeft: 10,
+        }}
+      >
+
+        <FontAwesome name="send" size={24} color="black" />
+      </View>
+      </TouchableOpacity>
+    </View>
+  );
+};
+
+const MessagePerso = ({ name, hour, message }) => {
+  return (
+    <View style={{ marginTop: 7, right: 0, left: 60 }}>
+      <View style={{ left: 160 }}>
+        <NomHeure name={name} hour={hour} />
+      </View>
+      <View style={styles.messagePerso}>
+        <Text style={{ color: COLOR.blanc }}>{message}</Text>
+      </View>
+    </View>
+  );
+};
+
+const NomHeure = ({ name, hour }) => {
+  return (
+    <View style={{ flexDirection: "row", marginLeft: 5, marginBottom: 5 }}>
+      <Text style={{ marginRight: 5 }}>{name}</Text>
+      <Text>{hour}</Text>
+    </View>
+  );
+};
 
 const styles = new StyleSheet.create({
   messageAutre: {

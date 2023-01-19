@@ -54,18 +54,18 @@ const Discussion = ({messages, setMessages, user}) => {
 const AddMessage =({user, setMessages}) => {
     const [message, setMessage] = useState("");
     async function addMessage(collocation, sender, message) {
-       
-        return useFetch(URLS.addMessage,"POST",{collocation,sender,message})
-        .then(() => {
-            useFetch(URLS.getMessageFromColocation.replace("{idColoc}",user.colocation))
-    .then((messages)=> {
-        setMessages(messages);
-        setMessage("");
-    }
-        
-        )
-            
-        })
+      return useFetch(URLS.addMessage, "POST", {
+        collocation,
+        sender,
+        message,
+      }).then(() => {
+        useFetch(
+          URLS.getMessageFromColocation.replace("{idColoc}", user.colocation)
+        ).then((messages) => {
+          setMessages(messages);
+          setMessage("");
+        });
+      });
     }
     return (
       <div style={{display : 'flex',flexDirection : 'row', padding : 20, width : 1000}}>

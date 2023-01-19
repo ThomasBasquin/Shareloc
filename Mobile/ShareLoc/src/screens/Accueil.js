@@ -20,6 +20,7 @@ const Accueil = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const [services, setServices] = useState([]);
   const [points, setPoints] = useState(0);
+  console.log(user)
 
   useEffect(() => {
     let promiseAll=[];
@@ -57,7 +58,7 @@ const Accueil = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
-        <MesPoints points={points} />
+        <MesPoints points={user.points} />
         <Text style={styles.titreMesServices}>Mes services en cours :</Text>
         {services.length ? (
           services.map((s) => (
