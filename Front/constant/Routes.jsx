@@ -6,6 +6,7 @@ const URLS={
     whoami:DOMAINS+"/user/whoami",
     getServicesRecipient:DOMAINS+"/user/{user}/services/recipient",
     getMessageFromColocation:DOMAINS+"/collocation/{idColoc}/messages",
+    addMessage:DOMAINS+"/message",
 }
 
 export default URLS;

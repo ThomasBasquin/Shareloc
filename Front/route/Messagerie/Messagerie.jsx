@@ -4,7 +4,7 @@ import Box from "../../components/Box/Box";
 import { Link } from "react-router-dom";
 import Title from "../../components/Title/Title";
 import { COLOR } from "../../constant/color"
-import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
+import Button from "../../components/ButtonComponent/ButtonComponent";
 import {UserContext} from "../../context/UserContext";
 import URLS from "../../constant/Routes";
 import "./Messagerie.css";
@@ -14,12 +14,7 @@ export default function Messagerie() {
 const [messages, setMessages] = useState([]);
   const {user}= useContext(UserContext);
 
-  async function addMessage(prenom, heure, message) {
-    return useFetch(URLS.register,"POST",{email,firstname,lastname,password})
-    .then(() => {
-        login(email,password);
-    })
-}
+  
 
   useEffect(() => {
     useFetch(URLS.getMessageFromColocation.replace("{idColoc}",user.colocation))
@@ -30,12 +25,12 @@ const [messages, setMessages] = useState([]);
   return (
     <div className="">
       <Title title="Messagerie" id="title" />
-      <Discussion messages={messages} user={user}/>
+      <Discussion messages={messages} setMessages = {setMessages} user={user}/>
     </div>
   );
 }
 
-const Discussion = ({messages, user}) => {
+const Discussion = ({messages, setMessages, user}) => {
   return (
     <div className="center">
       <Box style={{ width: "80%", height: 650 }}>
@@ -51,13 +46,27 @@ const Discussion = ({messages, user}) => {
         
         </div>
       </Box>
-      <AddMessage />
+      <AddMessage user={user} setMessages={setMessages}/>
     </div>
   );
 };
 
-const AddMessage =() => {
+const AddMessage =({user, setMessages}) => {
     const [message, setMessage] = useState("");
+    async function addMessage(collocation, sender, message) {
+       
+        return useFetch(URLS.addMessage,"POST",{collocation,sender,message})
+        .then(() => {
+            useFetch(URLS.getMessageFromColocation.replace("{idColoc}",user.colocation))
+    .then((messages)=> {
+        setMessages(messages);
+        setMessage("");
+    }
+        
+        )
+            
+        })
+    }
     return (
       <div style={{display : 'flex',flexDirection : 'row', padding : 20, width : 1000}}>
         <input
@@ -65,7 +74,7 @@ const AddMessage =() => {
         value={message}
         placeholder="Nouveau message"
         onChange={e => setMessage(e.target.value)} />
-        <ButtonComponent>Envoyer</ButtonComponent>
+        <button onClick={()=>addMessage(user.colocation, user.id, message)}>Envoyer</button>
       </div>
     )
   }
@@ -74,7 +83,7 @@ const AddMessage =() => {
     return (<div style={{marginTop: 7}}>
       <NomHeure name={name} hour={hour} />
       <div className="messageAutre">
-        <p>
+        <p style={{fontSize: 22}}>
           {message}
         </p>
       </div>
@@ -98,7 +107,7 @@ const AddMessage =() => {
       </div>
       <div className="messagePerso">
         
-        <p style={{color : COLOR.blanc}}>
+        <p style={{color : COLOR.blanc, fontSize : 22}}>
         {message}
         </p>
       </div>
