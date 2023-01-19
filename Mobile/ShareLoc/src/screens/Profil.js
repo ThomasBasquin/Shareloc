@@ -72,7 +72,7 @@ const Profil = ({ navigation }) => {
                 <Text style={{ color: "white" }}>Quitter ma colocation</Text>
             </ButtonComponent>
               ) : null}
-              <View style={{marginTop:50}}>
+              <View style={{marginTop:25}}>
 
             {!editable ? (
               <ShowInfo user={user} />

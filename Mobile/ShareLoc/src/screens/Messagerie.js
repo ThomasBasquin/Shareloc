@@ -15,8 +15,9 @@ import Box from "../components/Box";
 import { UserContext } from "../Context/UserContext";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
-import { format, isToday, isYesterday } from "date-fns";
-import moment from "moment";
+import moment from "moment-with-locales-es6";
+
+moment.locale("fr");
 
 const Messagerie = ({ navigation }) => {
   const [messages, setMessages] = useState([]);
@@ -48,11 +49,12 @@ const Discussion = ({ messages, setMessages, user }) => {
 
               let messageDateFormatted;
               if (messageDate.isSame(today, "day")) {
-                messageDateFormatted = messageDate.format("HH:mm");
+                messageDateFormatted = messageDate.format("à HH:mm");
               } else if (messageDate.isSame(yesterday, "day")) {
-                messageDateFormatted = "Hier " + messageDate.format("HH:mm");
+                messageDateFormatted = "Hier" + messageDate.format(" à HH:mm");
               } else {
-                messageDateFormatted = messageDate.format("DD/MM/YYYY");
+                messageDateFormatted =
+                  "le " + messageDate.format("DD MMMM YYYY à HH:mm");
               }
 
               if (m.sender.firstname == user.firstname) {

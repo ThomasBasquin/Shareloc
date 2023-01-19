@@ -91,6 +91,7 @@ const Services = ({ navigation }) => {
         }}
       >
         <Title title="Services" />
+        { user.colocation ?
         <TouchableOpacity
           onPressIn={() => {
             navigation.navigate("Messagerie");
@@ -102,7 +103,7 @@ const Services = ({ navigation }) => {
             color={COLOR.bleuFonce}
             style={{ margin: 25 }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
       </View>
       {user.colocation !== null ? (
         <ButtonComponent
