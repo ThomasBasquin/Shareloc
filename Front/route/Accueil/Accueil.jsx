@@ -13,6 +13,7 @@ export default function Accueil() {
   const [services, setServices] = useState([]);
 
   const {user}= useContext(UserContext);
+  console.log({user})
 
   useEffect(() => {
     useFetch(URLS.getServicesRecipient.replace("{user}",user.id))
@@ -30,7 +31,7 @@ export default function Accueil() {
       >
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <Title title={"Bonjour, " + user.firstname + "."} />
-          <PointsCounter points={80} />
+          <PointsCounter points={user.points} />
         </div>
         <ServicesEnCours services={services} />
       </div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
@@ -6,7 +6,7 @@ import ServiceComponent from "../../components/ServiceComponent/ServiceComponent
 import { COLOR } from "../../constant/color";
 import PointsCounter from "../../components/PointsCounter/PointsCounter";
 import Button from "../../components/Button/Button";
-
+import {UserContext} from "../../context/UserContext";
 import "./Services.css";
 
 export default function Service() {
@@ -15,6 +15,8 @@ export default function Service() {
   const [pour, setPour] = useState("Roméo");
   const [label, setLabel] = useState("Réparer la porte");
   const [score, setScore] = useState(5);
+  
+  const {user}= useContext(UserContext);
 
   const handleAdd = () => {
     console.log("add");
@@ -25,7 +27,7 @@ export default function Service() {
       <div id="header">
         <Title title="Services" />
         <div id="right-header">
-          <PointsCounter id="counter-services" points={80} />
+          <PointsCounter id="counter-services" points={user.points} />
           <Button id="add-service-button" primary onClick={handleAdd()}>
             <p>Ajouter un service</p>
           </Button>
