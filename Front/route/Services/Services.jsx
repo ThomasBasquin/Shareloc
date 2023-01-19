@@ -23,6 +23,10 @@ export default function Service() {
     setShowAdd(!showAdd);
   };
 
+  const handleReturn = () => {
+    setShowAdd(!showAdd);
+  };
+
   return (
     <>
       <div className={`blur-background ${showAdd ? "active" : ""}`}>
@@ -214,8 +218,11 @@ const AddService = () => {
         </div>
       </div>
       <div className="add-service-button">
-        <Button primary>
+        <Button className="button-modal" primary>
           <p>Valider</p>
+        </Button>
+        <Button className="button-modal" red onClick={() => handleReturn()}>
+          <p>Retour</p>
         </Button>
       </div>
     </div>
