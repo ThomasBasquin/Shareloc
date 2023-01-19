@@ -15,6 +15,7 @@ const URLS={
     createService: DOMAINS +"/service",
     leaveColocation : DOMAINS + "/user/{user}/leaveCollocation",
     validService:DOMAINS+"/service/{service}/valid",
+    getUsersWithoutColocation:DOMAINS+"/user/withoutColocation",
 }
 
 export default URLS;

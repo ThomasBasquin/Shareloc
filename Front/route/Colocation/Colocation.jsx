@@ -73,6 +73,11 @@ export default function Colocation() {
             />
             <ServicesColoc services={services} />
           </div>
+          {colocation.manager.id === user.id && (
+            <>
+              <InviteMembers user={user} />
+            </>
+          )}
         </div>
       ) : (
         <div>
@@ -114,7 +119,56 @@ export default function Colocation() {
   );
 }
 
+const InviteMembers = ({ user }) => {
+  const [userWithoutColocation, setUserWithoutColocation] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  function getUsersWithoutColocation() {
+   
+    useFetch(URLS.getUsersWithoutColocation).then((users) =>
+      setUserWithoutColocation(
+        users.map((u) => ({
+          label: u.firstname + " " + u.lastname,
+          value: u.id,
+        }))
+      )
+    );
+  }
+
+  function sendInvitation() {
+    useFetch(URLS.createInvitation, "POST", {
+      collocation: user.colocation,
+      sender: user.id,
+      receipter: selectedUser,
+    }).then((e) => {
+      setModalVisible(false);
+    });
+  }
+
+  
+  getUsersWithoutColocation();
+  
+  return (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      
+      <Box>
+        <label for="listMembres">Inviter un membre</label>
+        <select name="listMembres" value={selectedUser} OnChange={e=>setSelectedUser(e.target.value)}>
+          <option value=""></option>
+          {userWithoutColocation.map((u) => (<option value={u.id}>{u.label}</option>))}
+        </select>
+      </Box>
+    </div>
+  );
+};
+
 const Resume = ({ colocation, services }) => {
+  
   return (
     <div className="resume">
       <Box style={{ width: "56rem", marginRight: "2.5em", marginTop: 70 }}>
@@ -122,7 +176,7 @@ const Resume = ({ colocation, services }) => {
           <div
             style={{ display: "flex", justifyContent: "center", margin: 10 }}
           >
-            <h1 style={{ fontWeight: 500, fontSize: 38 }}>Résumé</h1>
+            <h1 style={{ fontWeight: 500, fontSize: 38 }}>{colocation.name}</h1>
           </div>
           <div className="itemResume">
             <Box

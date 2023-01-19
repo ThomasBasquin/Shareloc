@@ -1,72 +1,71 @@
 .resume {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  right: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .boxResume {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .itemResume {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .titreItemResume {
-  color: var(--jaune);
-  font-size: 25px;
+    color: var(--jaune);
+    font-size: 25px;
 }
 
 .valeurItemResume {
-  color: var(--jaune);
-  font-size: 25px;
+    color: var(--jaune);
+    font-size: 25px;
 }
 
 .classement {
-  border: 1px solid var(--bleuFonce);
-  margin: 30px;
-  width: 50%;
-  border-radius: 15px;
+    border: 1px solid var(--bleuFonce);
+    margin: 30px;
+    width: 50%;
+    border-radius: 15px;
 }
 
 .titleClassement,
 .titreServicesEncoursColoc {
-  font-size: 40px;
-  margin: 20px;
-  display: flex;
-  justify-content: center;
-  color: var(--blanc);
+    font-size: 40px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    color: var(--blanc);
 }
 
 .prenom {
-  font-size: 35px;
-  font-weight: 600;
-  color: var(--blanc);
+    font-size: 35px;
+    font-weight: 600;
+    color: var(--blanc);
 }
 
 .role {
-  color: var(--jaune);
-  font-size: 30px;
-  font-weight: 400;
-  margin-top: 2px;
-  margin-left: 5px;
+    color: var(--jaune);
+    font-size: 30px;
+    font-weight: 400;
+    margin-top: 2px;
+    margin-left: 5px;
 }
 
 .itemParticipants {
-  display: flex;
-  padding: 10px;
-  flex-direction: row;
-  justify-content: space-between;
-  border-bottom: 1px solid var(--jaune);
+    display: flex;
+    padding: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--jaune);
 }
 
 .nbPoints {
-  font-size: 35px;
-  color: var(--blanc);
-  margin-right: 5px;
+    font-size: 35px;
+    color: var(--blanc);
+    margin-right: 5px;
 }
