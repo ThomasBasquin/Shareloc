@@ -182,7 +182,7 @@ const EditInfo = (setEditable) => {
   function updateUser(){
     const passwordBody=password.length ? {password}:{};
     useFetch(URLS.updateUser.replace("{id}",user.id),"PUT",{...passwordBody,lastname,firstname,email})
-    .then((u)=>{setEditable(false),console.log(u)})
+    .then((u)=>{setEditable(false)})
     .catch(e => console.log(e));
   }
 

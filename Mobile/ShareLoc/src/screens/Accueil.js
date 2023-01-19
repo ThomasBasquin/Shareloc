@@ -20,7 +20,6 @@ const Accueil = ({ navigation }) => {
   const { user } = useContext(UserContext);
   const [services, setServices] = useState([]);
   const [points, setPoints] = useState(0);
-  console.log(user)
 
   useEffect(() => {
     let promiseAll=[];
