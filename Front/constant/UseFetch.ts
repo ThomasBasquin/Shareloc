@@ -4,6 +4,7 @@ type IFetchType = "JSON" | "MULTIPART/FORM-DATA";
 const JSON_HEADERS = {
     Accept: "application/json",
     "Content-Type": "application/json",
+    'Authorization': 'Bearer ' + localStorage.getItem("userToken")
 };
 
 async function checkStatus(response: Response) {
