@@ -51,7 +51,7 @@ const Discussion = ({ messages, setMessages, user }) => {
               if (messageDate.isSame(today, "day")) {
                 messageDateFormatted = messageDate.format("à HH:mm");
               } else if (messageDate.isSame(yesterday, "day")) {
-                messageDateFormatted = "Hier" + messageDate.format("à HH:mm");
+                messageDateFormatted = "Hier" + messageDate.format(" à HH:mm");
               } else {
                 messageDateFormatted =
                   "le " + messageDate.format("DD MMMM YYYY à HH:mm");
