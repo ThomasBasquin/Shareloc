@@ -83,6 +83,7 @@ const Colocation = ({ navigation }) => {
           }}
         >
           <Title title="Ma colocation" />
+        { user.colocation ?
           <TouchableOpacity
             onPressIn={() => {
               navigation.navigate("Messagerie");
@@ -94,7 +95,7 @@ const Colocation = ({ navigation }) => {
               color={COLOR.bleuFonce}
               style={{ margin: 25 }}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> : null}
         </View>
 
         {user.colocation && colocation && services.length ? (
