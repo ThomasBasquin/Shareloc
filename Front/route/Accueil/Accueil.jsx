@@ -62,7 +62,7 @@ const ServicesEnCours = ({services}) => {
               label={s.title}
               score={s.cost}
             />
-          )) : <p>Vous n'avez aucun services en cours</p> }
+          )) : <p style={{marginLeft:20, color : 'white', fontSize: 20}}>Vous n'avez aucun service en cours.</p> }
         </div>
       </Box>
     </div>
