@@ -22,6 +22,7 @@ import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
 import { UserContext } from "../Context/UserContext";
 import moment from "moment";
+import DropDownPicker from "react-native-dropdown-picker";
 
 const Colocation = ({ navigation }) => {
   const { user, setUserInfo } = useContext(UserContext);
@@ -69,6 +70,8 @@ const Colocation = ({ navigation }) => {
     });
   }
 
+
+
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
       <View style={{ flex: 1, backgroundColor: "white" }}>
@@ -98,7 +101,7 @@ const Colocation = ({ navigation }) => {
           <>
             {colocation.manager.id === user.id && (
               <>
-                <InviteMembers navigation={navigation} />
+                <InviteMembers user={user} />
               </>
             )}
             <Resume colocation={colocation} services={services} />
@@ -154,8 +157,25 @@ const Colocation = ({ navigation }) => {
   );
 };
 
-const InviteMembers = ({ navigation }) => {
+const InviteMembers = ({ user }) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [userWithoutColocation, setUserWithoutColocation] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+  const [openPicker, setOpenPicker] = useState(false);
+
+  function openModal(){
+    setModalVisible(true);
+    useFetch(URLS.getUsersWithoutColocation)
+    .then(users => setUserWithoutColocation(users.map(u => ({label : u.firstname + " " + u.lastname, value: u.id}))));
+  }
+
+
+  function sendInvitation(){
+    useFetch(URLS.createInvitation,"POST",{collocation:user.colocation,sender:user.id,receipter:selectedUser})
+    .then((e)=>{
+      setModalVisible(false);
+    })
+  }
 
   return (
     <View>
@@ -170,21 +190,19 @@ const InviteMembers = ({ navigation }) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Inviter un membre</Text>
-            {/* <Picker
-              selectedValue={selectedMember}
-              style={styles.modalInput}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedMember(itemValue)
-              }
-            >
-              {membersWithoutColocation.map((member, index) => (
-                <Picker.Item
-                  key={index}
-                  label={member.name}
-                  value={member.email}
-                />
-              ))}
-            </Picker> */}
+            <DropDownPicker
+              mode="SIMPLE"
+              dropDownDirection="BOTTOM"
+              open={openPicker}
+              value={selectedUser}
+              items={userWithoutColocation}
+              setOpen={setOpenPicker}
+              setValue={setSelectedUser}
+              setItems={setUserWithoutColocation}
+              theme="LIGHT"
+              placeholder="Utilisateur"
+              multiple={false}
+            />
             <View style={styles.modalButtonsDiv}>
               <TouchableOpacity
                 style={[styles.modalButton, { backgroundColor: COLOR.rouge }]}
@@ -196,9 +214,7 @@ const InviteMembers = ({ navigation }) => {
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.modalButton}
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
+                onPress={sendInvitation}
               >
                 <Text style={[styles.modalButtonText, { color: COLOR.jaune }]}>
                   Envoyer
@@ -215,10 +231,8 @@ const InviteMembers = ({ navigation }) => {
         }}
       >
         <ButtonComponent
-          onPress={() => {
-            setModalVisible(true);
-          }}
-          style={{ width: "91.7%" }}
+          onPress={openModal}
+          style={{ width: "30%" }}
         >
           <Text>Inviter</Text>
         </ButtonComponent>
