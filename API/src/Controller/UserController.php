@@ -76,7 +76,6 @@ class UserController extends AbstractController
      */
     public function getUserWithoutColocation(): Response
     {
-        dump("heyy");
         $users=$this->userRepository->findBy(["collocation"=> null]);
 
         return $this->json($users, 200, [], ["groups" => ["User:read"]]);
