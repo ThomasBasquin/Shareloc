@@ -3,10 +3,19 @@
   justify-content: center;
 }
 
+.detail-title {
+  font-size: 2em;
+  font-weight: 600;
+  margin-top: 0.3em;
+  margin-bottom: 1.3em;
+  text-align: center;
+  color: black;
+}
+
 .button-details-div {
   display: flex;
   justify-content: flex-end;
-  margin-top: 2em;
+  margin-top: 3em;
   margin-right: 5em;
 }
 
@@ -16,4 +25,18 @@
   margin-right: 2em;
   height: 4em;
   width: 13em;
+}
+
+.button p {
+  font-size: 1.15em;
+  font-weight: 600;
+}
+
+.detail-div {
+  display: flex;
+  flex-direction: row;
+}
+
+.detail-div p {
+  margin-right: 0.6rem;
 }
