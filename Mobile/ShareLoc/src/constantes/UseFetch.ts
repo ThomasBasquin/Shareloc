@@ -1,7 +1,9 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 type IFetchMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";
 type IFetchType = "JSON" | "MULTIPART/FORM-DATA";
 
-const JSON_HEADERS = {
+const HEADERS = {
     Accept: "application/json",
     "Content-Type": "application/json",
 };
@@ -18,6 +20,12 @@ async function checkStatus(response: Response) {
 export default async function useFetch(url:string,method:"POST"|"PUT"|"GET"|"DELETE"="GET",body:any,extraHeaders={}, extraParams = {}){
 
     if (method === "GET" && body) console.error("Une requête GET ne peut pas contenir de body.");
+    
+    const userToken=await AsyncStorage.getItem("userToken");
+
+    const JSON_HEADERS={...HEADERS,
+        'Authorization': 'Bearer ' + userToken};
+
     
     return fetch(url, {
         method: method,
