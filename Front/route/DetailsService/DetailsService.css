@@ -1,4 +1,19 @@
 .centre {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+}
+
+.button-details-div {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2em;
+  margin-right: 5em;
+}
+
+.button {
+  border-radius: 20px;
+  padding: 1em;
+  margin-right: 2em;
+  height: 4em;
+  width: 13em;
 }

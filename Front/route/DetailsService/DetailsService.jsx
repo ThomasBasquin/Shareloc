@@ -6,6 +6,7 @@ import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
 import { COLOR } from "../../constant/color";
 import ButtonComponent from "../../components/ButtonComponent/ButtonComponent";
+import Button from "../../components/Button/Button";
 import "./DetailsService.css";
 export default function DetailsService() {
   const [points, setPoints] = useState(5);
@@ -18,26 +19,23 @@ export default function DetailsService() {
     <div className="">
       <Title title={label} />
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <BoxGrise style={{ width: "70%", height: 400, alignItems: "center" }}>
+        <BoxGrise style={{ width: "70%", height: 500, alignItems: "center" }}>
           <Details points={points} date={date} by={by} pour={pour} />
+          <div className="button-details-div">
+            <Link to="/colocation" style={{ margin: 20 }}>
+              <Button className="button" id="button-validate" primary>
+                Valider le service
+              </Button>
+            </Link>
+            <Link to="/colocation" style={{ margin: 20 }}>
+              <Button className="button" id="button-return-details" red>
+                Retour
+              </Button>
+            </Link>
+          </div>
         </BoxGrise>
       </div>
-      <div className="centre">
-        <Link to="/colocation" style={{ margin: 20 }}>
-          <button
-            className="button"
-            id="button-disconnect"
-            style={{ fontSize: 40 }}
-          >
-            Valider le service
-          </button>
-        </Link>
-        <Link to="/colocation" style={{ margin: 20 }}>
-          <button className="button" id="button-leave" style={{ fontSize: 40 }}>
-            Retour
-          </button>
-        </Link>
-      </div>
+      <div className="centre"></div>
     </div>
   );
 }
