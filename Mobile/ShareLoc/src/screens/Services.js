@@ -39,7 +39,7 @@ const Services = ({ navigation }) => {
     fetchServices();
   }, []);
 
-  function fetchServices(){
+  function fetchServices() {
     let promiseAll = [];
     promiseAll.push(
       useFetch(URLS.getServicesRecipient.replace("{user}", user.id))
@@ -50,7 +50,14 @@ const Services = ({ navigation }) => {
     if (user.colocation) {
       useFetch(
         URLS.getCollocation.replace("{collocation}", user.colocation)
-      ).then((c) => setMembers(c.members.map(m => ({label : m.firstname + " " + m.lastname,value:m.id}))));
+      ).then((c) =>
+        setMembers(
+          c.members.map((m) => ({
+            label: m.firstname + " " + m.lastname,
+            value: m.id,
+          }))
+        )
+      );
     }
 
     Promise.all(promiseAll).then(([recipient, performer]) => {
@@ -64,7 +71,6 @@ const Services = ({ navigation }) => {
     });
   }
 
-
   const annuler = () => {
     setModalVisibility(!modalVisibility);
     setTitle("");
@@ -74,11 +80,17 @@ const Services = ({ navigation }) => {
   };
 
   const valider = () => {
-    useFetch(URLS.createService, "POST", {title,performer,recipient,cost,collocation:user.colocation})
-    .then(()=>{
-      fetchServices();
+    useFetch(URLS.createService, "POST", {
+      title,
+      performer,
+      recipient,
+      cost,
+      collocation: user.colocation,
     })
-    .catch(e => console.log(e))
+      .then(() => {
+        fetchServices();
+      })
+      .catch((e) => console.log(e));
   };
 
   return (
@@ -91,19 +103,20 @@ const Services = ({ navigation }) => {
         }}
       >
         <Title title="Services" />
-        { user.colocation ?
-        <TouchableOpacity
-          onPressIn={() => {
-            navigation.navigate("Messagerie");
-          }}
-        >
-          <Octicons
-            name="feed-discussion"
-            size={35}
-            color={COLOR.bleuFonce}
-            style={{ margin: 25 }}
-          />
-        </TouchableOpacity> : null}
+        {user.colocation ? (
+          <TouchableOpacity
+            onPressIn={() => {
+              navigation.navigate("Messagerie");
+            }}
+          >
+            <Octicons
+              name="feed-discussion"
+              size={35}
+              color={COLOR.bleuFonce}
+              style={{ margin: 25 }}
+            />
+          </TouchableOpacity>
+        ) : null}
       </View>
       {user.colocation !== null ? (
         <ButtonComponent
@@ -133,9 +146,7 @@ const Services = ({ navigation }) => {
           style={styles.input}
           value={title}
           placeholder="Nom du service"
-          onChangeText={(e) =>
-            setTitle(e)
-          }
+          onChangeText={(e) => setTitle(e)}
         />
         <DropDownPicker
           mode="SIMPLE"
@@ -169,9 +180,7 @@ const Services = ({ navigation }) => {
           style={styles.input}
           value={cost}
           placeholder="Nombre de points"
-          onChangeText={(e) =>
-            setCost(parseInt(e))
-          }
+          onChangeText={(e) => setCost(parseInt(e))}
           keyboardType="numeric"
         />
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
@@ -194,8 +203,12 @@ const ServiceActionnaire = ({ navigation, services }) => {
       {services.length ? (
         services.map((s) => (
           <ServiceComponent
+            id={s.id}
             navigation={navigation}
-            date={moment(s.createdAt).format("LL")}
+            dateCreation={moment(s.createdAt).format("LL")}
+            dateTermine={
+              s.validatedAt ? moment(s.validatedAt).format("LL") : null
+            }
             by={s.performer.firstname}
             pour={s.recipient.firstname}
             label={s.title}
@@ -216,8 +229,12 @@ const ServiceBeneficiaire = ({ navigation, services }) => {
       {services.length ? (
         services.map((s) => (
           <ServiceComponent
+            id={s.id}
             navigation={navigation}
-            date={moment(s.createdAt).format("LL")}
+            dateCreation={moment(s.createdAt).format("LL")}
+            dateTermine={
+              s.validatedAt ? moment(s.validatedAt).format("LL") : null
+            }
             by={s.performer.firstname}
             pour={s.recipient.firstname}
             label={s.title}
@@ -238,8 +255,12 @@ const ServiceFinis = ({ navigation, services }) => {
       {services.length ? (
         services.map((s) => (
           <ServiceComponent
+            id={s.id}
             navigation={navigation}
-            date={moment(s.createdAt).format("LL")}
+            dateCreation={moment(s.createdAt).format("LL")}
+            dateTermine={
+              s.validatedAt ? moment(s.validatedAt).format("LL") : null
+            }
             by={s.performer.firstname}
             pour={s.recipient.firstname}
             label={s.title}

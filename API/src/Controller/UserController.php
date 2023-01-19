@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Entity\Service;
 use App\Repository\CollocationRepository;
 use App\Repository\ServiceRepository;
 use App\Repository\UserRepository;

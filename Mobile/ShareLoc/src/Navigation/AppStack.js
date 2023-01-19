@@ -3,7 +3,6 @@ import { COLOR } from "./../constantes/Color";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Messagerie from "../screens/Messagerie";
 import DetailsService from "../screens/DetailsService";
-import ServicesColocation from "../screens/ServicesColocation";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Accueil from "../screens/Accueil";
@@ -48,18 +47,6 @@ export default function AppStack() {
           name="Home"
           component={Home}
           options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ServicesColocation"
-          component={ServicesColocation}
-          options={{
-            title: "",
-            headerStyle: {
-              backgroundColor: COLOR.bleuFonce,
-            },
-
-            headerTintColor: COLOR.blanc,
-          }}
         />
       </Stack.Navigator>
     </NavigationContainer>

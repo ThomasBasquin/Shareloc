@@ -3,7 +3,7 @@ nelmio_api_doc:
         info:
             title: SharelocAPI
             description: Web service de l'application ShareLoc créer lors de la licence CDAD 
-            version: 0.0.2
+            version: 1.0.1
         components:
             securitySchemes:
                 Bearer:

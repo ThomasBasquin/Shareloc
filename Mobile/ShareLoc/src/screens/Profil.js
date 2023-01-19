@@ -58,28 +58,27 @@ const Profil = ({ navigation }) => {
 
           <View style={styles.view}>
             {user.colocation ? (
-            <ButtonComponent
-              style={{
-                width: 180,
-                top: -123.5,
-                marginLeft: 140,
-              }}
-              red
-              onPress={() => {
-                setModalVisibility(!modalVisibility);
-              }}
-            >
+              <ButtonComponent
+                style={{
+                  width: 180,
+                  top: -123.5,
+                  marginLeft: 140,
+                }}
+                red
+                onPress={() => {
+                  setModalVisibility(!modalVisibility);
+                }}
+              >
                 <Text style={{ color: "white" }}>Quitter ma colocation</Text>
-            </ButtonComponent>
-              ) : null}
-              <View style={{marginTop:25}}>
-
-            {!editable ? (
-              <ShowInfo user={user} />
+              </ButtonComponent>
+            ) : null}
+            <View style={{ marginTop: 25 }}>
+              {!editable ? (
+                <ShowInfo user={user} />
               ) : (
                 <EditInfo setEditable={setEditable} />
-                )}
-                </View>
+              )}
+            </View>
             <ButtonComponent onPress={logout}>Deconnexion</ButtonComponent>
           </View>
         </View>
