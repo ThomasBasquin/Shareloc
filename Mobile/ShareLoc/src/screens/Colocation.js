@@ -377,18 +377,23 @@ const ServicesEnCours = ({ navigation, services }) => {
       <Text style={styles.titreParticipants}>Services en cours :</Text>
       {services.map((s) => (
         <ServiceComponent
-          id={s.id}
           navigation={navigation}
-          dateCreation={moment(s.createdAt).format("LL")}
-          dateTermine={
-            s.validatedAt ? moment(s.validatedAt).format("LL") : null
-          }
+          date={moment(s.createdAt).format("LL")}
           by={s.performer.firstname}
           pour={s.recipient.firstname}
           label={s.title}
           score={s.cost}
         />
       ))}
+
+      {/* <ButtonComponent
+        primary
+        onPress={() => {
+          navigation.navigate("ServicesColocation");
+        }}
+      >
+        Voir tout
+      </ButtonComponent> */}
     </View>
   );
 };

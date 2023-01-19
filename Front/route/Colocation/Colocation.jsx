@@ -1,4 +1,10 @@
-import React, { useDebugValue, useContext, useEffect, useState } from "react";
+import React, {
+  useDebugValue,
+  useContext,
+  useEffect,
+  useState,
+  Select,
+} from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar/Navbar";
 import Box from "../../components/Box/Box";
@@ -10,6 +16,7 @@ import ServiceComponent from "../../components/ServiceComponent/ServiceComponent
 import useFetch from "../../constant/UseFetch";
 import URLS from "../../constant/Routes";
 import { UserContext } from "../../context/UserContext";
+import Button from "../../components/Button/Button";
 import moment from "moment";
 
 export default function Colocation() {
@@ -66,6 +73,11 @@ export default function Colocation() {
 
             <Resume colocation={colocation} services={services} />
           </div>
+          {colocation.manager.id === user.id && (
+            <>
+              <InviteMembers user={user} />
+            </>
+          )}
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Classement
               members={colocation.members}
@@ -113,6 +125,55 @@ export default function Colocation() {
     </>
   );
 }
+
+const InviteMembers = ({ user }) => {
+  const [userWithoutColocation, setUserWithoutColocation] = useState([]);
+  const [selectedUser, setSelectedUser] = useState(null);
+
+  useFetch(URLS.getUsersWithoutColocation).then((users) =>
+    setUserWithoutColocation(
+      users.map((u) => ({
+        label: u.firstname + " " + u.lastname,
+        value: u.id,
+      }))
+    )
+  );
+
+  function handleChange(e) {
+    setSelectedUser(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    useFetch(URLS.createInvitation, "POST", {
+      collocation: user.colocation,
+      sender: user.id,
+      receipter: selectedUser,
+    });
+  }
+
+  return (
+    <div id="invite-members">
+      <h2>Inviter un membre</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Sélectionnez un utilisateur :
+          <select value={selectedUser} onChange={handleChange}>
+            <option value="" disabled>
+              Sélectionnez un utilisateur
+            </option>
+            {userWithoutColocation.map((u) => (
+              <option key={u.value} value={u.value}>
+                {u.label}
+              </option>
+            ))}
+          </select>
+        </label>
+        <button type="submit">Envoyer</button>
+      </form>
+    </div>
+  );
+};
 
 const Resume = ({ colocation, services }) => {
   return (
