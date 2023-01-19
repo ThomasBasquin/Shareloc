@@ -25,7 +25,7 @@ export default function Service() {
       <div id="header">
         <Title title="Services" />
         <div id="right-header">
-          <PointsCounter points={80} />
+          <PointsCounter id="counter-services" points={80} />
           <Button id="add-service-button" primary onClick={handleAdd()}>
             <p>Ajouter un service</p>
           </Button>

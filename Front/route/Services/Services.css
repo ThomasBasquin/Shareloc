@@ -49,6 +49,15 @@
   margin-top: 3.5em;
   padding: 1.3em;
   margin-right: 3em;
-  height: 4.5em;
-  width: 15em;
+  height: 5em;
+  width: 17em;
+}
+
+#counter-services {
+  margin-right: 0.5em !important;
+}
+
+#add-service-button p {
+  font-size: 1.15em;
+  font-weight: 600;
 }
