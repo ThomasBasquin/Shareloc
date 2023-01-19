@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import Box from "../components/Box";
@@ -169,11 +170,21 @@ const InviteMembers = ({ navigation }) => {
         <View style={styles.modalContainer}>
           <View style={styles.modalContent}>
             <Text style={styles.modalTitle}>Inviter un membre</Text>
-            <Text style={styles.modalLabel}>Adresse email :</Text>
-            <TextInput
+            {/* <Picker
+              selectedValue={selectedMember}
               style={styles.modalInput}
-              placeholder="Entrez l'adresse email"
-            />
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedMember(itemValue)
+              }
+            >
+              {membersWithoutColocation.map((member, index) => (
+                <Picker.Item
+                  key={index}
+                  label={member.name}
+                  value={member.email}
+                />
+              ))}
+            </Picker> */}
             <View style={styles.modalButtonsDiv}>
               <TouchableOpacity
                 style={[styles.modalButton, { backgroundColor: COLOR.rouge }]}
@@ -435,7 +446,7 @@ const styles = new StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: "bold",
-    marginBottom: 10,
+    marginBottom: 20,
     alignSelf: "center",
   },
   modalLabel: {
