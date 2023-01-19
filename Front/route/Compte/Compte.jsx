@@ -15,7 +15,7 @@ export default function Profil() {
 
   return (
     <>
-      <div id="nav-bar">
+      <div id="account-bar">
         <Title title="Profil" id="title" />
         <div className="button-div">
           <div className="button-container">

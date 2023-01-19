@@ -103,13 +103,13 @@ button {
   align-items: center;
 }
 
-#nav-bar {
+#account-bar {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-left: -2em;
   align-items: center;
-  margin-bottom: 5em;
+  margin-bottom: 2.7em;
   padding: 0.8em 2em;
   height: 4em;
   margin-top: 40px;
