@@ -1,6 +1,4 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import Navbar from "../../components/Navbar/Navbar";
 import Title from "../../components/Title/Title";
 import ServiceComponent from "../../components/ServiceComponent/ServiceComponent.jsx";
 import { COLOR } from "../../constant/color";
@@ -13,23 +11,14 @@ import "./Services.css";
 import moment from "moment";
 
 export default function Service() {
-  const [date, setDate] = useState("25/02/2023");
-  const [by, setBy] = useState("Thomas");
-  const [pour, setPour] = useState("Roméo");
-  const [label, setLabel] = useState("Réparer la porte");
-  const [score, setScore] = useState(5);
+
   const [showAdd, setShowAdd] = useState(false);
 
-  const [modalVisibility, setModalVisibility] = useState(false);
 
-  const [title, setTitle] = useState("");
-  const [performer, setPerformer] = useState(null);
-  const [recipient, setRecipient] = useState(null);
-  const [cost, setCost] = useState(0);
+  
   const { user } = useContext(UserContext);
 
-  const [openPickerPerformer, setOpenPickerPerformer] = useState(false);
-  const [openPickerRecipient, setOpenPickerRecipient] = useState(false);
+
   const [recipientServices, setRecipientServices] = useState([]);
   const [performerServices, setPerformerServices] = useState([]);
   const [members, setMembers] = useState([]);
@@ -42,9 +31,7 @@ export default function Service() {
     setShowAdd(!showAdd);
   };
 
-  const handleReturn = () => {
-    setShowAdd(!showAdd);
-  };
+  
   function fetchServices(){
     let promiseAll = [];
     promiseAll.push(
@@ -70,23 +57,6 @@ export default function Service() {
     });
   }
 
-
-  const annuler = () => {
-    setModalVisibility(!modalVisibility);
-    setTitle("");
-    setPerformer(null);
-    setRecipient(null);
-    setCost(0);
-  };
-
-  const valider = () => {
-    useFetch(URLS.createService, "POST", {title,performer,recipient,cost,collocation:user.colocation})
-    .then(()=>{
-      fetchServices();
-    })
-    .catch(e => console.log(e))
-  };
-
   return (
     <>
       <div className={`blur-background ${showAdd ? "active" : ""}`}>
@@ -101,7 +71,7 @@ export default function Service() {
           </div>
         </div>
       </div>
-      {showAdd ? <AddService handleReturn={handleReturn} /> : null}
+      {showAdd ? <AddService user={user} handleAdd={handleAdd} /> : null}
       <div className={`blur-background ${showAdd ? "active" : ""}`}>
         <div
           className="service-div"
@@ -123,7 +93,7 @@ export default function Service() {
           />
         ))
       ) : (
-        <p>Vous n'avez aucun services en tant que actionnaire</p>
+        <p>Vous n'avez aucun services en tant que actionnaire.</p>
       )}
           </div>
           <div className="service-container">
@@ -142,7 +112,7 @@ export default function Service() {
           />
         ))
       ) : (
-        <p>Vous n'avez aucun services en tant que bénéficiaire</p>
+        <p>Vous n'avez aucun services en tant que bénéficiaire.</p>
       )}
           </div>
           <div className="service-container">
@@ -165,7 +135,7 @@ export default function Service() {
           />
         ))
       ) : (
-        <p>Vous n'avez aucun services terminés</p>
+        <p>Vous n'avez aucun services terminés.</p>
       )}
           </div>
         </div>
@@ -174,87 +144,84 @@ export default function Service() {
   );
 }
 
-const ServicesAsked = ({ date, by, pour, label, score }) => {
-  return (
-    <>
-      <ServiceComponent
-        className="service-component"
-        date={date}
-        by={by}
-        pour={pour}
-        label={label}
-        score={score}
-      />
-    </>
-  );
-};
 
-const ServicesToDo = ({ date, by, pour, label, score }) => {
-  return (
-    <>
-      <ServiceComponent
-        className="service-component"
-        date={date}
-        by={by}
-        pour={pour}
-        label={label}
-        score={score}
-      />
-    </>
-  );
-};
 
-const ServicesDone = ({ date, by, pour, label, score }) => {
-  return (
-    <>
-      <ServiceComponent
-        className="service-component"
-        date={date}
-        by={by}
-        pour={pour}
-        label={label}
-        score={score}
-      />
-    </>
-  );
-};
+const AddService = ({ user, handleAdd }) => {
+  const [title, setTitle] = useState("");
+  const [performer, setPerformer] = useState(null);
+  const [recipient, setRecipient] = useState(null);
+  const [cost, setCost] = useState(0);
+  function fetchServices(){
+    let promiseAll = [];
+    promiseAll.push(
+      useFetch(URLS.getServicesRecipient.replace("{user}", user.id))
+    );
+    promiseAll.push(
+      useFetch(URLS.getServicesPerformer.replace("{user}", user.id))
+    );
+    if (user.colocation) {
+      useFetch(
+        URLS.getCollocation.replace("{collocation}", user.colocation)
+      ).then((c) => setMembers(c.members.map(m => ({label : m.firstname + " " + m.lastname,value:m.id}))));
+    }
 
-const AddService = ({ handleReturn }) => {
+    Promise.all(promiseAll).then(([recipient, performer]) => {
+      setRecipientServices(recipient);
+      setPerformerServices(performer);
+      setTitle("");
+      setPerformer(null);
+      setRecipient(null);
+      setCost(0);
+      setModalVisibility(false);
+    });
+  }
+
+  const annuler = () => {
+    handleAdd()
+    setTitle("");
+    setPerformer(null);
+    setRecipient(null);
+    setCost(0);
+  };
+
+  const valider = () => {
+    useFetch(URLS.createService, "POST", {title,performer,recipient,cost,collocation:user.colocation})
+    .then(()=>{
+      fetchServices();
+    })
+    .catch(e => console.log(e))
+  };
   return (
     <div className="add-service" id="add-service">
       <h2 className="add-service-title">Ajouter un service</h2>
       <div className="add-service-container">
         <div className="add-service-input">
-          <label className="add-service-label">Date :</label>
-          <input
-            // className="add-service-input"
-            type="date"
-            name="date"
-            placeholder="Date"
-          />
-        </div>
-        <div className="add-service-input">
           <label className="add-service-label">Pour :</label>
           <input
             // className="add-service-input"
+            value={recipient}
+            onChange={e => setRecipient(e.target.value)}
             type="text"
             name="pour"
             placeholder="Pour"
           />
         </div>
         <div className="add-service-input">
-          <label className="add-service-label">Label :</label>
+          <label className="add-service-label">Titre :</label>
           <input
             // className="add-service-input"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
             type="text"
-            name="label"
-            placeholder="Label"
+            name="title"
+            placeholder="Titre"
           />
         </div>
         <div className="add-service-input">
           <label className="add-service-label">Score :</label>
           <input
-            // className="add-service-input"
+            value={cost}
+            onChange={e => setCost(e.target.value)}
             type="number"
             name="score"
             min="0"
@@ -263,10 +230,10 @@ const AddService = ({ handleReturn }) => {
         </div>
       </div>
       <div className="add-service-button">
-        <Button className="button-modal" primary>
+        <Button className="button-modal" primary onClick={()=> valider()}>
           <p>Valider</p>
         </Button>
-        <Button className="button-modal" red onClick={() => handleReturn()}>
+        <Button className="button-modal" red onClick={() => annuler()}>
           <p>Retour</p>
         </Button>
       </div>
