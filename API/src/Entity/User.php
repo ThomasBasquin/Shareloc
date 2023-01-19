@@ -41,6 +41,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastname = null;
 
     #[ORM\Column]
+    #[Groups(['User:read','Collocation:read',"Invitation:read","Service:read","Message:read"])]
     private ?int $points = null;
 
     #[ORM\ManyToOne(inversedBy: 'members',cascade: ['persist'])]
