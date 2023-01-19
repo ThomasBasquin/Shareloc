@@ -20,7 +20,7 @@ export default function PointsCounter({ points, children }) {
             <p className="points">{points}</p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="fill-yellow-700"
+              classname="fill-yellow-700"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
