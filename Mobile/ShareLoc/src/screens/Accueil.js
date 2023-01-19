@@ -43,6 +43,7 @@ const Accueil = ({ navigation }) => {
         }}
       >
         <Title title="Accueil" />
+        { user.colocation ?
         <TouchableOpacity
           onPressIn={() => {
             navigation.navigate("Messagerie");
@@ -54,7 +55,7 @@ const Accueil = ({ navigation }) => {
             color={COLOR.bleuFonce}
             style={{ margin: 25 }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity> : null}
       </View>
       <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
         <MesPoints points={user.points} />

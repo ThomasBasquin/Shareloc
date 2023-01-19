@@ -11,6 +11,8 @@ const URLS={
     getInvitations:DOMAINS+"/invitation",
     answerInvitation:DOMAINS+"/invitation/{invitation}/replied",
     getCollocation:DOMAINS+"/collocation/{collocation}",
+    getServicesPerformer:DOMAINS+"/user/{user}/services/performer",
+    createService: DOMAINS +"/service",
 }
 
 export default URLS;

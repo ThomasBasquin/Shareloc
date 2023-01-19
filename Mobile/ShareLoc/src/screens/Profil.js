@@ -20,8 +20,10 @@ import URLS from "../constantes/Routes";
 
 const Profil = ({ navigation }) => {
   const { logout } = useContext(AuthContext);
+  const { user, setUserInfo } = useContext(UserContext);
   const [modalVisibility, setModalVisibility] = useState(false);
   const [editable, setEditable] = useState(true);
+  const [error, setError] = useState(null);
 
   const handleEditable = () => {
     setEditable(!editable);
@@ -35,10 +37,17 @@ const Profil = ({ navigation }) => {
 
   const annuler = () => {
     setModalVisibility(!modalVisibility);
+    setError(null);
   };
 
   const valider = () => {
-    setModalVisibility(!modalVisibility);
+    useFetch(URLS.leaveColocation.replace("{user}", user.id))
+      .then(() => {
+        setUserInfo({ ...user, colocation: null });
+        setModalVisibility(false);
+        setError(null);
+      })
+      .catch((e) => setError(e));
   };
 
   return (
@@ -48,6 +57,7 @@ const Profil = ({ navigation }) => {
           <Title title="Profil" />
 
           <View style={styles.view}>
+            {user.colocation ? (
             <ButtonComponent
               style={{
                 width: 180,
@@ -59,9 +69,17 @@ const Profil = ({ navigation }) => {
                 setModalVisibility(!modalVisibility);
               }}
             >
-              <Text style={{ color: "white" }}>Quitter ma colocation</Text>
+                <Text style={{ color: "white" }}>Quitter ma colocation</Text>
             </ButtonComponent>
-            {!editable ? <ShowInfo /> : <EditInfo setEditable={setEditable} />}
+              ) : null}
+              <View style={{marginTop:25}}>
+
+            {!editable ? (
+              <ShowInfo user={user} />
+              ) : (
+                <EditInfo setEditable={setEditable} />
+                )}
+                </View>
             <ButtonComponent onPress={logout}>Deconnexion</ButtonComponent>
           </View>
         </View>
@@ -69,7 +87,13 @@ const Profil = ({ navigation }) => {
           <Text style={styles.titreModal}>
             Voulez-vous vraiment quitter votre collocation ?
           </Text>
-
+          {error ? (
+            <Text
+              style={{ backgroundColor: "red", color: "white", padding: 10 }}
+            >
+              {error.detail}
+            </Text>
+          ) : null}
           <View
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
@@ -86,9 +110,7 @@ const Profil = ({ navigation }) => {
   );
 };
 
-const ShowInfo = () => {
-  const { user } = useContext(UserContext);
-
+const ShowInfo = ({ user }) => {
   const [lastname, setLastname] = useState(user.lastname);
   const [firstname, setFirstname] = useState(user.firstname);
   const [email, setEmail] = useState(user.email);
@@ -179,11 +201,18 @@ const EditInfo = (setEditable) => {
     setShowPassword(!showPassword);
   };
 
-  function updateUser(){
-    const passwordBody=password.length ? {password}:{};
-    useFetch(URLS.updateUser.replace("{id}",user.id),"PUT",{...passwordBody,lastname,firstname,email})
-    .then((u)=>{setEditable(false)})
-    .catch(e => console.log(e));
+  function updateUser() {
+    const passwordBody = password.length ? { password } : {};
+    useFetch(URLS.updateUser.replace("{id}", user.id), "PUT", {
+      ...passwordBody,
+      lastname,
+      firstname,
+      email,
+    })
+      .then((u) => {
+        setEditable(false);
+      })
+      .catch((e) => console.log(e));
   }
 
   return (
