@@ -1,4 +1,4 @@
-import React,{useContext, useEffect} from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   Text,
   View,
@@ -6,10 +6,8 @@ import {
   ScrollView,
   TouchableOpacity,
 } from "react-native";
-import Ionicons from "@expo/vector-icons/Ionicons";
 import Title from "../components/Title";
 import BoxGrise from "../components/BoxGrise";
-import Box from "../components/Box";
 import { FontAwesome } from "@expo/vector-icons";
 import { COLOR } from "../constantes/Color";
 import { Octicons } from "@expo/vector-icons";
@@ -17,14 +15,18 @@ import ServiceComponent from "../components/ServiceComponent";
 import { UserContext } from "../Context/UserContext";
 import useFetch from "../constantes/UseFetch";
 import URLS from "../constantes/Routes";
-import ErrorMessage from "../components/ErrorMessage";
-import { AuthContext } from "../Context/AuthContext";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Accueil = ({ navigation }) => {
+  const { user } = useContext(UserContext);
+  const [services, setServices] = useState([]);
 
-  const {user} = useContext(UserContext);
- 
+  useEffect(() => {
+    useFetch(URLS.getServicesRecipient.replace("{user}", user.id)).then(
+      setServices
+    );
+  }, []);
+
+  console.log(services);
 
   return (
     <ScrollView style={{ backgroundColor: COLOR.blanc, marginBottom: 50 }}>
@@ -35,7 +37,6 @@ const Accueil = ({ navigation }) => {
           backgroundColor: COLOR.blanc,
         }}
       >
-        
         <Title title="Accueil" />
         <TouchableOpacity
           onPressIn={() => {
@@ -53,62 +54,20 @@ const Accueil = ({ navigation }) => {
       <View style={{ flex: 1, backgroundColor: COLOR.blanc, margin: 10 }}>
         <MesPoints />
         <Text style={styles.titreMesServices}>Mes services en cours :</Text>
-        <ServiceComponent
-          navigation={navigation}
-          date="18/02/2022"
-          by="Hugo"
-          pour="Roméo"
-          label="Passez l'aspirateur"
-          score={10}
-        />
-        <ServiceComponent
-          navigation={navigation}
-          date="19/02/2022"
-          by="Lucas"
-          pour="Roméo"
-          label="Passez le balais"
-          score={12}
-        />
-        <ServiceComponent
-          navigation={navigation}
-          date="25/12/2022"
-          by="Thomas"
-          pour="Roméo"
-          label="Faire le repas de Noël"
-          score={25}
-        />
-        <ServiceComponent
-          navigation={navigation}
-          date="15/12/2022"
-          by="Thomas"
-          pour="Roméo"
-          label="Me faire des bisous"
-          score={25}
-        />
-        <ServiceComponent
-          navigation={navigation}
-          date="25/12/2022"
-          by="Thomas"
-          pour="Roméo"
-          label="Me faire des bisous"
-          score={25}
-        />
-        <ServiceComponent
-          navigation={navigation}
-          date="25/12/2022"
-          by="Thomas"
-          pour="Roméo"
-          label="Me faire des bisous"
-          score={25}
-        />
-        <ServiceComponent
-          navigation={navigation}
-          date="25/12/2022"
-          by="Thomas"
-          pour="Roméo"
-          label="Me faire des bisous"
-          score={25}
-        />
+        {services.length ? (
+          services.map((s) => (
+            <ServiceComponent
+              navigation={navigation}
+              date={s.createdAt}
+              by={s.performer.firstname}
+              pour={s.recipient.firstname}
+              label={s.title}
+              score={s.cost}
+            />
+          ))
+        ) : (
+          <Text>Vous n'avait pas de services en cours</Text>
+        )}
       </View>
     </ScrollView>
   );
