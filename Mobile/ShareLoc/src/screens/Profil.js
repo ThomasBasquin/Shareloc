@@ -294,7 +294,7 @@ const EditInfo = (setEditable) => {
           </TouchableOpacity>
         </View>
         <ButtonComponent primary onPress={updateUser}>
-          Valider
+          Modifier
         </ButtonComponent>
       </View>
     </View>

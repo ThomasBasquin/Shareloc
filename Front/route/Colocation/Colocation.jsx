@@ -53,17 +53,15 @@ export default function Colocation() {
     useFetch(
       URLS.answerInvitation.replace("{invitation}", invitation.id),
       "PUT",
-      {
-        accepted,
-      }
+      {accepted}
     ).then(() => {
       setInvitations(invitations.filter((i) => i.id !== invitation.id));
       if (accepted) {
         setUserInfo({ ...user, colocation: invitation.collocation.id });
       }
-    });
+    })
   }
-  
+
   return (
     <>
       {user.colocation && colocation && services.length ? (
@@ -146,11 +144,13 @@ const InviteMembers = ({ user }) => {
       collocation: user.colocation,
       sender: user.id,
       receipter: selectedUser,
-    }).then((e) => {
-      console.log(e)
-    }).catch((e) => {
-      console.log(e)
     })
+      .then((e) => {
+        console.log(e);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   return (
