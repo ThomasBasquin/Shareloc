@@ -19,13 +19,13 @@ const Signup = () => {
       setError({ message: "Les deux mot de passe ne corresponent pas" });
       return;
     }
-    register(email, firstname, lastname, password).catch((err) =>
+    register(email, firstname, lastname, password).then(e => console.log(e)).catch((err) =>{
       setError({
         message:
           err.status == 409
             ? "Cette email a déjà un compte"
             : "Une erreur est survenue lors de la création de votre compte",
-      })
+      })}
     );
   }
 

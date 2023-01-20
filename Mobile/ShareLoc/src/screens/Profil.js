@@ -211,7 +211,6 @@ const EditInfo = (setEditable) => {
       .then((u) => {
         setEditable(false);
       })
-      .catch((e) => console.log(e));
   }
 
   return (
