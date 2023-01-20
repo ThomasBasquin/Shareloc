@@ -169,7 +169,7 @@ const MessagePerso = ({ name, hour, message }) => {
 
 const NomHeure = ({ name, hour }) => {
   return (
-    <View style={{ flexDirection: "row", marginLeft: 5, marginBottom: 5 }}>
+    <View style={{ flexDirection: "row", marginRight: 20, marginBottom: 5 }}>
       <Text style={{ marginRight: 5 }}>{name}</Text>
       <Text>{hour}</Text>
     </View>

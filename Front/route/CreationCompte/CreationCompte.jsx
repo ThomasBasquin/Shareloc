@@ -18,7 +18,7 @@ export default function CreationCompte() {
   const { register } = useContext(AuthContext);
 
   function registerHandle() {
-    console.log(user.password, user.confirmPassword);
+    
     if (user.password !== user.confirmPassword) {
       setError({ message: "Les mots de passe ne sont pas identique" });
       return;
