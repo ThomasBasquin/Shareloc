@@ -61,10 +61,10 @@ export default function Colocation() {
       }
     })
   }
-
+console.log({colocation})
   return (
     <>
-      {user.colocation && colocation && services.length ? (
+      {user.colocation && colocation  ? (
         <div>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <Title title="Colocation" />
