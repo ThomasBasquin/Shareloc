@@ -91,7 +91,6 @@ const Services = ({ navigation }) => {
       .then(() => {
         fetchServices();
       })
-      .catch((e) => console.log(e));
   };
 
   return (

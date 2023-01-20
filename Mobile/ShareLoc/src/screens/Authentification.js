@@ -25,7 +25,6 @@ const Authentification = ({ navigation }) => {
   useEffect(() => {
     useFetch(URLS.whoami)
       .then(() => navigation.navigate("Home"))
-      .catch((err) => console.log(err));
   }, []);
 
   function loginHandle() {

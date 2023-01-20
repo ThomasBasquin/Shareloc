@@ -13,6 +13,7 @@ export function AuthProvider({children}){
     async function login(email,password){
         return useFetch(URLS.login,"POST",{email,password})
         .then(({token,data}) => {
+            console.log(token);
             setUserToken(token);
             setUserInfo(data);
             AsyncStorage.setItem("userToken",token);
@@ -20,8 +21,21 @@ export function AuthProvider({children}){
     }
 
     async function register(email,firstname,lastname,password){
-        return useFetch(URLS.register,"POST",{email,firstname,lastname,password})
-        .then(() => {
+        return fetch(URLS.register,{
+            method:"POST",
+            headers:{
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body:JSON.stringify({email,firstname,lastname,password})
+        }).then((response)=>{
+            if (!response.ok) {
+                const error = response.json();
+                throw error;
+            }
+            return response.json();
+        }).then((e) => {
+            console.log("heyy: "+e);
             login(email,password);
         })
     }

@@ -175,7 +175,6 @@ function CreationColocationModal({isOpen,setIsOpen,user,setUserInfo}){
       setUserInfo({...user,colocation:e.id});
       setIsOpen(false);
     })
-    .catch(e => console.log(e))
   }
 
   return (<ModalGeneral visible={isOpen}>
