@@ -79,7 +79,7 @@ const Accueil = ({ navigation }) => {
             />
           ))
         ) : (
-          <Text>Vous n'avait pas de services en cours</Text>
+          <Text>Vous n'avez pas de services en cours</Text>
         )}
       </View>
     </ScrollView>

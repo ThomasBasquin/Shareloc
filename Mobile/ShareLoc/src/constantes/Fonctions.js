@@ -6,7 +6,7 @@ export async function storeJWTToken(value){
   } catch(e) {
     // read error
   }
-  console.log('Done.')
+  
 }
 
 export async function getJWTToken(){
@@ -17,5 +17,5 @@ export async function getJWTToken(){
     // read error
   }
 
-  console.log('Done.')
+ 
 }
